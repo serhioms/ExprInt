@@ -97,7 +97,7 @@ public class TestSets {
 	public static void main(String[] args) throws Exception {
 		logger.info("Antlr test...");
 		
-		TestRig.main(new String[] {"sets.Sets", "expr", "-gui","-tokens","-diagnostics","-trace","data/sets.txt"});
+		TestRig.main(new String[] {"sets.Sets", "expr", "-gui","-tokens","-diagnostics","-trace","data/sets1.txt"});
 		
 		logger.info("Goodbye!");
 	}
