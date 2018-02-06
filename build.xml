@@ -1,0 +1,178 @@
+<!DOCTYPE project>
+<project name="ExprInt" default="">
+
+	<property name="basedir" value="." />
+
+	<property name="exprint.jar" value="exprint-jar-with-dependencies.jar" />
+
+	<property name="maven.opts" value="-Dmaven.test.skip=true" />
+	<property name="maven.home" value="C:/mss/tools/apache-maven-3.5.2" />
+
+	<macrodef name="maven">
+		<attribute name="options" default="" />
+		<attribute name="goal" />
+		<attribute name="basedir" />
+		<attribute name="resultproperty" default="maven.result" />
+		<element name="args" implicit="true" optional="true" />
+		<sequential>
+			<java classname="org.codehaus.classworlds.Launcher" fork="true" dir="@{basedir}" resultproperty="@{resultproperty}">
+				<jvmarg value="-Xmx512m" />
+				<classpath>
+					<fileset dir="${maven.home}/boot">
+						<include name="*.jar" />
+					</fileset>
+					<fileset dir="${maven.home}/lib">
+						<include name="*.jar" />
+					</fileset>
+				</classpath>
+				<sysproperty key="classworlds.conf" value="${maven.home}/bin/m2.conf" />
+				<sysproperty key="maven.home" value="${maven.home}" />
+				<arg line="--batch-mode @{options} @{goal}" />
+			</java>
+		</sequential>
+	</macrodef>
+
+	<target name="build.maven">
+      <maven basedir="${basedir}"
+             options="${maven.opts}"
+             goal="package"
+             resultproperty="maven.build.result"/>
+	</target>
+
+	<target name="run.main.cmd">
+		<exec dir="." executable="cmd.exe">
+			<arg value="/c" />
+			<arg value="run-main.cmd" />
+		</exec>
+	</target>
+
+	<target name="run.test.cmd">
+		<exec dir="." executable="cmd.exe">
+			<arg value="/c" />
+			<arg value="run-test.cmd" />
+		</exec>
+	</target>
+
+	<target name="exec.main">
+		<exec dir="." executable="java.exe">
+			<arg value="-cp" />
+			<arg value="target/classes;target/${exprint.jar}" />
+			<arg value="org.exprint.Main" />
+		</exec>
+	</target>
+
+	<target name="exec.test.antlr">
+		<exec dir="." executable="java.exe">
+			<arg value="-cp" />
+			<arg value="target/test-classes;target/classes;target/${exprint.jar}" />
+			<arg value="org.antlr.test.TestHello" />
+		</exec>
+	</target>
+
+	<target name="java.main">
+		<java fork="true" classname="org.exprint.Main" classpath="target/classes;target/${exprint.jar}">
+			<arg line="" />
+		</java>
+	</target>
+
+	<target name="javar.test.antl">
+		<java fork="true" classname="org.antlr.test.TestHello" classpath="target/test-classes;target/classes;target/${exprint.jar}">
+			<arg line="" />
+		</java>
+	</target>
+
+	<macrodef name="antlr.help.Tool" description="">
+		<sequential>
+			<java classname="org.antlr.v4.Tool" classpath="target/${exprint.jar}" />
+		</sequential>
+	</macrodef>
+
+	<macrodef name="antlr.compile" description="">
+		<attribute name="gramma" />
+		<attribute name="package" />
+		<attribute name="srcdir" default="gramma" />
+		<attribute name="outdir" default="src/main/java" />
+		<sequential>
+			<java classname="org.antlr.v4.Tool" classpath="target/${exprint.jar}">
+				<arg line="-o @{outdir}/@{package} -package @{package} -no-listener -visitor @{srcdir}/@{gramma}.g4" />
+			</java>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="antlr.help.TestRig" description="">
+		<sequential>
+			<java classname="org.antlr.v4.gui.TestRig" classpath="target/${exprint.jar}" />
+		</sequential>
+	</macrodef>
+
+	<macrodef name="antlr.tree" description="">
+		<attribute name="gramma" />
+		<attribute name="rule" />
+		<attribute name="file" default="" />
+		<attribute name="outdir" default="target/classes" />
+		<sequential>
+			<java fork="true" classname="org.antlr.v4.gui.TestRig" classpath="target/test-classes;target/classes;target/${exprint.jar}">
+				<arg line="@{gramma} @{rule} -tree -tokens -diagnostics -trace @{file}" />
+			</java>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="antlr.gui" description="">
+		<attribute name="gramma" />
+		<attribute name="rule" />
+		<attribute name="file" default="" />
+		<attribute name="outdir" default="target/classes" />
+		<sequential>
+			<java fork="true" classname="org.antlr.v4.gui.TestRig" classpath="target/test-classes;target/classes;target/${exprint.jar}">
+				<arg line="@{gramma} @{rule} -gui -tokens -diagnostics -trace @{file}" />
+			</java>
+		</sequential>
+	</macrodef>
+
+	<target name="test.antlr.tree">
+		<antlr.help.TestRig />
+		<antlr.tree gramma="hello.Hello" rule="r" file="data/hello.txt" />
+	</target>
+
+	<target name="test.calc.tree">
+		<antlr.help.TestRig />
+		<antlr.tree gramma="calculator.Calculator" rule="input" file="data/calculator.txt" />
+	</target>
+
+	<target name="test.antlr.gui">
+		<antlr.help.TestRig />
+		<antlr.gui gramma="hello.Hello" rule="r" file="data/hello.txt" />
+	</target>
+
+	<target name="test.calc.gui">
+		<antlr.help.TestRig />
+		<antlr.gui gramma="calculator.Calculator" rule="input" file="data/calculator.txt" />
+	</target>
+
+	<target name="test.set.union.gui">
+		<antlr.help.TestRig />
+		<antlr.gui gramma="sets.Sets" rule="expr" file="data/sets1.txt" />
+	</target>
+
+	<target name="test.set.intersection.gui">
+		<antlr.help.TestRig />
+		<antlr.gui gramma="sets.Sets" rule="expr" file="data/sets2.txt" />
+	</target>
+
+	<target name="test.set.subtraction.gui">
+		<antlr.help.TestRig />
+		<antlr.gui gramma="sets.Sets" rule="expr" file="data/sets3.txt" />
+	</target>
+
+	<target name="test.compile.gramma">
+		<antlr.help.Tool />
+		<antlr.compile gramma="Hello" package="hello" />
+	</target>
+
+	<target name="compile.gramma">
+		<antlr.help.Tool />
+		<antlr.compile gramma="Calculator" package="calculator" />
+		<antlr.compile gramma="Sets" package="sets" />
+	</target>
+
+</project>
