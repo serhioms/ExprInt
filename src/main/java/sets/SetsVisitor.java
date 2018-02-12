@@ -11,6 +11,12 @@ import org.antlr.v4.runtime.tree.ParseTreeVisitor;
  */
 public interface SetsVisitor<T> extends ParseTreeVisitor<T> {
 	/**
+	 * Visit a parse tree produced by {@link SetsParser#input}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitInput(SetsParser.InputContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link SetsParser#expr}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
@@ -35,9 +41,15 @@ public interface SetsVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitSet(SetsParser.SetContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link SetsParser#ints}.
+	 * Visit a parse tree produced by {@link SetsParser#list}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitInts(SetsParser.IntsContext ctx);
+	T visitList(SetsParser.ListContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link SetsParser#atom}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitAtom(SetsParser.AtomContext ctx);
 }

@@ -10,6 +10,7 @@ import org.antlr.v4.gui.TestRig;
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.apache.log4j.Logger;
+import org.exprint.type.MathType;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -24,7 +25,7 @@ import sets.SetsParser;
 
 public class TestSets {
 
-	final static Logger logger = Logger.getLogger(TestHello.class);
+	final static Logger logger = Logger.getLogger(TestSets.class);
 
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
@@ -44,49 +45,52 @@ public class TestSets {
 
 	@Test
 	public void union() throws IOException {
-    	ANTLRInputStream input = new ANTLRInputStream(new String(Files.readAllBytes(Paths.get("data/sets1.txt"))));
+    	ANTLRInputStream inputs = new ANTLRInputStream(new String(Files.readAllBytes(Paths.get("data/sets1.txt"))));
 
-        SetsLexer lexer = new SetsLexer(input);
+        SetsLexer lexer = new SetsLexer(inputs);
         CommonTokenStream tokenStream = new CommonTokenStream(lexer);
         SetsParser parser = new SetsParser(tokenStream);
 
-        SetsParser.ExprContext expr = parser.expr();
+        SetsParser.ExprContext input = parser.expr();
         EvalVisitor visitor = new EvalVisitor();
-        MathSet<Integer> result = visitor.visit(expr);
+        MathSet<MathType> result = visitor.visit(input);
         System.out.println(result);
         
+        assertEquals("NotNull", result==null?"Null":"NotNull");
         assertEquals("{1,2,3,4,5}", result.toString());
 	}
 
 	@Test
 	public void intersection () throws IOException {
-    	ANTLRInputStream input = new ANTLRInputStream(new String(Files.readAllBytes(Paths.get("data/sets2.txt"))));
+    	ANTLRInputStream inputs = new ANTLRInputStream(new String(Files.readAllBytes(Paths.get("data/sets2.txt"))));
 
-        SetsLexer lexer = new SetsLexer(input);
+        SetsLexer lexer = new SetsLexer(inputs);
         CommonTokenStream tokenStream = new CommonTokenStream(lexer);
         SetsParser parser = new SetsParser(tokenStream);
 
-        SetsParser.ExprContext expr = parser.expr();
+        SetsParser.ExprContext input = parser.expr();
         EvalVisitor visitor = new EvalVisitor();
-        MathSet<Integer> result = visitor.visit(expr);
+        MathSet<MathType> result = visitor.visit(input);
         System.out.println(result);
         
+        assertEquals("NotNull", result==null?"Null":"NotNull");
         assertEquals("{1,3,5}", result.toString());
 	}
 
 	@Test
 	public void subtraction () throws IOException {
-    	ANTLRInputStream input = new ANTLRInputStream(new String(Files.readAllBytes(Paths.get("data/sets3.txt"))));
+    	ANTLRInputStream inputs = new ANTLRInputStream(new String(Files.readAllBytes(Paths.get("data/sets3.txt"))));
 
-        SetsLexer lexer = new SetsLexer(input);
+        SetsLexer lexer = new SetsLexer(inputs);
         CommonTokenStream tokenStream = new CommonTokenStream(lexer);
         SetsParser parser = new SetsParser(tokenStream);
 
-        SetsParser.ExprContext expr = parser.expr();
+        SetsParser.ExprContext input = parser.expr();
         EvalVisitor visitor = new EvalVisitor();
-        MathSet<Integer> result = visitor.visit(expr);
+        MathSet<MathType> result = visitor.visit(input);
         System.out.println(result);
         
+        assertEquals("NotNull", result==null?"Null":"NotNull");
         assertEquals("{1,5}", result.toString());
 	}
 
@@ -97,7 +101,7 @@ public class TestSets {
 	public static void main(String[] args) throws Exception {
 		logger.info("Antlr test...");
 		
-		TestRig.main(new String[] {"sets.Sets", "expr", "-gui","-tokens","-diagnostics","-trace","data/sets1.txt"});
+		TestRig.main(new String[] {"sets.Sets", "input", "-gui","-tokens","-diagnostics","-trace","data/sets1.txt"});
 		
 		logger.info("Goodbye!");
 	}

@@ -1,9 +1,16 @@
 grammar Sets;
-expr: expr OP_ADD term | term;
-term: term OP_MUL factor | factor;
+WS : [ \t\r]+ -> skip ;
+INT : [0-9]+;
+
+input: expr;
+
+expr: expr ADD_SUB term | term;
+term: term MUL factor | factor;
 factor: set | '(' expr ')';
-OP_ADD: 'u' | '/';
-OP_MUL: 'n';
-set: '{' ints '}' | '{' '}';
-ints: INT ',' ints | INT;
-INT: [0-9]+ ;
+
+ADD_SUB: '#' | '/';
+MUL: '*';
+
+set: '{' list '}' | '{' '}';
+list: atom ',' list | atom;
+atom: INT;

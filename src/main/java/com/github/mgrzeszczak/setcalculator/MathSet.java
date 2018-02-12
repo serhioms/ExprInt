@@ -17,10 +17,8 @@ public class MathSet<T> {
     }
 
     public MathSet<T> union(MathSet<T> other) {
-        return Stream.concat(
-                data.stream(),
-                other.data.stream()
-        ).collect(Collectors.collectingAndThen(Collectors.toSet(), MathSet::of));
+        return Stream.concat(data.stream(), other.data.stream())
+        		.collect(Collectors.collectingAndThen(Collectors.toSet(), MathSet::of));
     }
 
     public MathSet<T> intersection(MathSet<T> other) {

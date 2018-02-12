@@ -17,7 +17,7 @@ public class CalculatorParser extends Parser {
 	protected static final PredictionContextCache _sharedContextCache =
 		new PredictionContextCache();
 	public static final int
-		INT=1, DOUBLE=2, PI=3, E=4, POW=5, NL=6, WS=7, ID=8, PLUS=9, EQUAL=10, 
+		NL=1, WS=2, INT=3, DOUBLE=4, PI=5, E=6, POW=7, ID=8, PLUS=9, EQUAL=10, 
 		MINUS=11, MULT=12, DIV=13, LPAR=14, RPAR=15;
 	public static final int
 		RULE_input = 0, RULE_setVar = 1, RULE_plusOrMinus = 2, RULE_multOrDiv = 3, 
@@ -27,11 +27,11 @@ public class CalculatorParser extends Parser {
 	};
 
 	private static final String[] _LITERAL_NAMES = {
-		null, null, null, "'pi'", "'e'", "'^'", "'\n'", null, null, "'+'", "'='", 
+		null, "'\n'", null, null, null, "'pi'", "'e'", "'^'", null, "'+'", "'='", 
 		"'-'", "'*'", "'/'", "'('", "')'"
 	};
 	private static final String[] _SYMBOLIC_NAMES = {
-		null, "INT", "DOUBLE", "PI", "E", "POW", "NL", "WS", "ID", "PLUS", "EQUAL", 
+		null, "NL", "WS", "INT", "DOUBLE", "PI", "E", "POW", "ID", "PLUS", "EQUAL", 
 		"MINUS", "MULT", "DIV", "LPAR", "RPAR"
 	};
 	public static final Vocabulary VOCABULARY = new VocabularyImpl(_LITERAL_NAMES, _SYMBOLIC_NAMES);
@@ -709,36 +709,36 @@ public class CalculatorParser extends Parser {
 			setState(77);
 			_errHandler.sync(this);
 			switch (_input.LA(1)) {
-			case PI:
-				_localctx = new ConstantPIContext(_localctx);
+			case INT:
+				_localctx = new IntContext(_localctx);
 				enterOuterAlt(_localctx, 1);
 				{
 				setState(68);
+				match(INT);
+				}
+				break;
+			case DOUBLE:
+				_localctx = new DoubleContext(_localctx);
+				enterOuterAlt(_localctx, 2);
+				{
+				setState(69);
+				match(DOUBLE);
+				}
+				break;
+			case PI:
+				_localctx = new ConstantPIContext(_localctx);
+				enterOuterAlt(_localctx, 3);
+				{
+				setState(70);
 				match(PI);
 				}
 				break;
 			case E:
 				_localctx = new ConstantEContext(_localctx);
-				enterOuterAlt(_localctx, 2);
-				{
-				setState(69);
-				match(E);
-				}
-				break;
-			case DOUBLE:
-				_localctx = new DoubleContext(_localctx);
-				enterOuterAlt(_localctx, 3);
-				{
-				setState(70);
-				match(DOUBLE);
-				}
-				break;
-			case INT:
-				_localctx = new IntContext(_localctx);
 				enterOuterAlt(_localctx, 4);
 				{
 				setState(71);
-				match(INT);
+				match(E);
 				}
 				break;
 			case ID:
@@ -812,8 +812,8 @@ public class CalculatorParser extends Parser {
 		"\58\n\5\f\5\16\5;\13\5\3\6\3\6\3\6\5\6@\n\6\3\7\3\7\3\7\5\7E\n\7\3\b\3"+
 		"\b\3\b\3\b\3\b\3\b\3\b\3\b\3\b\5\bP\n\b\3\b\2\4\6\b\t\2\4\6\b\n\f\16\2"+
 		"\2\2W\2\32\3\2\2\2\4\34\3\2\2\2\6 \3\2\2\2\b.\3\2\2\2\n<\3\2\2\2\fD\3"+
-		"\2\2\2\16O\3\2\2\2\20\21\5\4\3\2\21\22\7\b\2\2\22\23\5\2\2\2\23\33\3\2"+
-		"\2\2\24\26\5\6\4\2\25\27\7\b\2\2\26\25\3\2\2\2\26\27\3\2\2\2\27\30\3\2"+
+		"\2\2\2\16O\3\2\2\2\20\21\5\4\3\2\21\22\7\3\2\2\22\23\5\2\2\2\23\33\3\2"+
+		"\2\2\24\26\5\6\4\2\25\27\7\3\2\2\26\25\3\2\2\2\26\27\3\2\2\2\27\30\3\2"+
 		"\2\2\30\31\7\2\2\3\31\33\3\2\2\2\32\20\3\2\2\2\32\24\3\2\2\2\33\3\3\2"+
 		"\2\2\34\35\7\n\2\2\35\36\7\f\2\2\36\37\5\6\4\2\37\5\3\2\2\2 !\b\4\1\2"+
 		"!\"\5\b\5\2\"+\3\2\2\2#$\f\5\2\2$%\7\13\2\2%*\5\b\5\2&\'\f\4\2\2\'(\7"+
@@ -821,9 +821,9 @@ public class CalculatorParser extends Parser {
 		"\3\2\2\2-+\3\2\2\2./\b\5\1\2/\60\5\n\6\2\609\3\2\2\2\61\62\f\5\2\2\62"+
 		"\63\7\16\2\2\638\5\n\6\2\64\65\f\4\2\2\65\66\7\17\2\2\668\5\n\6\2\67\61"+
 		"\3\2\2\2\67\64\3\2\2\28;\3\2\2\29\67\3\2\2\29:\3\2\2\2:\t\3\2\2\2;9\3"+
-		"\2\2\2<?\5\f\7\2=>\7\7\2\2>@\5\n\6\2?=\3\2\2\2?@\3\2\2\2@\13\3\2\2\2A"+
+		"\2\2\2<?\5\f\7\2=>\7\t\2\2>@\5\n\6\2?=\3\2\2\2?@\3\2\2\2@\13\3\2\2\2A"+
 		"B\7\r\2\2BE\5\f\7\2CE\5\16\b\2DA\3\2\2\2DC\3\2\2\2E\r\3\2\2\2FP\7\5\2"+
-		"\2GP\7\6\2\2HP\7\4\2\2IP\7\3\2\2JP\7\n\2\2KL\7\20\2\2LM\5\6\4\2MN\7\21"+
+		"\2GP\7\6\2\2HP\7\7\2\2IP\7\b\2\2JP\7\n\2\2KL\7\20\2\2LM\5\6\4\2MN\7\21"+
 		"\2\2NP\3\2\2\2OF\3\2\2\2OG\3\2\2\2OH\3\2\2\2OI\3\2\2\2OJ\3\2\2\2OK\3\2"+
 		"\2\2P\17\3\2\2\2\13\26\32)+\679?DO";
 	public static final ATN _ATN =

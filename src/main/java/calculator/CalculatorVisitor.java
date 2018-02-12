@@ -95,6 +95,20 @@ public interface CalculatorVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitToAtom(CalculatorParser.ToAtomContext ctx);
 	/**
+	 * Visit a parse tree produced by the {@code Int}
+	 * labeled alternative in {@link CalculatorParser#atom}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitInt(CalculatorParser.IntContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code Double}
+	 * labeled alternative in {@link CalculatorParser#atom}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitDouble(CalculatorParser.DoubleContext ctx);
+	/**
 	 * Visit a parse tree produced by the {@code ConstantPI}
 	 * labeled alternative in {@link CalculatorParser#atom}.
 	 * @param ctx the parse tree
@@ -108,20 +122,6 @@ public interface CalculatorVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitConstantE(CalculatorParser.ConstantEContext ctx);
-	/**
-	 * Visit a parse tree produced by the {@code Double}
-	 * labeled alternative in {@link CalculatorParser#atom}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitDouble(CalculatorParser.DoubleContext ctx);
-	/**
-	 * Visit a parse tree produced by the {@code Int}
-	 * labeled alternative in {@link CalculatorParser#atom}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitInt(CalculatorParser.IntContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code Variable}
 	 * labeled alternative in {@link CalculatorParser#atom}.

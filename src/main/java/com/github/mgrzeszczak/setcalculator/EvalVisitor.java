@@ -3,18 +3,20 @@ package com.github.mgrzeszczak.setcalculator;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.exprint.type.MathType;
+
 import sets.SetsBaseVisitor;
 import sets.SetsParser;
 
-public class EvalVisitor extends SetsBaseVisitor<MathSet<Integer>> {
+public class EvalVisitor extends SetsBaseVisitor<MathSet<MathType>> {
 
-    @Override
-    public MathSet<Integer> visitExpr(SetsParser.ExprContext ctx) {
-        if (ctx.OP_ADD() != null) {
-            MathSet<Integer> left = visit(ctx.expr());
-            MathSet<Integer> right = visit(ctx.term());
-            switch (ctx.OP_ADD().getText()) {
-                case "u":
+	@Override
+    public MathSet<MathType> visitExpr(SetsParser.ExprContext ctx) {
+        if (ctx.ADD_SUB() != null) {
+            MathSet<MathType> left = visit(ctx.expr());
+            MathSet<MathType> right = visit(ctx.term());
+            switch (ctx.ADD_SUB().getText()) {
+                case "#":
                     return left.union(right);
                 case "/":
                     return left.difference(right);
@@ -26,12 +28,12 @@ public class EvalVisitor extends SetsBaseVisitor<MathSet<Integer>> {
     }
 
     @Override
-    public MathSet<Integer> visitTerm(SetsParser.TermContext ctx) {
-        if (ctx.OP_MUL() != null) {
-            MathSet<Integer> left = visit(ctx.term());
-            MathSet<Integer> right = visit(ctx.factor());
-            switch (ctx.OP_MUL().getText()) {
-                case "n":
+    public MathSet<MathType> visitTerm(SetsParser.TermContext ctx) {
+        if (ctx.MUL() != null) {
+            MathSet<MathType> left = visit(ctx.term());
+            MathSet<MathType> right = visit(ctx.factor());
+            switch (ctx.MUL().getText()) {
+                case "*":
                     return left.intersection(right);
             }
             return null;
@@ -41,7 +43,7 @@ public class EvalVisitor extends SetsBaseVisitor<MathSet<Integer>> {
     }
 
     @Override
-    public MathSet<Integer> visitFactor(SetsParser.FactorContext ctx) {
+    public MathSet<MathType> visitFactor(SetsParser.FactorContext ctx) {
         if (ctx.expr() != null) {
             return visit(ctx.expr());
         } else {
@@ -50,20 +52,21 @@ public class EvalVisitor extends SetsBaseVisitor<MathSet<Integer>> {
     }
 
     @Override
-    public MathSet<Integer> visitSet(SetsParser.SetContext ctx) {
-        if (ctx.ints() == null) {
+    public MathSet<MathType> visitSet(SetsParser.SetContext ctx) {
+        if (ctx.list() != null) {
+        	return visitList(ctx.list());
+        } else {
             return MathSet.of(new HashSet<>());
         }
-        return visitInts(ctx.ints());
     }
 
     @Override
-    public MathSet<Integer> visitInts(SetsParser.IntsContext ctx) {
-        Set<Integer> set = new HashSet<>();
-        set.add(Integer.parseInt(ctx.INT().getSymbol().getText()));
-        while (ctx.ints() != null) {
-            ctx = ctx.ints();
-            set.add(Integer.parseInt(ctx.INT().getSymbol().getText()));
+    public MathSet<MathType> visitList(SetsParser.ListContext ctx) {
+        Set<MathType> set = new HashSet<>();
+        set.add(MathType.parseInt(ctx.atom().getText()));
+        while (ctx.list() != null) {
+            ctx = ctx.list();
+            set.add(MathType.parseInt(ctx.atom().getText()));
         }
         return MathSet.of(set);
     }
