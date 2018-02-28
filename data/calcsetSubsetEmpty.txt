@@ -1,0 +1,5 @@
+set = {1,2,3,4,5}
+subset = {1,2,5} @ set
+notsubset = {1,2,7} @ set
+emptyset = !(set @ {}) && ({} @ set)
+subset && !notsubset && emptyset 

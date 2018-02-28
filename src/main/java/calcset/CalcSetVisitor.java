@@ -25,13 +25,6 @@ public interface CalcSetVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitCalculate(CalcSetParser.CalculateContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code SetExpression}
-	 * labeled alternative in {@link CalcSetParser#input}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitSetExpression(CalcSetParser.SetExpressionContext ctx);
-	/**
 	 * Visit a parse tree produced by the {@code SetVariable}
 	 * labeled alternative in {@link CalcSetParser#setVar}.
 	 * @param ctx the parse tree
@@ -46,12 +39,54 @@ public interface CalcSetVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitToMultOrDiv(CalcSetParser.ToMultOrDivContext ctx);
 	/**
+	 * Visit a parse tree produced by the {@code Or}
+	 * labeled alternative in {@link CalcSetParser#plusOrMinus}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitOr(CalcSetParser.OrContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code Subset}
+	 * labeled alternative in {@link CalcSetParser#plusOrMinus}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitSubset(CalcSetParser.SubsetContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code Equal}
+	 * labeled alternative in {@link CalcSetParser#plusOrMinus}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitEqual(CalcSetParser.EqualContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code And}
+	 * labeled alternative in {@link CalcSetParser#plusOrMinus}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitAnd(CalcSetParser.AndContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code Nequal}
+	 * labeled alternative in {@link CalcSetParser#plusOrMinus}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitNequal(CalcSetParser.NequalContext ctx);
+	/**
 	 * Visit a parse tree produced by the {@code Plus}
 	 * labeled alternative in {@link CalcSetParser#plusOrMinus}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitPlus(CalcSetParser.PlusContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code Implication}
+	 * labeled alternative in {@link CalcSetParser#plusOrMinus}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitImplication(CalcSetParser.ImplicationContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code Minus}
 	 * labeled alternative in {@link CalcSetParser#plusOrMinus}.
@@ -95,6 +130,20 @@ public interface CalcSetVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitChangeSign(CalcSetParser.ChangeSignContext ctx);
 	/**
+	 * Visit a parse tree produced by the {@code UnaryNot}
+	 * labeled alternative in {@link CalcSetParser#unaryMinus}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitUnaryNot(CalcSetParser.UnaryNotContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code Cardinality}
+	 * labeled alternative in {@link CalcSetParser#unaryMinus}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitCardinality(CalcSetParser.CardinalityContext ctx);
+	/**
 	 * Visit a parse tree produced by the {@code ToAtom}
 	 * labeled alternative in {@link CalcSetParser#unaryMinus}.
 	 * @param ctx the parse tree
@@ -132,6 +181,13 @@ public interface CalcSetVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitList(CalcSetParser.ListContext ctx);
 	/**
+	 * Visit a parse tree produced by the {@code Variable}
+	 * labeled alternative in {@link CalcSetParser#atom}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitVariable(CalcSetParser.VariableContext ctx);
+	/**
 	 * Visit a parse tree produced by the {@code ConstantPI}
 	 * labeled alternative in {@link CalcSetParser#atom}.
 	 * @param ctx the parse tree
@@ -145,6 +201,20 @@ public interface CalcSetVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitConstantE(CalcSetParser.ConstantEContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code String}
+	 * labeled alternative in {@link CalcSetParser#atom}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitString(CalcSetParser.StringContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code Boolean}
+	 * labeled alternative in {@link CalcSetParser#atom}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitBoolean(CalcSetParser.BooleanContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code Double}
 	 * labeled alternative in {@link CalcSetParser#atom}.
@@ -160,17 +230,17 @@ public interface CalcSetVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitInt(CalcSetParser.IntContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code Variable}
-	 * labeled alternative in {@link CalcSetParser#atom}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitVariable(CalcSetParser.VariableContext ctx);
-	/**
 	 * Visit a parse tree produced by the {@code Braces}
 	 * labeled alternative in {@link CalcSetParser#atom}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitBraces(CalcSetParser.BracesContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code AtomExpr}
+	 * labeled alternative in {@link CalcSetParser#atom}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitAtomExpr(CalcSetParser.AtomExprContext ctx);
 }

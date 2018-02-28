@@ -8,7 +8,7 @@ expr: expr ADD_SUB term | term;
 term: term MUL factor | factor;
 factor: set | '(' expr ')';
 
-ADD_SUB: '#' | '/';
+ADD_SUB: '+' | '-';
 MUL: '*';
 
 set: '{' list '}' | '{' '}';

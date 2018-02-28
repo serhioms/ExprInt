@@ -175,6 +175,7 @@
 		<antlr.compile gramma="Calculator" package="calculator" />
 		<antlr.compile gramma="Sets" package="sets" />
 		<antlr.compile gramma="CalcSet" package="calcset" />
+		<antlr.compile gramma="SetsOrig" package="setsorig" />
 	</target>
 
 </project>

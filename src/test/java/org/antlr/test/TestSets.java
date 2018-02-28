@@ -10,19 +10,19 @@ import org.antlr.v4.gui.TestRig;
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.apache.log4j.Logger;
-import org.exprint.type.MathType;
+import org.exprint.type.AtomicType;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-
-import com.github.mgrzeszczak.setcalculator.EvalVisitor;
-import com.github.mgrzeszczak.setcalculator.MathSet;
+import org.sets.EvalVisitor;
+import org.sets.MathSet;
 
 import sets.SetsLexer;
 import sets.SetsParser;
 
+@SuppressWarnings("deprecation")
 public class TestSets {
 
 	final static Logger logger = Logger.getLogger(TestSets.class);
@@ -53,7 +53,7 @@ public class TestSets {
 
         SetsParser.ExprContext input = parser.expr();
         EvalVisitor visitor = new EvalVisitor();
-        MathSet<MathType> result = visitor.visit(input);
+        MathSet<AtomicType> result = visitor.visit(input);
         System.out.println(result);
         
         assertEquals("NotNull", result==null?"Null":"NotNull");
@@ -61,7 +61,7 @@ public class TestSets {
 	}
 
 	@Test
-	public void intersection () throws IOException {
+	public void intersection() throws IOException {
     	ANTLRInputStream inputs = new ANTLRInputStream(new String(Files.readAllBytes(Paths.get("data/sets2.txt"))));
 
         SetsLexer lexer = new SetsLexer(inputs);
@@ -70,7 +70,7 @@ public class TestSets {
 
         SetsParser.ExprContext input = parser.expr();
         EvalVisitor visitor = new EvalVisitor();
-        MathSet<MathType> result = visitor.visit(input);
+        MathSet<AtomicType> result = visitor.visit(input);
         System.out.println(result);
         
         assertEquals("NotNull", result==null?"Null":"NotNull");
@@ -87,7 +87,7 @@ public class TestSets {
 
         SetsParser.ExprContext input = parser.expr();
         EvalVisitor visitor = new EvalVisitor();
-        MathSet<MathType> result = visitor.visit(input);
+        MathSet<AtomicType> result = visitor.visit(input);
         System.out.println(result);
         
         assertEquals("NotNull", result==null?"Null":"NotNull");
@@ -102,6 +102,8 @@ public class TestSets {
 		logger.info("Antlr test...");
 		
 		TestRig.main(new String[] {"sets.Sets", "input", "-gui","-tokens","-diagnostics","-trace","data/sets1.txt"});
+		TestRig.main(new String[] {"sets.Sets", "input", "-gui","-tokens","-diagnostics","-trace","data/sets2.txt"});
+		TestRig.main(new String[] {"sets.Sets", "input", "-gui","-tokens","-diagnostics","-trace","data/sets3.txt"});
 		
 		logger.info("Goodbye!");
 	}

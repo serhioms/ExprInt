@@ -1,198 +1,219 @@
 package org.exprint;
 
-
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.exprint.type.MathType;
+import org.exprint.type.AtomicType;
+import org.exprint.type.BooleanType;
+import org.exprint.type.DoubleType;
+import org.exprint.type.IntegerType;
+import org.exprint.type.SetType;
+import org.exprint.type.StringType;
 
 import calcset.CalcSetBaseVisitor;
 import calcset.CalcSetParser;
+import calcset.CalcSetParser.AndContext;
+import calcset.CalcSetParser.BooleanContext;
 import calcset.CalcSetParser.CalculateContext;
+import calcset.CalcSetParser.CardinalityContext;
+import calcset.CalcSetParser.EqualContext;
 import calcset.CalcSetParser.ExprContext;
 import calcset.CalcSetParser.FactorContext;
+import calcset.CalcSetParser.ImplicationContext;
 import calcset.CalcSetParser.IntContext;
 import calcset.CalcSetParser.ListContext;
+import calcset.CalcSetParser.NequalContext;
+import calcset.CalcSetParser.OrContext;
 import calcset.CalcSetParser.PlusOrMinusContext;
 import calcset.CalcSetParser.SetContext;
 import calcset.CalcSetParser.SetVariableContext;
+import calcset.CalcSetParser.StringContext;
+import calcset.CalcSetParser.SubsetContext;
 import calcset.CalcSetParser.TermContext;
 import calcset.CalcSetParser.ToSetVarContext;
+import calcset.CalcSetParser.UnaryNotContext;
 
+public class EvalVisitor extends CalcSetBaseVisitor<AtomicType> {
 
-public class EvalVisitor extends CalcSetBaseVisitor<MathSet<MathType>> {
-
-	private HashMap<String, MathSet<MathType>> variables = new HashMap<String, MathSet<MathType>>();
+	private HashMap<String, AtomicType> variables = new HashMap<String, AtomicType>();
 
 	@Override
-	public MathSet<MathType> visitExpr(ExprContext ctx) {
-		if (ctx.OP_UNION_SUBSTRUCTION() != null) {
-            MathSet<MathType> left = visit(ctx.expr());
-            MathSet<MathType> right = visit(ctx.term());
-            switch (ctx.OP_UNION_SUBSTRUCTION().getText()) {
-                case "#":
-                    return left.union(right);
-                case "/":
-                    return left.difference(right);
-            }
-            return null;
-        } else {
-            return visit(ctx.term());
-        }
+	public AtomicType visitExpr(ExprContext ctx) {
+		return visit(ctx.term());
 	}
 
 	@Override
-	public MathSet<MathType> visitTerm(TermContext ctx) {
-        if (ctx.OP_INTERSECTION() != null) {
-            MathSet<MathType> left = visit(ctx.term());
-            MathSet<MathType> right = visit(ctx.factor());
-            switch (ctx.OP_INTERSECTION().getText()) {
-                case "*":
-                    return left.intersection(right);
-            }
-            return null;
-        } else {
-            return visitFactor(ctx.factor());
-        }
+	public AtomicType visitTerm(TermContext ctx) {
+		return visitFactor(ctx.factor());
 	}
 
 	@Override
-	public MathSet<MathType> visitFactor(FactorContext ctx) {
-        if (ctx.expr() != null) {
-            return visit(ctx.expr());
-        } else {
-            return visit(ctx.set());
-        }
+	public AtomicType visitFactor(FactorContext ctx) {
+		if (ctx.expr() != null) {
+			return visit(ctx.expr());
+		} else {
+			return visit(ctx.set());
+		}
 	}
 
 	@Override
-	public MathSet<MathType> visitSet(SetContext ctx) {
-        if (ctx.list() != null) {
-            return visitList(ctx.list());
-        } else {
-            return MathSet.ofSet(new HashSet<>());
-        }
+	public AtomicType visitSet(SetContext ctx) {
+		return visitList(ctx.list());
 	}
 
 	@Override
-	public MathSet<MathType> visitList(ListContext ctx) {
-        Set<MathType> set = new HashSet<>();
-        set.add(MathType.parseInt(ctx.atom().getText()));
-        while (ctx.list() != null) {
-            ctx = ctx.list();
-            set.add(MathType.parseInt(ctx.atom().getText()));
-        }
-        return MathSet.ofSet(set);
+	public AtomicType visitList(ListContext ctx) {
+		Set<AtomicType> set = new HashSet<>();
+		if( ctx != null ) {
+			set.add(visit(ctx.atom()));
+			while (ctx.list() != null) {
+				ctx = ctx.list();
+				set.add(visit(ctx.atom()));
+			}
+		}
+		return SetType.ofSet(set);
 	}
 
 	/*
-     * *********************************
-     */
-    
-	@Override
-    public MathSet<MathType> visitPlus(CalcSetParser.PlusContext ctx) {
-        return visit(ctx.plusOrMinus()).plus(visit(ctx.multOrDiv()));
-    }
-    
-    
-	@Override
-    public MathSet<MathType> visitMinus(CalcSetParser.MinusContext ctx) {
-        return visit(ctx.plusOrMinus()).minus(visit(ctx.multOrDiv()));
-    }
+	 * *********************************
+	 */
 
-    
+	
 	@Override
-    public MathSet<MathType> visitMultiplication(CalcSetParser.MultiplicationContext ctx) {
-        return visit(ctx.multOrDiv()).mult(visit(ctx.pow()));
-    }
+	public AtomicType visitPlus(CalcSetParser.PlusContext ctx) {
+		return visit(ctx.plusOrMinus()).sum(visit(ctx.multOrDiv()));
+	}
 
-    
 	@Override
-    public MathSet<MathType> visitDivision(CalcSetParser.DivisionContext ctx) {
-        return visit(ctx.multOrDiv()).div(visit(ctx.pow()));
-    }
-   
-    
+	public AtomicType visitSubset(SubsetContext ctx) {
+		return visit(ctx.plusOrMinus()).subset(visit(ctx.multOrDiv()));
+	}
+
 	@Override
-	public MathSet<MathType> visitToSetVar(ToSetVarContext ctx) {
+	public AtomicType visitImplication(ImplicationContext ctx) {
+		return visit(ctx.plusOrMinus()).implication(visit(ctx.multOrDiv()));
+	}
+
+	@Override
+	public AtomicType visitOr(OrContext ctx) {
+		return visit(ctx.plusOrMinus()).or(visit(ctx.multOrDiv()));
+	}
+
+	@Override
+	public AtomicType visitNequal(NequalContext ctx) {
+		return visit(ctx.plusOrMinus()).notequal(visit(ctx.multOrDiv()));
+	}
+
+	@Override
+	public AtomicType visitEqual(EqualContext ctx) {
+		return visit(ctx.plusOrMinus()).equal(visit(ctx.multOrDiv()));
+	}
+
+	@Override
+	public AtomicType visitMinus(CalcSetParser.MinusContext ctx) {
+		return visit(ctx.plusOrMinus()).substruction(visit(ctx.multOrDiv()));
+	}
+
+	@Override
+	public AtomicType visitAnd(AndContext ctx) {
+		return visit(ctx.plusOrMinus()).and(visit(ctx.multOrDiv()));
+	}
+	
+	@Override
+	public AtomicType visitMultiplication(CalcSetParser.MultiplicationContext ctx) {
+		return visit(ctx.multOrDiv()).multiplication(visit(ctx.pow()));
+	}
+
+	@Override
+	public AtomicType visitDivision(CalcSetParser.DivisionContext ctx) {
+		return visit(ctx.multOrDiv()).division(visit(ctx.pow()));
+	}
+
+	@Override
+	public AtomicType visitToSetVar(ToSetVarContext ctx) {
 		return super.visitToSetVar(ctx);
 	}
 
 	@Override
-	public MathSet<MathType> visitCalculate(CalculateContext ctx) {
-        return visit(ctx.plusOrMinus());
+	public AtomicType visitCalculate(CalculateContext ctx) {
+		return visit(ctx.plusOrMinus());
 	}
 
-
 	@Override
-	public MathSet<MathType> visitSetVariable(SetVariableContext ctx) {
+	public AtomicType visitSetVariable(SetVariableContext ctx) {
 		PlusOrMinusContext plusOrMinus = ctx.plusOrMinus();
-		if( plusOrMinus != null ) {
-			MathSet<MathType> value = visit(plusOrMinus);
-	        variables.put(ctx.ID().getText(), value);
-	        return value;
+		if (plusOrMinus != null) {
+			AtomicType value = visit(plusOrMinus);
+			variables.put(ctx.ID().getText(), value);
+			return value;
 		} else {
-			return variables.get(ctx.ID().getText()); 
+			return variables.get(ctx.ID().getText());
 		}
 	}
-	
+
 	@Override
-	public MathSet<MathType> visitInt(IntContext ctx) {
-        Set<MathType> set = new HashSet<>();
-        set.add(MathType.parseInt(ctx.getText()));
-        return  MathSet.ofSet(set);
+	public AtomicType visitPower(CalcSetParser.PowerContext ctx) {
+		if (ctx.pow() != null) {
+			return visit(ctx.unaryMinus()).power(visit(ctx.pow()));
+		} else {
+			return visit(ctx.unaryMinus());
+		}
 	}
-    
-/*
- * 			CalcSetParser.VariableContext
- */
 
 	@Override
-	public MathSet<MathType>  visitPower(CalcSetParser.PowerContext ctx) {
-        if (ctx.pow() != null) {
-        	return visit(ctx.unaryMinus()).pow(visit(ctx.pow()));
-        }
-        return visit(ctx.unaryMinus());
-    }
+	public AtomicType visitChangeSign(CalcSetParser.ChangeSignContext ctx) {
+		return visit(ctx.unaryMinus()).changeSign();
+	}
 
-    
 	@Override
-    public MathSet<MathType>  visitChangeSign(CalcSetParser.ChangeSignContext ctx) {
-        return visit(ctx.unaryMinus()).changeSign();
-    }
+	public AtomicType visitUnaryNot(UnaryNotContext ctx) {
+		return visit(ctx.unaryMinus()).not();
+	}
 
-    
 	@Override
-    public MathSet<MathType>  visitBraces(CalcSetParser.BracesContext ctx) {
-        return visit(ctx.plusOrMinus());
-    }
+	public AtomicType visitCardinality(CardinalityContext ctx) {
+		return visit(ctx.unaryMinus()).cardinality();
+	}
 
-    
 	@Override
-    public MathSet<MathType> visitConstantPI(CalcSetParser.ConstantPIContext ctx) {
-        Set<MathType> set = new HashSet<>();
-        set.add(MathType.parseDouble(Math.PI));
-        return  MathSet.ofSet(set);
-    }
+	public AtomicType visitBraces(CalcSetParser.BracesContext ctx) {
+		return visit(ctx.plusOrMinus());
+	}
 
-    
 	@Override
-    public MathSet<MathType> visitConstantE(CalcSetParser.ConstantEContext ctx) {
-        Set<MathType> set = new HashSet<>();
-        set.add(MathType.parseDouble(Math.E));
-        return  MathSet.ofSet(set);
-    }
-    
+	public AtomicType visitConstantPI(CalcSetParser.ConstantPIContext ctx) {
+		return new DoubleType(Math.PI);
+	}
+
 	@Override
-    public MathSet<MathType> visitDouble(CalcSetParser.DoubleContext ctx) {
-        Set<MathType> set = new HashSet<>();
-        set.add(MathType.parseDouble(ctx.DOUBLE().getText()));
-        return  MathSet.ofSet(set);
-    }
-	
+	public AtomicType visitConstantE(CalcSetParser.ConstantEContext ctx) {
+		return new DoubleType(Math.E);
+	}
+
 	@Override
-    public MathSet<MathType> visitVariable(CalcSetParser.VariableContext ctx) {
-        return variables.get(ctx.ID().getText());
-    }
+	public AtomicType visitString(StringContext ctx) {
+		return new StringType(ctx.getText());
+	}
+
+	@Override
+	public AtomicType visitBoolean(BooleanContext ctx) {
+		return new BooleanType(ctx.getText());
+	}
+
+	@Override
+	public AtomicType visitDouble(CalcSetParser.DoubleContext ctx) {
+		return new DoubleType(ctx.getText());
+	}
+
+	@Override
+	public AtomicType visitInt(IntContext ctx) {
+		return new IntegerType(ctx.getText());
+	}
+
+	@Override
+	public AtomicType visitVariable(CalcSetParser.VariableContext ctx) {
+		AtomicType atomicType = variables.get(ctx.ID().getText());
+		return atomicType;
+	}
 }

@@ -1,0 +1,3 @@
+a = "ABCDEFG"
+b = "HKLMNOP"
+a+b == "AbCdEfGhKlMnOp"

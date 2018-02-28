@@ -1,0 +1,8 @@
+a = {1,2,3}
+b = {2,3,4}
+c = {3,4,5}
+intersection = a && b && c
+union = a || b || c
+check = (intersection == {3}) && (union == {1,2,3,4,5}) && (union != intersection) 
+empty = !(union && {}) && (union || {}) 
+check && empty

@@ -1,17 +1,17 @@
 package org.exprint.type;
 
-public class DoubleType implements MathType, Comparable<MathType> {
+public class DoubleType extends AtomicNotImplemented implements AtomicType, Comparable<AtomicType> {
 
-	private static final String UNEXPECTED_TYPE = "Unexpected type: ";
-	
+	public static final double MIN_DIFFERENCE = 0.000000001;
+
 	private Double val;
 
 	public DoubleType(String text) {
 		this.val = Double.parseDouble(text);
 	}
 
-	public DoubleType(double val) {
-		this.val = val;
+	public DoubleType(Double val) {
+		this.val = new Double(val);
 	}
 
 	@Override
@@ -34,32 +34,12 @@ public class DoubleType implements MathType, Comparable<MathType> {
 	}
 
 	@Override
-	public int compareTo(MathType obj) {
+	public int compareTo(AtomicType obj) {
 		if( obj instanceof IntegerType) {
 			return val.compareTo(((DoubleType)obj).val);
 		} else {
 			throw new RuntimeException(UNEXPECTED_TYPE+obj.getClass().getName());
 		}
-	}
-
-	@Override
-	public void sum(MathType a) {
-		val += a.getDouble();
-	}
-
-	@Override
-	public void sub(MathType a) {
-		val -= a.getDouble();
-	}
-
-	@Override
-	public void mul(MathType a) {
-		val *= a.getDouble();
-	}
-
-	@Override
-	public void div(MathType a) {
-		val /= a.getDouble();
 	}
 
 	@Override
@@ -71,6 +51,50 @@ public class DoubleType implements MathType, Comparable<MathType> {
 	public Double getDouble() {
 		return val;
 	}
-	
+
+	@Override
+	public String getString() {
+		return val.toString();
+	}
+
+	@Override
+	public AtomicType sum(AtomicType a) {
+		return new DoubleType(val + a.getDouble());
+	}
+
+	@Override
+	public AtomicType substruction(AtomicType a) {
+		return new DoubleType(val - a.getDouble());
+	}
+
+	@Override
+	public AtomicType multiplication(AtomicType a) {
+		return new DoubleType(val * a.getDouble());
+	}
+
+	@Override
+	public AtomicType division(AtomicType a) {
+		return new DoubleType(val / a.getDouble());
+	}
+
+	@Override
+	public AtomicType power(AtomicType o) {
+		return new DoubleType(Math.pow(val, o.getDouble()));
+	}
+
+	@Override
+	public AtomicType changeSign() {
+		return new DoubleType(val * -1.0);
+	}
+
+	@Override
+	public AtomicType equal(AtomicType o) {
+		return new BooleanType( Math.abs(val - o.getDouble()) <= MIN_DIFFERENCE);
+	}
+
+	@Override
+	public AtomicType notequal(AtomicType o) {
+		return new BooleanType( Math.abs(val - o.getDouble()) > 0.000000001);
+	}
 	
 }

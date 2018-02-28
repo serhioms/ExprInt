@@ -10,102 +10,127 @@ import org.antlr.v4.gui.TestRig;
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.apache.log4j.Logger;
-import org.exprint.type.MathType;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
+import org.exprint.EvalVisitor;
+import org.exprint.type.AtomicType;
 import org.junit.Test;
 
-import sets.SetsLexer;
-import sets.SetsParser;
+import calcset.CalcSetLexer;
+import calcset.CalcSetParser;
 
+@SuppressWarnings("deprecation")
 public class TestCalcSet {
 
 	final static Logger logger = Logger.getLogger(TestCalcSet.class);
 
-	@BeforeClass
-	public static void setUpBeforeClass() throws Exception {
-	}
+	public boolean checkInt(String file, String result) throws IOException {
+    	ANTLRInputStream inputs = new ANTLRInputStream(new String(Files.readAllBytes(Paths.get(file))));
 
-	@AfterClass
-	public static void tearDownAfterClass() throws Exception {
-	}
+        CalcSetLexer lexer = new CalcSetLexer(inputs);
+        CommonTokenStream tokenStream = new CommonTokenStream(lexer);
+        CalcSetParser parser = new CalcSetParser(tokenStream);
 
-	@Before
-	public void setUp() throws Exception {
-	}
-
-	@After
-	public void tearDown() throws Exception {
+        CalcSetParser.InputContext input = parser.input();
+        EvalVisitor visitor = new EvalVisitor();
+        AtomicType atomic = visitor.visit(input);
+        System.out.println(atomic);
+        
+        return result.equals(atomic+"");
 	}
 
 	@Test
-	public void sets1() throws IOException {
-    	ANTLRInputStream inputs = new ANTLRInputStream(new String(Files.readAllBytes(Paths.get("data/sets1.txt"))));
-
-    	sets.SetsLexer lexer = new sets.SetsLexer(inputs);
-        CommonTokenStream tokenStream = new CommonTokenStream(lexer);
-        sets.SetsParser parser = new sets.SetsParser(tokenStream);
-
-        sets.SetsParser.ExprContext expr = parser.expr();
-        com.github.mgrzeszczak.setcalculator.EvalVisitor visitor = new com.github.mgrzeszczak.setcalculator.EvalVisitor();
-        com.github.mgrzeszczak.setcalculator.MathSet<MathType> result = visitor.visit(expr);
-        System.out.println(result);
-        
-        assertEquals("NotNull", result==null?"Null":"NotNull");
-        assertEquals("{1,2,3,4,5}", result.toString());
-	}
-	
-	//@Test
-	public void calcsetCalculator1() throws IOException {
-    	ANTLRInputStream inputs = new ANTLRInputStream(new String(Files.readAllBytes(Paths.get("data/calculator1.txt"))));
-
-        calcset.CalcSetLexer lexer = new calcset.CalcSetLexer(inputs);
-        CommonTokenStream tokenStream = new CommonTokenStream(lexer);
-        calcset.CalcSetParser parser = new calcset.CalcSetParser(tokenStream);
-
-        calcset.CalcSetParser.InputContext input = parser.input();
-        org.exprint.EvalVisitor visitor = new org.exprint.EvalVisitor();
-        org.exprint.MathSet<MathType> result = visitor.visit(input);
-        System.out.println(result);
-        
-        assertEquals("NotNull", result==null?"Null":"NotNull");
-        assertEquals("{33}", result.toString());
+	public void calcIntPlus() throws IOException {
+		assertEquals(true, checkSet("data/calcsetIntPlus.txt", "3"));
 	}
 	
 	@Test
-	public void calcsetCalculator2() throws IOException {
-    	ANTLRInputStream inputs = new ANTLRInputStream(new String(Files.readAllBytes(Paths.get("data/calculator2.txt"))));
+	public void calcIntPlusMinusPow() throws IOException {
+		assertEquals(true, checkSet("data/calcsetIntPlusMinusPow.txt", "33"));
+	}
+	
+	public boolean checkSet(String file, String result) throws IOException {
+    	ANTLRInputStream inputs = new ANTLRInputStream(new String(Files.readAllBytes(Paths.get(file))));
 
-        calcset.CalcSetLexer lexer = new calcset.CalcSetLexer(inputs);
+        CalcSetLexer lexer = new CalcSetLexer(inputs);
         CommonTokenStream tokenStream = new CommonTokenStream(lexer);
-        calcset.CalcSetParser parser = new calcset.CalcSetParser(tokenStream);
+        CalcSetParser parser = new CalcSetParser(tokenStream);
 
-        calcset.CalcSetParser.InputContext input = parser.input();
-        org.exprint.EvalVisitor visitor = new org.exprint.EvalVisitor();
-        org.exprint.MathSet<MathType> result = visitor.visit(input);
-        System.out.println(result);
+        CalcSetParser.InputContext input = parser.input();
+        EvalVisitor visitor = new EvalVisitor();
+        AtomicType atomic = visitor.visit(input);
+        System.out.println(atomic);
         
-        assertEquals("NotNull", result==null?"Null":"NotNull");
-        assertEquals("{3}", result.toString());
+        return result.equals(atomic+"");
 	}
 	
 	@Test
-	public void calcsetSet1() throws IOException {
-    	ANTLRInputStream inputs = new ANTLRInputStream(new String(Files.readAllBytes(Paths.get("data/sets1.txt"))));
+	public void setUnion() throws IOException {
+		assertEquals(true, checkSet("data/setUnion.txt", "{1,2,3,4,5}"));
+	}
+	
+	@Test
+	public void setUnionInter() throws IOException {
+		assertEquals(true, checkSet("data/setUnionInter.txt", "{1,3,5}"));
+	}
+	
+	@Test
+	public void setUnionIntersectionSubstruction() throws IOException {
+		assertEquals(true, checkSet("data/setUnionInterSub.txt", "{1,5}"));
+	}
+	
+	public boolean checkCalcSet(String file, String result) throws IOException {
+		ANTLRInputStream inputs = new ANTLRInputStream(new String(Files.readAllBytes(Paths.get(file))));
 
-        calcset.CalcSetLexer lexer = new calcset.CalcSetLexer(inputs);
+        CalcSetLexer lexer = new CalcSetLexer(inputs);
         CommonTokenStream tokenStream = new CommonTokenStream(lexer);
-        calcset.CalcSetParser parser = new calcset.CalcSetParser(tokenStream);
+        CalcSetParser parser = new CalcSetParser(tokenStream);
 
-        calcset.CalcSetParser.InputContext input = parser.input();
-        org.exprint.EvalVisitor visitor = new org.exprint.EvalVisitor();
-        org.exprint.MathSet<MathType> result = visitor.visit(input);
-        System.out.println(result);
+        CalcSetParser.InputContext input = parser.input();
+        EvalVisitor visitor = new EvalVisitor();
+        AtomicType atomic = visitor.visit(input);
+        System.out.println(atomic);
         
-        assertEquals("NotNull", result==null?"Null":"NotNull");
-        assertEquals("{1,2,3,4,5}", result.toString());
+        return result.equals(atomic+"");
+	}
+	
+	
+	@Test
+	public void calcsetInterUnionEmpty() throws IOException {
+		assertEquals(true, checkCalcSet("data/calcsetInterUnionEmpty.txt", "true"));
+	}
+	
+	@Test
+	public void calcsetSubsetEmpty() throws IOException {
+		assertEquals(true, checkCalcSet("data/calcsetSubsetEmpty.txt", "true"));
+	}
+	
+	@Test
+	public void calcsetCardinality() throws IOException {
+		assertEquals(true, checkCalcSet("data/calcsetCardinality.txt", "true"));
+	}
+	
+	@Test
+	public void calcsetIntUnion() throws IOException {
+		assertEquals(true, checkCalcSet("data/calcsetIntUnion.txt", "true"));
+	}
+
+	@Test
+	public void calcsetInit() throws IOException {
+		assertEquals(true, checkCalcSet("data/calcsetInit.txt", "true"));
+	}
+
+	@Test
+	public void calcsetBoolean() throws IOException {
+		assertEquals(true, checkCalcSet("data/calcsetBoolean.txt", "true"));
+	}
+	
+	@Test
+	public void calcsetStringConcat() throws IOException {
+		assertEquals(true, checkCalcSet("data/calcsetStringConcat.txt", "true"));
+	}
+	
+	@Test
+	public void calcsetStringBoolean() throws IOException {
+		assertEquals(true, checkCalcSet("data/calcsetStringBoolean.txt", "true"));
 	}
 	
 	/**
@@ -115,8 +140,19 @@ public class TestCalcSet {
 	public static void main(String[] args) throws Exception {
 		logger.info("Antlr test...");
 		
-		TestRig.main(new String[] {"calcset.CalcSet", "input", "-gui","-tokens","-diagnostics","-trace","data/sets1.txt"});
-		TestRig.main(new String[] {"calcset.CalcSet", "input", "-gui","-tokens","-diagnostics","-trace","data/calculator1.txt"});
+		TestRig.main(new String[] {"calcset.CalcSet", "input", "-gui","-tokens","-diagnostics","-trace","data/calcsetIntPlus.txt"});
+		TestRig.main(new String[] {"calcset.CalcSet", "input", "-gui","-tokens","-diagnostics","-trace","data/calcsetIntPlusMinusPow.txt"});
+		TestRig.main(new String[] {"calcset.CalcSet", "input", "-gui","-tokens","-diagnostics","-trace","data/calcsetBoolean.txt"});
+		TestRig.main(new String[] {"calcset.CalcSet", "input", "-gui","-tokens","-diagnostics","-trace","data/calcsetCardinality.txt"});
+		TestRig.main(new String[] {"calcset.CalcSet", "input", "-gui","-tokens","-diagnostics","-trace","data/calcsetInit.txt"});
+		TestRig.main(new String[] {"calcset.CalcSet", "input", "-gui","-tokens","-diagnostics","-trace","data/calcsetInterUnionEmpty.txt"});
+		TestRig.main(new String[] {"calcset.CalcSet", "input", "-gui","-tokens","-diagnostics","-trace","data/calcsetIntUnion.txt"});
+		TestRig.main(new String[] {"calcset.CalcSet", "input", "-gui","-tokens","-diagnostics","-trace","data/calcsetStringBoolean.txt"});
+		TestRig.main(new String[] {"calcset.CalcSet", "input", "-gui","-tokens","-diagnostics","-trace","data/calcsetStringConcat.txt"});
+		TestRig.main(new String[] {"calcset.CalcSet", "input", "-gui","-tokens","-diagnostics","-trace","data/calcsetSubsetEmpty.txt"});
+		TestRig.main(new String[] {"calcset.CalcSet", "input", "-gui","-tokens","-diagnostics","-trace","data/setUnion.txt"});
+		TestRig.main(new String[] {"calcset.CalcSet", "input", "-gui","-tokens","-diagnostics","-trace","data/setUnionInter.txt"});
+		TestRig.main(new String[] {"calcset.CalcSet", "input", "-gui","-tokens","-diagnostics","-trace","data/setUnionInterSub.txt"});
 		
 		logger.info("Goodbye!");
 	}

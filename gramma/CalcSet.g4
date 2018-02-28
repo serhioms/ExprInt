@@ -3,65 +3,95 @@ WS 	   : [ \t\r]+ -> skip;
 NL     : '\n';
 INT    : [0-9]+;
 DOUBLE : [0-9]+'.'[0-9]+;
-PI     : 'pi';
-E      : 'e';
+PI     : '_pi';
+E      : '_e';
+TRUE   : 'true';
+FALSE  : 'false';
 POW    : '^';
 ID     : [a-zA-Z_][a-zA-Z_0-9]*;
+STRING : '"' ~( '\r' | '\n' | '"' )* '"';
 
-PLUS  : '+';
-EQUAL : '=';
-MINUS : '-';
-MULT  : '*';
-DIV   : '/';
-LPAR  : '(';
-RPAR  : ')';
+PLUS		: '+';
+ASSIGN		: '=';
+AND			: '&&';
+OR			: '||';
+EQUAL		: '==';
+NEQUAL		: '!=';
+IMPLICATION	: '->';
+NOT			: '!';
+MINUS		: '-';
+MULT		: '*';
+SUBSET		: '@';
+CARDINALITY	: '#';
+DIV			: '/';
+LPAR		: '(';
+RPAR		: ')';
+
+OP_UNION_SUBSTRUCTION: PLUS | MINUS;
+OP_INTERSECTION: MULT;
 
 input
-	: setVar NL input	  # ToSetVar 
-	| plusOrMinus NL? EOF # Calculate
-    | expr				  # SetExpression
+	: setVar NL input		# ToSetVar 
+	| plusOrMinus NL? EOF	# Calculate
 	;
 
 setVar
-	: ID EQUAL plusOrMinus	# SetVariable
+	: ID ASSIGN plusOrMinus	# SetVariable
 	;
 
 plusOrMinus 
-    : plusOrMinus PLUS multOrDiv  # Plus
-    | plusOrMinus MINUS multOrDiv # Minus
-    | multOrDiv                   # ToMultOrDiv
+    : plusOrMinus PLUS multOrDiv  		# Plus
+    | plusOrMinus MINUS multOrDiv		# Minus
+    | plusOrMinus EQUAL multOrDiv 		# Equal
+    | plusOrMinus NEQUAL multOrDiv		# Nequal
+    | plusOrMinus OR multOrDiv  		# Or
+    | plusOrMinus AND multOrDiv			# And
+    | plusOrMinus IMPLICATION multOrDiv	# Implication
+    | plusOrMinus SUBSET multOrDiv		# Subset
+    | multOrDiv                  		# ToMultOrDiv
     ;
 
 multOrDiv
-    : multOrDiv MULT pow # Multiplication
-    | multOrDiv DIV pow  # Division
-    | pow                # ToPow
+    : multOrDiv MULT pow			# Multiplication
+    | multOrDiv DIV pow				# Division
+    | pow							# ToPow
     ;
 
 pow
-    : unaryMinus (POW pow)? # Power
+    : unaryMinus (POW pow)? 		# Power
     ;
 
 unaryMinus
-    : MINUS unaryMinus # ChangeSign
-    | atom             # ToAtom
+    : MINUS unaryMinus 				# ChangeSign
+    | NOT unaryMinus				# UnaryNot
+    | CARDINALITY unaryMinus		# Cardinality
+    | atom             				# ToAtom
     ;
         
-expr: expr OP_UNION_SUBSTRUCTION term | term;
-term: term OP_INTERSECTION factor | factor;
+        
+expr
+	: expr OP_UNION_SUBSTRUCTION term 	
+	| term								
+	;
+term
+	: term OP_INTERSECTION factor 		
+	| factor							
+	;
+	
 factor: set | '(' expr ')';
-
-OP_UNION_SUBSTRUCTION: '#' | DIV;
-OP_INTERSECTION: MULT;
 
 set: '{' list '}' | '{' '}';
 list: atom ',' list | atom;
 
 atom
-    : PI                    # ConstantPI
+    : ID                    # Variable
+    | PI                    # ConstantPI
     | E                     # ConstantE
+    | STRING				# String
+    | TRUE                  # Boolean
+    | FALSE                 # Boolean
     | DOUBLE                # Double
     | INT                   # Int
-    | ID                    # Variable
     | LPAR plusOrMinus RPAR # Braces
+    | expr					# AtomExpr
 	;

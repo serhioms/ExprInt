@@ -1,0 +1,15 @@
+t = true
+f = false
+orFalse = (f || f) && (f || t) && (t || f) && (t && t)
+orTrue = !(f || f) && (f || t) && (t || f) && (t && t)
+or = !orFalse && orTrue
+andTrue = !(f && f) && !(f && t) && !(t && f) && (t && t)
+andFalse = !(f && f) && (f && t) && !(t && f) && (t && t)
+and = andTrue && !andFalse
+equalTrue = (f == f) && (f != t) && (t != false) && (t == t) 
+equalFalse = (f == f) && (f == t) && (t != false) && (t == t) 
+equal = equalTrue && ! equalFalse
+implicationTrue = (f -> f) && (f -> t) && !(t -> f) && (t -> t)
+implicationFalse = (f -> f) && (f -> t) && (t -> f) && (t -> t)
+implication = implicationTrue && !implicationFalse
+implication && equal && and && or
