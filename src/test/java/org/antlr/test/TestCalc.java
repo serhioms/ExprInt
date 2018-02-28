@@ -43,8 +43,8 @@ public class TestCalc {
 	}
 
 	@Test
-	public void calculator1() throws IOException {
-    	ANTLRInputStream input = new ANTLRInputStream(new String(Files.readAllBytes(Paths.get("data/calculator1.txt"))));
+	public void calcPlus() throws IOException {
+    	ANTLRInputStream input = new ANTLRInputStream(new String(Files.readAllBytes(Paths.get("data/calcPlus.txt"))));
     	
     	CalculatorLexer lexer = new CalculatorLexer(input);
         CommonTokenStream tokens = new CommonTokenStream(lexer);
@@ -59,8 +59,8 @@ public class TestCalc {
 	}
 
 	@Test
-	public void calculator2() throws IOException {
-    	ANTLRInputStream input = new ANTLRInputStream(new String(Files.readAllBytes(Paths.get("data/calculator2.txt"))));
+	public void calcPlusMinusPow() throws IOException {
+    	ANTLRInputStream input = new ANTLRInputStream(new String(Files.readAllBytes(Paths.get("data/calcPlusMinusPow.txt"))));
     	
     	CalculatorLexer lexer = new CalculatorLexer(input);
         CommonTokenStream tokens = new CommonTokenStream(lexer);

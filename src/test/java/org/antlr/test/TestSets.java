@@ -44,8 +44,8 @@ public class TestSets {
 	}
 
 	@Test
-	public void union() throws IOException {
-    	ANTLRInputStream inputs = new ANTLRInputStream(new String(Files.readAllBytes(Paths.get("data/sets1.txt"))));
+	public void setUnion() throws IOException {
+    	ANTLRInputStream inputs = new ANTLRInputStream(new String(Files.readAllBytes(Paths.get("data/setUnion.txt"))));
 
         SetsLexer lexer = new SetsLexer(inputs);
         CommonTokenStream tokenStream = new CommonTokenStream(lexer);
@@ -61,8 +61,8 @@ public class TestSets {
 	}
 
 	@Test
-	public void intersection() throws IOException {
-    	ANTLRInputStream inputs = new ANTLRInputStream(new String(Files.readAllBytes(Paths.get("data/sets2.txt"))));
+	public void setUnionInter() throws IOException {
+    	ANTLRInputStream inputs = new ANTLRInputStream(new String(Files.readAllBytes(Paths.get("data/setUnionInter.txt"))));
 
         SetsLexer lexer = new SetsLexer(inputs);
         CommonTokenStream tokenStream = new CommonTokenStream(lexer);
@@ -78,8 +78,8 @@ public class TestSets {
 	}
 
 	@Test
-	public void subtraction () throws IOException {
-    	ANTLRInputStream inputs = new ANTLRInputStream(new String(Files.readAllBytes(Paths.get("data/sets3.txt"))));
+	public void setUnionInterSub () throws IOException {
+    	ANTLRInputStream inputs = new ANTLRInputStream(new String(Files.readAllBytes(Paths.get("data/setUnionInterSub.txt"))));
 
         SetsLexer lexer = new SetsLexer(inputs);
         CommonTokenStream tokenStream = new CommonTokenStream(lexer);

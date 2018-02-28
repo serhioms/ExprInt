@@ -51,7 +51,7 @@ public class SetType<T> extends AtomicNotImplemented implements AtomicType, Comp
 	}
 
 	@Override
-	public AtomicType substruction(AtomicType o) {
+	public AtomicType complements(AtomicType o) {
         return SetType.ofSet(set.stream().filter(i -> !o.getSet().contains(i)).collect(Collectors.toSet()));
 	}
 

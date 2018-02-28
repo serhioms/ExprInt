@@ -19,6 +19,7 @@ public interface AtomicType {
 	public Set<?> getSet();
 	public AtomicType union(AtomicType o);
 	public AtomicType intersection(AtomicType o);
+	public AtomicType complements(AtomicType o);
 	public AtomicType subset(AtomicType o);
 	public AtomicType cartesian(AtomicType o);
 	public AtomicType powerset();
