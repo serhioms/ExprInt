@@ -13,8 +13,9 @@ STRING : '"' ~( '\r' | '\n' | '"' )* '"';
 
 PLUS		: '+';
 ASSIGN		: '=';
-AND			: '&&';
-OR			: '||';
+AND			: '&';
+OR			: '|';
+COMPLEMENTS	: '\\';
 EQUAL		: '==';
 NEQUAL		: '!=';
 IMPLICATION	: '->';
@@ -47,6 +48,7 @@ plusOrMinus
     | plusOrMinus OR multOrDiv  		# Or
     | plusOrMinus AND multOrDiv			# And
     | plusOrMinus IMPLICATION multOrDiv	# Implication
+    | plusOrMinus COMPLEMENTS multOrDiv	# Complements
     | plusOrMinus SUBSET multOrDiv		# Subset
     | multOrDiv                  		# ToMultOrDiv
     ;

@@ -17,6 +17,7 @@ import calcset.CalcSetParser.AndContext;
 import calcset.CalcSetParser.BooleanContext;
 import calcset.CalcSetParser.CalculateContext;
 import calcset.CalcSetParser.CardinalityContext;
+import calcset.CalcSetParser.ComplementsContext;
 import calcset.CalcSetParser.EqualContext;
 import calcset.CalcSetParser.ExprContext;
 import calcset.CalcSetParser.FactorContext;
@@ -83,6 +84,11 @@ public class EvalVisitor extends CalcSetBaseVisitor<AtomicType> {
 	@Override
 	public AtomicType visitPlus(CalcSetParser.PlusContext ctx) {
 		return visit(ctx.plusOrMinus()).sum(visit(ctx.multOrDiv()));
+	}
+
+	@Override
+	public AtomicType visitComplements(ComplementsContext ctx) {
+		return visit(ctx.plusOrMinus()).complements(visit(ctx.multOrDiv()));
 	}
 
 	@Override

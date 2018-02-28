@@ -8,8 +8,8 @@ expr: expr ADD_SUB term | term;
 term: term MUL factor | factor;
 factor: set | '(' expr ')';
 
-ADD_SUB: '+' | '-';
-MUL: '*';
+ADD_SUB: '|' | '\\';
+MUL: '&';
 
 set: '{' list '}' | '{' '}';
 list: atom ',' list | atom;

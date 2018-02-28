@@ -129,7 +129,11 @@ public class AtomicNotImplemented implements AtomicType, Comparable<AtomicType> 
 
 	@Override
 	public AtomicType cardinality() {
-		// TODO Auto-generated method stub
-		return null;
+		throw new RuntimeException(NOT_IMPLEMENTED);
+	}
+
+	@Override
+	public AtomicType complements(AtomicType o) {
+		throw new RuntimeException(NOT_IMPLEMENTED);
 	}
 }

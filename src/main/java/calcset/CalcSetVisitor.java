@@ -95,6 +95,13 @@ public interface CalcSetVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitMinus(CalcSetParser.MinusContext ctx);
 	/**
+	 * Visit a parse tree produced by the {@code Complements}
+	 * labeled alternative in {@link CalcSetParser#plusOrMinus}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitComplements(CalcSetParser.ComplementsContext ctx);
+	/**
 	 * Visit a parse tree produced by the {@code Multiplication}
 	 * labeled alternative in {@link CalcSetParser#multOrDiv}.
 	 * @param ctx the parse tree

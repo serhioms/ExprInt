@@ -11,10 +11,6 @@ import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.apache.log4j.Logger;
 import org.exprint.type.AtomicType;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import org.sets.EvalVisitor;
 import org.sets.MathSet;
@@ -27,25 +23,8 @@ public class TestSets {
 
 	final static Logger logger = Logger.getLogger(TestSets.class);
 
-	@BeforeClass
-	public static void setUpBeforeClass() throws Exception {
-	}
-
-	@AfterClass
-	public static void tearDownAfterClass() throws Exception {
-	}
-
-	@Before
-	public void setUp() throws Exception {
-	}
-
-	@After
-	public void tearDown() throws Exception {
-	}
-
-	@Test
-	public void union() throws IOException {
-    	ANTLRInputStream inputs = new ANTLRInputStream(new String(Files.readAllBytes(Paths.get("data/sets1.txt"))));
+	public boolean testSets(String file, String result) throws IOException {
+    	ANTLRInputStream inputs = new ANTLRInputStream(new String(Files.readAllBytes(Paths.get(file))));
 
         SetsLexer lexer = new SetsLexer(inputs);
         CommonTokenStream tokenStream = new CommonTokenStream(lexer);
@@ -53,45 +32,25 @@ public class TestSets {
 
         SetsParser.ExprContext input = parser.expr();
         EvalVisitor visitor = new EvalVisitor();
-        MathSet<AtomicType> result = visitor.visit(input);
-        System.out.println(result);
+        MathSet<AtomicType> atomic = visitor.visit(input);
+        System.out.println(atomic);
         
-        assertEquals("NotNull", result==null?"Null":"NotNull");
-        assertEquals("{1,2,3,4,5}", result.toString());
+        return result.equals(atomic+"");
 	}
 
 	@Test
-	public void intersection() throws IOException {
-    	ANTLRInputStream inputs = new ANTLRInputStream(new String(Files.readAllBytes(Paths.get("data/sets2.txt"))));
-
-        SetsLexer lexer = new SetsLexer(inputs);
-        CommonTokenStream tokenStream = new CommonTokenStream(lexer);
-        SetsParser parser = new SetsParser(tokenStream);
-
-        SetsParser.ExprContext input = parser.expr();
-        EvalVisitor visitor = new EvalVisitor();
-        MathSet<AtomicType> result = visitor.visit(input);
-        System.out.println(result);
-        
-        assertEquals("NotNull", result==null?"Null":"NotNull");
-        assertEquals("{1,3,5}", result.toString());
+	public void setUnion() throws IOException {
+		assertEquals(true, testSets("data/setUnion.txt", "{1,2,3,4,5}"));
 	}
 
 	@Test
-	public void subtraction () throws IOException {
-    	ANTLRInputStream inputs = new ANTLRInputStream(new String(Files.readAllBytes(Paths.get("data/sets3.txt"))));
+	public void setUnionInter() throws IOException {
+		assertEquals(true, testSets("data/setUnionInter.txt", "{1,3,5}"));
+	}
 
-        SetsLexer lexer = new SetsLexer(inputs);
-        CommonTokenStream tokenStream = new CommonTokenStream(lexer);
-        SetsParser parser = new SetsParser(tokenStream);
-
-        SetsParser.ExprContext input = parser.expr();
-        EvalVisitor visitor = new EvalVisitor();
-        MathSet<AtomicType> result = visitor.visit(input);
-        System.out.println(result);
-        
-        assertEquals("NotNull", result==null?"Null":"NotNull");
-        assertEquals("{1,5}", result.toString());
+	@Test
+	public void setUnionInterSub () throws IOException {
+		assertEquals(true, testSets("data/setUnionInterSub.txt", "{1,5}"));
 	}
 
 	/**
@@ -101,9 +60,9 @@ public class TestSets {
 	public static void main(String[] args) throws Exception {
 		logger.info("Antlr test...");
 		
-		TestRig.main(new String[] {"sets.Sets", "input", "-gui","-tokens","-diagnostics","-trace","data/sets1.txt"});
-		TestRig.main(new String[] {"sets.Sets", "input", "-gui","-tokens","-diagnostics","-trace","data/sets2.txt"});
-		TestRig.main(new String[] {"sets.Sets", "input", "-gui","-tokens","-diagnostics","-trace","data/sets3.txt"});
+		TestRig.main(new String[] {"sets.Sets", "input", "-gui","-tokens","-diagnostics","-trace","data/setUnion.txt"});
+		TestRig.main(new String[] {"sets.Sets", "input", "-gui","-tokens","-diagnostics","-trace","data/setUnionInter.txt"});
+		TestRig.main(new String[] {"sets.Sets", "input", "-gui","-tokens","-diagnostics","-trace","data/setUnionInterSub.txt"});
 		
 		logger.info("Goodbye!");
 	}

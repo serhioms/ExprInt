@@ -16,10 +16,10 @@ public class EvalVisitor extends SetsOrigBaseVisitor<MathSet<Integer>> {
             MathSet<Integer> left = visit(ctx.expr());
             MathSet<Integer> right = visit(ctx.term());
             switch (ctx.OP_ADD().getText()) {
-                case "+":
+                case "|":
                     return left.union(right);
-                case "-":
-                    return left.difference(right);
+                case "\\":
+                    return left.complements(right);
             }
             return null;
         } else {
@@ -33,7 +33,7 @@ public class EvalVisitor extends SetsOrigBaseVisitor<MathSet<Integer>> {
             MathSet<Integer> left = visit(ctx.term());
             MathSet<Integer> right = visit(ctx.factor());
             switch (ctx.OP_MUL().getText()) {
-                case "*":
+                case "&":
                     return left.intersection(right);
             }
             return null;

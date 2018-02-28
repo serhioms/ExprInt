@@ -22,7 +22,7 @@ public class TestCalcSet {
 
 	final static Logger logger = Logger.getLogger(TestCalcSet.class);
 
-	public boolean checkInt(String file, String result) throws IOException {
+	public boolean testCalcSet(String file, String expected) throws IOException {
     	ANTLRInputStream inputs = new ANTLRInputStream(new String(Files.readAllBytes(Paths.get(file))));
 
         CalcSetLexer lexer = new CalcSetLexer(inputs);
@@ -31,106 +31,75 @@ public class TestCalcSet {
 
         CalcSetParser.InputContext input = parser.input();
         EvalVisitor visitor = new EvalVisitor();
-        AtomicType atomic = visitor.visit(input);
-        System.out.println(atomic);
+        AtomicType result = visitor.visit(input);
+        System.out.println(result);
         
-        return result.equals(atomic+"");
+        return expected.equals(result+"");
 	}
 
 	@Test
-	public void calcIntPlus() throws IOException {
-		assertEquals(true, checkSet("data/calcsetIntPlus.txt", "3"));
+	public void calcPlus() throws IOException {
+		assertEquals(true, testCalcSet("data/calcPlus.txt", "3"));
 	}
 	
 	@Test
-	public void calcIntPlusMinusPow() throws IOException {
-		assertEquals(true, checkSet("data/calcsetIntPlusMinusPow.txt", "33"));
-	}
-	
-	public boolean checkSet(String file, String result) throws IOException {
-    	ANTLRInputStream inputs = new ANTLRInputStream(new String(Files.readAllBytes(Paths.get(file))));
-
-        CalcSetLexer lexer = new CalcSetLexer(inputs);
-        CommonTokenStream tokenStream = new CommonTokenStream(lexer);
-        CalcSetParser parser = new CalcSetParser(tokenStream);
-
-        CalcSetParser.InputContext input = parser.input();
-        EvalVisitor visitor = new EvalVisitor();
-        AtomicType atomic = visitor.visit(input);
-        System.out.println(atomic);
-        
-        return result.equals(atomic+"");
+	public void calcPlusMinusPow() throws IOException {
+		assertEquals(true, testCalcSet("data/calcPlusMinusPow.txt", "33"));
 	}
 	
 	@Test
 	public void setUnion() throws IOException {
-		assertEquals(true, checkSet("data/setUnion.txt", "{1,2,3,4,5}"));
+		assertEquals(true, testCalcSet("data/setUnion.txt", "{1,2,3,4,5}"));
 	}
 	
 	@Test
 	public void setUnionInter() throws IOException {
-		assertEquals(true, checkSet("data/setUnionInter.txt", "{1,3,5}"));
+		assertEquals(true, testCalcSet("data/setUnionInter.txt", "{1,3,5}"));
 	}
 	
 	@Test
-	public void setUnionIntersectionSubstruction() throws IOException {
-		assertEquals(true, checkSet("data/setUnionInterSub.txt", "{1,5}"));
+	public void setUnionInterSub() throws IOException {
+		assertEquals(true, testCalcSet("data/setUnionInterSub.txt", "{1,5}"));
 	}
-	
-	public boolean checkCalcSet(String file, String result) throws IOException {
-		ANTLRInputStream inputs = new ANTLRInputStream(new String(Files.readAllBytes(Paths.get(file))));
-
-        CalcSetLexer lexer = new CalcSetLexer(inputs);
-        CommonTokenStream tokenStream = new CommonTokenStream(lexer);
-        CalcSetParser parser = new CalcSetParser(tokenStream);
-
-        CalcSetParser.InputContext input = parser.input();
-        EvalVisitor visitor = new EvalVisitor();
-        AtomicType atomic = visitor.visit(input);
-        System.out.println(atomic);
-        
-        return result.equals(atomic+"");
-	}
-	
 	
 	@Test
 	public void calcsetInterUnionEmpty() throws IOException {
-		assertEquals(true, checkCalcSet("data/calcsetInterUnionEmpty.txt", "true"));
+		assertEquals(true, testCalcSet("data/calcsetInterUnionEmpty.txt", "true"));
 	}
 	
 	@Test
 	public void calcsetSubsetEmpty() throws IOException {
-		assertEquals(true, checkCalcSet("data/calcsetSubsetEmpty.txt", "true"));
+		assertEquals(true, testCalcSet("data/calcsetSubsetEmpty.txt", "true"));
 	}
 	
 	@Test
 	public void calcsetCardinality() throws IOException {
-		assertEquals(true, checkCalcSet("data/calcsetCardinality.txt", "true"));
+		assertEquals(true, testCalcSet("data/calcsetCardinality.txt", "true"));
 	}
 	
 	@Test
-	public void calcsetIntUnion() throws IOException {
-		assertEquals(true, checkCalcSet("data/calcsetIntUnion.txt", "true"));
+	public void calcsetInterUnion() throws IOException {
+		assertEquals(true, testCalcSet("data/calcsetInterUnion.txt", "true"));
 	}
 
 	@Test
 	public void calcsetInit() throws IOException {
-		assertEquals(true, checkCalcSet("data/calcsetInit.txt", "true"));
+		assertEquals(true, testCalcSet("data/calcsetInit.txt", "true"));
 	}
 
 	@Test
 	public void calcsetBoolean() throws IOException {
-		assertEquals(true, checkCalcSet("data/calcsetBoolean.txt", "true"));
+		assertEquals(true, testCalcSet("data/calcsetBoolean.txt", "true"));
 	}
 	
 	@Test
 	public void calcsetStringConcat() throws IOException {
-		assertEquals(true, checkCalcSet("data/calcsetStringConcat.txt", "true"));
+		assertEquals(true, testCalcSet("data/calcsetStringConcat.txt", "true"));
 	}
 	
 	@Test
 	public void calcsetStringBoolean() throws IOException {
-		assertEquals(true, checkCalcSet("data/calcsetStringBoolean.txt", "true"));
+		assertEquals(true, testCalcSet("data/calcsetStringBoolean.txt", "true"));
 	}
 	
 	/**
@@ -140,19 +109,19 @@ public class TestCalcSet {
 	public static void main(String[] args) throws Exception {
 		logger.info("Antlr test...");
 		
-		TestRig.main(new String[] {"calcset.CalcSet", "input", "-gui","-tokens","-diagnostics","-trace","data/calcsetIntPlus.txt"});
-		TestRig.main(new String[] {"calcset.CalcSet", "input", "-gui","-tokens","-diagnostics","-trace","data/calcsetIntPlusMinusPow.txt"});
-		TestRig.main(new String[] {"calcset.CalcSet", "input", "-gui","-tokens","-diagnostics","-trace","data/calcsetBoolean.txt"});
-		TestRig.main(new String[] {"calcset.CalcSet", "input", "-gui","-tokens","-diagnostics","-trace","data/calcsetCardinality.txt"});
-		TestRig.main(new String[] {"calcset.CalcSet", "input", "-gui","-tokens","-diagnostics","-trace","data/calcsetInit.txt"});
-		TestRig.main(new String[] {"calcset.CalcSet", "input", "-gui","-tokens","-diagnostics","-trace","data/calcsetInterUnionEmpty.txt"});
-		TestRig.main(new String[] {"calcset.CalcSet", "input", "-gui","-tokens","-diagnostics","-trace","data/calcsetIntUnion.txt"});
-		TestRig.main(new String[] {"calcset.CalcSet", "input", "-gui","-tokens","-diagnostics","-trace","data/calcsetStringBoolean.txt"});
-		TestRig.main(new String[] {"calcset.CalcSet", "input", "-gui","-tokens","-diagnostics","-trace","data/calcsetStringConcat.txt"});
-		TestRig.main(new String[] {"calcset.CalcSet", "input", "-gui","-tokens","-diagnostics","-trace","data/calcsetSubsetEmpty.txt"});
+		TestRig.main(new String[] {"calcset.CalcSet", "input", "-gui","-tokens","-diagnostics","-trace","data/calcPlus.txt"});
+		TestRig.main(new String[] {"calcset.CalcSet", "input", "-gui","-tokens","-diagnostics","-trace","data/calcPlusMinusPow.txt"});
 		TestRig.main(new String[] {"calcset.CalcSet", "input", "-gui","-tokens","-diagnostics","-trace","data/setUnion.txt"});
 		TestRig.main(new String[] {"calcset.CalcSet", "input", "-gui","-tokens","-diagnostics","-trace","data/setUnionInter.txt"});
 		TestRig.main(new String[] {"calcset.CalcSet", "input", "-gui","-tokens","-diagnostics","-trace","data/setUnionInterSub.txt"});
+		TestRig.main(new String[] {"calcset.CalcSet", "input", "-gui","-tokens","-diagnostics","-trace","data/calcsetInterUnionEmpty.txt"});
+		TestRig.main(new String[] {"calcset.CalcSet", "input", "-gui","-tokens","-diagnostics","-trace","data/calcsetSubsetEmpty.txt"});
+		TestRig.main(new String[] {"calcset.CalcSet", "input", "-gui","-tokens","-diagnostics","-trace","data/calcsetCardinality.txt"});
+		TestRig.main(new String[] {"calcset.CalcSet", "input", "-gui","-tokens","-diagnostics","-trace","data/calcsetInterUnion.txt"});
+		TestRig.main(new String[] {"calcset.CalcSet", "input", "-gui","-tokens","-diagnostics","-trace","data/calcsetInit.txt"});
+		TestRig.main(new String[] {"calcset.CalcSet", "input", "-gui","-tokens","-diagnostics","-trace","data/calcsetBoolean.txt"});
+		TestRig.main(new String[] {"calcset.CalcSet", "input", "-gui","-tokens","-diagnostics","-trace","data/calcsetStringConcat.txt"});
+		TestRig.main(new String[] {"calcset.CalcSet", "input", "-gui","-tokens","-diagnostics","-trace","data/calcsetStringBoolean.txt"});
 		
 		logger.info("Goodbye!");
 	}

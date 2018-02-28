@@ -17,10 +17,10 @@ public class EvalVisitor extends SetsBaseVisitor<MathSet<AtomicType>> {
             MathSet<AtomicType> left = visit(ctx.expr());
             MathSet<AtomicType> right = visit(ctx.term());
             switch (ctx.ADD_SUB().getText()) {
-                case "+":
+                case "|":
                     return left.union(right);
-                case "-":
-                    return left.difference(right);
+                case "\\":
+                    return left.complements(right);
             }
             return null;
         } else {
@@ -34,7 +34,7 @@ public class EvalVisitor extends SetsBaseVisitor<MathSet<AtomicType>> {
             MathSet<AtomicType> left = visit(ctx.term());
             MathSet<AtomicType> right = visit(ctx.factor());
             switch (ctx.MUL().getText()) {
-                case "*":
+                case "&":
                     return left.intersection(right);
             }
             return null;

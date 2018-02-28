@@ -25,7 +25,7 @@ public class MathSet<T> {
         return MathSet.of(data.stream().filter(other.data::contains).collect(Collectors.toSet()));
     }
 
-    public MathSet<T> difference(MathSet<T> other) {
+    public MathSet<T> complements(MathSet<T> other) {
         return MathSet.of(data.stream().filter(i -> !other.data.contains(i)).collect(Collectors.toSet()));
     }
 

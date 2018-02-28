@@ -12,10 +12,6 @@ import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.tree.ParseTree;
 import org.apache.log4j.Logger;
 import org.calc.CalculatorBaseVisitorImpl;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 
 import calculator.CalculatorLexer;
@@ -26,25 +22,8 @@ public class TestCalc {
 
 	final static Logger logger = Logger.getLogger(TestCalc.class);
 
-	@BeforeClass
-	public static void setUpBeforeClass() throws Exception {
-	}
-
-	@AfterClass
-	public static void tearDownAfterClass() throws Exception {
-	}
-
-	@Before
-	public void setUp() throws Exception {
-	}
-
-	@After
-	public void tearDown() throws Exception {
-	}
-
-	@Test
-	public void calculator1() throws IOException {
-    	ANTLRInputStream input = new ANTLRInputStream(new String(Files.readAllBytes(Paths.get("data/calculator1.txt"))));
+	public boolean testCalc(String file, double result) throws IOException {
+    	ANTLRInputStream input = new ANTLRInputStream(new String(Files.readAllBytes(Paths.get(file))));
     	
     	CalculatorLexer lexer = new CalculatorLexer(input);
         CommonTokenStream tokens = new CommonTokenStream(lexer);
@@ -52,26 +31,20 @@ public class TestCalc {
         ParseTree tree = parser.input();
 
         CalculatorBaseVisitorImpl calcVisitor = new CalculatorBaseVisitorImpl();
-        Double result = calcVisitor.visit(tree);
-        System.out.println("Result: " + result);
+        Double dbl = calcVisitor.visit(tree);
+        System.out.println("Result: " + dbl);
         
-        assertEquals(3.0d, result.doubleValue(), 0.00001);
+        return dbl.equals(result);
 	}
 
 	@Test
-	public void calculator2() throws IOException {
-    	ANTLRInputStream input = new ANTLRInputStream(new String(Files.readAllBytes(Paths.get("data/calculator2.txt"))));
-    	
-    	CalculatorLexer lexer = new CalculatorLexer(input);
-        CommonTokenStream tokens = new CommonTokenStream(lexer);
-        CalculatorParser parser = new CalculatorParser(tokens);
-        ParseTree tree = parser.input();
+	public void calcPlus() throws IOException {
+        assertEquals(true, testCalc("data/calcPlus.txt", 3.0d));
+	}
 
-        CalculatorBaseVisitorImpl calcVisitor = new CalculatorBaseVisitorImpl();
-        Double result = calcVisitor.visit(tree);
-        System.out.println("Result: " + result);
-        
-        assertEquals(33.0d, result.doubleValue(), 0.00001);
+	@Test
+	public void calcPlusMinusPow() throws IOException {
+        assertEquals(true, testCalc("data/calcPlusMinusPow.txt", 33.0d));
 	}
 
 	/**
@@ -81,8 +54,8 @@ public class TestCalc {
 	public static void main(String[] args) throws Exception {
 		logger.info("Antlr test...");
 		
-		TestRig.main(new String[] {"calculator.Calculator", "input", "-gui","-tokens","-diagnostics","-trace","data/calculator1.txt"});
-		//TestRig.main(new String[] {"calculator.Calculator", "input", "-gui","-tokens","-diagnostics","-trace","data/calculator2.txt"});
+		TestRig.main(new String[] {"calculator.Calculator", "input", "-gui","-tokens","-diagnostics","-trace","data/calcPlus.txt"});
+		TestRig.main(new String[] {"calculator.Calculator", "input", "-gui","-tokens","-diagnostics","-trace","data/calcPlusMinusPow.txt"});
 		
 		logger.info("Goodbye!");
 	}
