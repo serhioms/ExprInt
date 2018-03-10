@@ -1,0 +1,31 @@
+a = {1,2,3}
+b = {3,4}
+c = {1,2,3,4,5}
+complementA = _u\a
+p0 = a \ b != b \ a
+p1 = complementA == "ComplementOf{1,2,3}"
+p2 = a|complementA == _u && complementA|a == _u
+p3 = a & complementA == {} && complementA & a == {}
+Involution = _u\complementA == a
+p5 = a\_u == {}
+p6 = a\complementA == a 
+p7 = complementA\a == complementA
+p8 = {} \ a == {}
+p9 = a \ {} == a
+p10 = a \ a == {}
+p11 = a \ _u == {}
+p12 = a \ complementA == a
+p13 = complementA \ a == complementA 
+p14 = _u \ _u == {}
+p15 = _u\{} == _u
+complementB = _u \ b
+p16 = a \ b == a & complementB
+p17 = (a @ c) && (a\c == {}) 
+p18 = a /\ b == {1,2,4}
+p20 = a | complementA == _u
+complementC = _u \ c
+p21 = a @ c && complementC @ complementA
+p22 = a\b == a & complementB
+p23 = _u\(a\b) == complementA | b
+p24 = complementA\complementB == b\a
+p0 && p1 && p2 && p3 && Involution && p5 && p6 && p7 && p8 && p9 && p10 && p11 && p12 && p13 && p14 && p15 && p16 && p17 && p18 && p20 && p21 && p22 && p23 && p24

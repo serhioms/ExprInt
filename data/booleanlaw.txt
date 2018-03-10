@@ -1,0 +1,39 @@
+t = true
+f = false
+x = true
+y = false
+z = true
+p1 = t && f == !(!t || !f)
+p2 = t || f == !(!t && !f)
+basic = p1 && p2
+p3 = t -> f == !t || f
+p4 = f -> t == !f || t
+p5 = t X| f == (t || f)&& !(t && f)
+p6 = f X| t == (f || t)&& !(f && t)
+p7 = (t == f) == !(t X| f)
+p8 = (f == t) == !(f X| t)
+secondary = p3 && p4 && p5 && p6 && p7 && p8 
+orAssociativity = x || (y || z) == (x || y) || z 
+andAssociativity = x && (y && z) == (x && y) && z
+orCommutativity = x || y == y || x
+andCommutativity = x && y == y && x
+andDistributivity = x && (y || z) == (x && y) || (x && z) 
+orIdentity = x || false == x
+andIdentity = x && true == x
+andAnnihilator = x && false == false
+orAnnihilator = x || true == true
+orIdempotence = x || x == x 
+andIdempotence = x && x == x 
+absorption1 = x && ( x || y) == x
+absorption2 = x || ( x && y) == x
+orDistributivity = x || (y && z) == (x|| y) && (x || y) 
+monotone = orAssociativity && andAssociativity && orCommutativity && andCommutativity && andDistributivity && orIdentity && andIdentity && andAnnihilator && orAnnihilator && orIdempotence && andIdempotence && absorption1 && absorption2 && orDistributivity
+complementation1 = x && !x == false
+complementation2 = x || !x == true
+double_negation = !(!x) == x
+nonmonotone =  complementation1 && complementation1 && double_negation
+morgan11 = (!x && !y) == !(x || y)
+morgan21 = (!x || !y) == !(x && y)
+morgan12 = (x && y) == !(!x && !y)
+morgan22 = (x || y) == !(!x || !y)
+basic && secondary && monotone && nonmonotone && morgan11 && morgan21

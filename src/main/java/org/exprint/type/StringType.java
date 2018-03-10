@@ -4,25 +4,46 @@ public class StringType extends AtomicNotImplemented implements AtomicType, Comp
 
 	private String val;
 
-	public StringType(String text) {
-		this.val = text.replaceAll("\"", "");
+	public StringType(String val) {
+		try {
+			this.val = val.replaceAll("\"", "");
+		} catch( Exception e) {
+			throw new RuntimeException(String.format(RUNTIME_ERROR3, getMessage(e), "StringType", val));
+		}
 	}
 	
 	public StringType(Integer val) {
-		this.val = val.toString();
+		try {
+			this.val = val.toString();
+		} catch( Exception e) {
+			throw new RuntimeException(String.format(RUNTIME_ERROR3, getMessage(e), "StringType", val));
+		}
+	}
+
+	@Override
+	public AtomicType cloneInstance() {
+		try {
+			return new StringType(val.toString());
+		} catch( Exception e) {
+			throw new RuntimeException(String.format(RUNTIME_ERROR3, getMessage(e), "cloneInstance", val));
+		}
 	}
 
 	@Override
 	public String toString() {
-		return val;
+		try {
+			return val;
+		} catch( Exception e) {
+			throw new RuntimeException(String.format(RUNTIME_ERROR3, getMessage(e), "toString", this));
+		}
 	}
 
 	@Override
 	public boolean equals(Object obj) {
-		if( obj instanceof StringType) {
-			return val.equals(((StringType)obj).val);
-		} else {
-			throw new RuntimeException(UNEXPECTED_TYPE+obj.getClass().getName());
+		try {
+			return val.equals(obj.toString());
+		} catch( Exception e) {
+			throw new RuntimeException(String.format(RUNTIME_ERROR3, getMessage(e), "equals", this));
 		}
 	}
 
@@ -33,26 +54,34 @@ public class StringType extends AtomicNotImplemented implements AtomicType, Comp
 
 	@Override
 	public int compareTo(AtomicType obj) {
-		if( obj instanceof IntegerType) {
-			return val.compareTo(((StringType)obj).val);
-		} else {
-			throw new RuntimeException(UNEXPECTED_TYPE+obj.getClass().getName());
-		}
+		return val.compareTo(obj.getString());
 	}
 
 	@Override
 	public Double getDouble() {
-		return Double.parseDouble(val);
+		try {
+			return Double.parseDouble(val);
+		} catch( Exception e) {
+			throw new RuntimeException(String.format(RUNTIME_ERROR3, getMessage(e), "getDouble", this));
+		}
 	}
 	
 	@Override
 	public Boolean getBoolean() {
-		return Boolean.parseBoolean(val);
+		try {
+			return Boolean.parseBoolean(val);
+		} catch( Exception e) {
+			throw new RuntimeException(String.format(RUNTIME_ERROR3, getMessage(e), "getBoolean", this));
+		}
 	}
 
 	@Override
 	public Integer getInteger() {
-		return Integer.parseInt(val);
+		try {
+			return Integer.parseInt(val);
+		} catch( Exception e) {
+			throw new RuntimeException(String.format(RUNTIME_ERROR3, getMessage(e), "getInteger", this));
+		}
 	}
 
 	@Override
@@ -62,22 +91,40 @@ public class StringType extends AtomicNotImplemented implements AtomicType, Comp
 
 	
 	@Override
-	public AtomicType concatenation(AtomicType o) {
-		return new StringType( val + o.getString());
+	public AtomicType concatenation(AtomicType a) {
+		try {
+			return new StringType( val + a.getString());
+		} catch( Exception e) {
+			throw new RuntimeException(String.format(RUNTIME_ERROR4, getMessage(e), this, "+", a));
+		}
 	}
 
 	@Override
-	public AtomicType equal(AtomicType o) {
-		return new BooleanType( val.equalsIgnoreCase(o.getString()));
+	public AtomicType equal(AtomicType a) {
+		try {
+			return new BooleanType( val.equalsIgnoreCase(a.getString()));
+		} catch( Exception e) {
+			throw new RuntimeException(String.format(RUNTIME_ERROR4, getMessage(e), this, "==", a));
+		}
 	}
 	
 	@Override
-	public AtomicType notequal(AtomicType o) {
-		return new BooleanType( !val.equalsIgnoreCase(o.getString()));
+	public AtomicType notequal(AtomicType a) {
+		try {
+			return new BooleanType( !val.equalsIgnoreCase(a.getString()));
+		} catch( Exception e) {
+			throw new RuntimeException(String.format(RUNTIME_ERROR4, getMessage(e), this, "!=", a));
+		}
 	}
 
 	@Override
-	public AtomicType sum(AtomicType o) {
-		return concatenation(o);
+	public AtomicType cardinality() {
+		return new IntegerType(val.length());
 	}
+	
+	@Override
+	public AtomicType sum(AtomicType a) {
+		return concatenation(a);
+	}
+
 }

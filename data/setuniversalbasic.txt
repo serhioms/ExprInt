@@ -1,0 +1,13 @@
+a = {1,2,3}
+p1 = _u == _u
+p2 = _u \ _u == {}
+p3 = a \ _u == {}
+complementEmptySet = _u \ {}
+p4 = complementEmptySet == _u
+complementA = _u \ a
+p5 = complementA == "ComplementOf{1,2,3}"
+p6 = a | complementA == _u 
+p7 = complementA | a == _u
+p8 = _u \ complementA == a
+p9 = a \ complementA == a
+p1 && p2 && p3 && p4 && p5 && p6 && p7 && p8 && p9

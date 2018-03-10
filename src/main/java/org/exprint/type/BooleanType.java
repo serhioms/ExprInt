@@ -4,25 +4,46 @@ public class BooleanType extends AtomicNotImplemented implements AtomicType, Com
 
 	private Boolean val;
 
-	public BooleanType(String text) {
-		this.val = Boolean.parseBoolean(text);
+	public BooleanType(String val) {
+		try {
+			this.val = Boolean.parseBoolean(val);
+		} catch( Exception e) {
+			throw new RuntimeException(String.format(RUNTIME_ERROR3, getMessage(e), "BooleanType", val));
+		}
 	}
 	
 	public BooleanType(Boolean val) {
 		this.val = new Boolean(val);
 	}
+
 	
 	@Override
+	public AtomicType cloneInstance() {
+		try {
+			return new BooleanType(val);
+		} catch( Exception e) {
+			throw new RuntimeException(String.format(RUNTIME_ERROR3, getMessage(e), "BooleanType", val));
+		}
+	}
+
+	@Override
 	public String toString() {
-		return val.toString();
+		try {
+			return val.toString();
+		} catch( Exception e) {
+			throw new RuntimeException(String.format(RUNTIME_ERROR3, getMessage(e), "toString", this));
+		}
 	}
 
 	@Override
 	public boolean equals(Object obj) {
-		if( obj instanceof StringType) {
+		if( obj instanceof BooleanType) {
 			return val.equals(((BooleanType)obj).val);
+		} else if( obj instanceof Boolean) {
+			return val.equals((Boolean)obj);
 		} else {
-			throw new RuntimeException(UNEXPECTED_TYPE+obj.getClass().getName());
+			//throw new RuntimeException(UNEXPECTED_TYPE+obj.getClass().getName());
+			return false;
 		}
 	}
 
@@ -32,11 +53,11 @@ public class BooleanType extends AtomicNotImplemented implements AtomicType, Com
 	}
 
 	@Override
-	public int compareTo(AtomicType obj) {
-		if( obj instanceof IntegerType) {
-			return val.compareTo(((BooleanType)obj).val);
-		} else {
-			throw new RuntimeException(UNEXPECTED_TYPE+obj.getClass().getName());
+	public int compareTo(AtomicType a) {
+		try {
+			return val.compareTo(a.getBoolean());
+		} catch( Exception e) {
+			throw new RuntimeException(String.format(RUNTIME_ERROR4, getMessage(e), this, "compareTo", a));
 		}
 	}
 
@@ -47,36 +68,88 @@ public class BooleanType extends AtomicNotImplemented implements AtomicType, Com
 
 	@Override
 	public String getString() {
-		return val.toString();
+		try {
+			return val.toString();
+		} catch( Exception e) {
+			throw new RuntimeException(String.format(RUNTIME_ERROR3, getMessage(e), "getString", this));
+		}
+	}
+
+	
+	@Override
+	public AtomicType implication(AtomicType a) {
+		try {
+			return new BooleanType( !val || a.getBoolean());
+		} catch(Exception e) {
+			throw new RuntimeException(String.format(RUNTIME_ERROR4, getMessage(e), this, "->", a));
+		}
 	}
 
 	@Override
-	public AtomicType or(AtomicType other) {
-		return new BooleanType(val || other.getBoolean());
+	public AtomicType or(AtomicType a) {
+		try {
+			return new BooleanType(val || a.getBoolean());
+		} catch( Exception e) {
+			throw new RuntimeException(String.format(RUNTIME_ERROR4, getMessage(e), this, "||", a));
+		}
 	}
 
 	@Override
-	public AtomicType and(AtomicType other) {
-		return new BooleanType(val && other.getBoolean());
-	}
-
-	@Override
-	public AtomicType equal(AtomicType o) {
-		return new BooleanType(val == o.getBoolean());
-	}
-
-	@Override
-	public AtomicType notequal(AtomicType o) {
-		return new BooleanType(val != o.getBoolean());
-	}
-
-	@Override
-	public AtomicType implication(AtomicType o) {
-		return new BooleanType( !val || o.getBoolean());
+	public AtomicType and(AtomicType a) {
+		try {
+			return new BooleanType(val && a.getBoolean());
+		} catch(Exception e) {
+			throw new RuntimeException(String.format(RUNTIME_ERROR4, getMessage(e), this, "&&", a));
+		}
 	}
 
 	@Override
 	public AtomicType not() {
-		return new BooleanType(!val);
+		try {
+			return new BooleanType(!val);
+		} catch(Exception e) {
+			throw new RuntimeException(String.format(RUNTIME_ERROR3, getMessage(e), "!", this));
+		}
+	}
+
+	@Override
+	public AtomicType xor(AtomicType a) {
+		try {
+			return new BooleanType((val && !a.getBoolean())||(!val && a.getBoolean()));
+		} catch( Exception e) {
+			throw new RuntimeException(String.format(RUNTIME_ERROR4, getMessage(e), this, "X|", a));
+		}
+	}
+
+	@Override
+	public AtomicType nand(AtomicType a) {
+		try {
+			return new BooleanType(!(val && a.getBoolean()));
+		} catch( Exception e) {
+			throw new RuntimeException(String.format(RUNTIME_ERROR4, getMessage(e), this, "!&", a));
+		}
+	}
+
+	@Override
+	public AtomicType xnor(AtomicType a) {
+		try {
+			return new BooleanType((val && a.getBoolean())||(!val && !a.getBoolean()));
+		} catch( Exception e) {
+			throw new RuntimeException(String.format(RUNTIME_ERROR4, getMessage(e), this, "x|", a));
+		}
+	}
+
+	@Override
+	public AtomicType nor(AtomicType a) {
+		try {
+			return new BooleanType(!(val|| a.getBoolean()));
+		} catch( Exception e) {
+			throw new RuntimeException(String.format(RUNTIME_ERROR4, getMessage(e), this, "!|", a));
+		}
+	}
+
+	@Override
+	public AtomicType cardinality() {
+		return new IntegerType(1);
 	}
 }

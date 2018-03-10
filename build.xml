@@ -94,7 +94,7 @@
 		<attribute name="outdir" default="src/main/java" />
 		<sequential>
 			<java classname="org.antlr.v4.Tool" classpath="target/${exprint.jar}">
-				<arg line="-o @{outdir}/@{package} -package @{package} -no-listener -visitor @{srcdir}/@{gramma}.g4" />
+				<arg line="-o @{outdir}/antlr/@{package} -package antlr.@{package} -no-listener -visitor @{srcdir}/@{gramma}.g4" />
 			</java>
 		</sequential>
 	</macrodef>
@@ -131,7 +131,7 @@
 
 	<target name="test.antlr.tree">
 		<antlr.help.TestRig />
-		<antlr.tree gramma="hello.Hello" rule="r" file="data/hello.txt" />
+		<antlr.tree gramma="hello.Hello" rule="r" file="data/hello.txt"/>
 	</target>
 
 	<target name="test.calc.tree">
@@ -166,16 +166,18 @@
 
 	<target name="test.compile.gramma">
 		<antlr.help.Tool />
-		<antlr.compile gramma="Hello" package="hello" />
+		<antlr.compile gramma="Hello" package="hello"  srcdir="src/test/gramma" outdir="src/test/java"/>
 	</target>
 
 	<target name="compile.gramma">
 		<echo message="compile.gramma" />
 		<antlr.help.Tool />
-		<antlr.compile gramma="Calculator" package="calculator" />
-		<antlr.compile gramma="Sets" package="sets" />
+
 		<antlr.compile gramma="CalcSet" package="calcset" />
-		<antlr.compile gramma="SetsOrig" package="setsorig" />
+
+		<antlr.compile gramma="Calculator" package="calculator" srcdir="src/test/gramma" outdir="src/test/java"/>
+		<antlr.compile gramma="Sets" package="sets" srcdir="src/test/gramma" outdir="src/test/java"/>
+		<antlr.compile gramma="SetsOrig" package="setsorig" srcdir="src/test/gramma" outdir="src/test/java"/>
 	</target>
 
 </project>

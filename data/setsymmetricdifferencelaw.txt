@@ -1,0 +1,18 @@
+a = {7,8,9,10}
+b = {9,10,11,12}
+c = {11,12,13,14}
+bydef1 = a /\ b == (a \ b) | (b \ a)
+bydef2 = a /\ c == (a \ c) | (c \ a)
+work = a/\c @ a|c
+does_not_work = !(a/\b @ a|b)
+p5 = (a/\b) & (a&b) == {}
+p6 = (a/\c) & (a&c) == {}
+p7 = a|b == (a/\b)/\(a&b)
+cumulative = a/\b == b/\a
+associative = (a/\b)/\c == a/\(b/\c)
+p10= a/\{} == a
+p11= a/\a == {}
+triangle_inequality= (a/\b)/\(b/\c) == a/\c
+intersection_distributes_over= a&(b/\c) == (a&b)/\(a&c) 
+boolean_ring= a/\b == _u\a /\ _u\b 
+bydef1 && bydef2 && work && !does_not_work && p5 && p6 && p7 && cumulative && associative && p10 && p11 && triangle_inequality && intersection_distributes_over && boolean_ring

@@ -6,25 +6,49 @@ public class DoubleType extends AtomicNotImplemented implements AtomicType, Comp
 
 	private Double val;
 
-	public DoubleType(String text) {
-		this.val = Double.parseDouble(text);
+	public DoubleType(String val) {
+		try {
+			this.val = Double.parseDouble(val);
+		} catch( Exception e) {
+			throw new RuntimeException(String.format(RUNTIME_ERROR3, getMessage(e), "DoubleType", val));
+		}
 	}
 
 	public DoubleType(Double val) {
-		this.val = new Double(val);
+		try {
+			this.val = new Double(val.doubleValue());
+		} catch( Exception e) {
+			throw new RuntimeException(String.format(RUNTIME_ERROR3, getMessage(e), "DoubleType", val));
+		}
+	}
+
+	@Override
+	public AtomicType cloneInstance() {
+		try {
+			return new DoubleType(val);
+		} catch( Exception e) {
+			throw new RuntimeException(String.format(RUNTIME_ERROR3, getMessage(e), "cloneInstance", this));
+		}
 	}
 
 	@Override
 	public String toString() {
-		return val.toString();
+		try {
+			return val.toString();
+		} catch( Exception e) {
+			throw new RuntimeException(String.format(RUNTIME_ERROR3, getMessage(e), "toString", this));
+		}
 	}
 
 	@Override
 	public boolean equals(Object obj) {
-		if( obj instanceof IntegerType) {
+		if( obj instanceof DoubleType) {
 			return val.equals(((DoubleType)obj).val);
+		} else if( obj instanceof Double) {
+			return val.equals((Double)obj);
 		} else {
-			throw new RuntimeException(UNEXPECTED_TYPE+obj.getClass().getName());
+			//throw new RuntimeException(UNEXPECTED_TYPE+obj.getClass().getName());
+			return false;
 		}
 	}
 
@@ -34,17 +58,21 @@ public class DoubleType extends AtomicNotImplemented implements AtomicType, Comp
 	}
 
 	@Override
-	public int compareTo(AtomicType obj) {
-		if( obj instanceof IntegerType) {
-			return val.compareTo(((DoubleType)obj).val);
-		} else {
-			throw new RuntimeException(UNEXPECTED_TYPE+obj.getClass().getName());
+	public int compareTo(AtomicType a) {
+		try {
+			return val.compareTo(a.getDouble());
+		} catch( Exception e) {
+			throw new RuntimeException(String.format(RUNTIME_ERROR4, getMessage(e), this, "compareTo", a));
 		}
 	}
 
 	@Override
 	public Integer getInteger() {
-		return val.intValue();
+		try {
+			return val.intValue();
+		} catch( Exception e) {
+			throw new RuntimeException(String.format(RUNTIME_ERROR3, getMessage(e), "getInteger", this));
+		}
 	}
 
 	@Override
@@ -54,47 +82,90 @@ public class DoubleType extends AtomicNotImplemented implements AtomicType, Comp
 
 	@Override
 	public String getString() {
-		return val.toString();
+		try {
+			return val.toString();
+		} catch( Exception e) {
+			throw new RuntimeException(String.format(RUNTIME_ERROR3, getMessage(e), "getInteger", this));
+		}
 	}
 
 	@Override
 	public AtomicType sum(AtomicType a) {
-		return new DoubleType(val + a.getDouble());
+		try {
+			return new DoubleType(val + a.getDouble());
+		} catch( Exception e) {
+			throw new RuntimeException(String.format(RUNTIME_ERROR4, getMessage(e), this, "+", a));
+		}
 	}
 
 	@Override
 	public AtomicType substruction(AtomicType a) {
-		return new DoubleType(val - a.getDouble());
+		try {
+			return new DoubleType(val - a.getDouble());
+		} catch( Exception e) {
+			throw new RuntimeException(String.format(RUNTIME_ERROR4, getMessage(e), this, "-", a));
+		}
 	}
 
 	@Override
 	public AtomicType multiplication(AtomicType a) {
-		return new DoubleType(val * a.getDouble());
+		try {
+			return new DoubleType(val * a.getDouble());
+		} catch( Exception e) {
+			throw new RuntimeException(String.format(RUNTIME_ERROR4, getMessage(e), this, "*", a));
+		}
 	}
 
 	@Override
 	public AtomicType division(AtomicType a) {
-		return new DoubleType(val / a.getDouble());
+		try {
+			return new DoubleType(val / a.getDouble());
+		} catch( Exception e) {
+			throw new RuntimeException(String.format(RUNTIME_ERROR4, getMessage(e), this, "/", a));
+		}
 	}
 
 	@Override
 	public AtomicType power(AtomicType o) {
-		return new DoubleType(Math.pow(val, o.getDouble()));
+		try {
+			return new DoubleType(Math.pow(val, o.getDouble()));
+		} catch( Exception e) {
+			throw new RuntimeException(String.format(RUNTIME_ERROR3, getMessage(e), "^", this));
+		}
 	}
 
 	@Override
 	public AtomicType changeSign() {
-		return new DoubleType(val * -1.0);
+		try {
+			return new DoubleType(val * -1.0);
+		} catch( Exception e) {
+			throw new RuntimeException(String.format(RUNTIME_ERROR3, getMessage(e), "-", this));
+		}
 	}
 
-	@Override
-	public AtomicType equal(AtomicType o) {
-		return new BooleanType( Math.abs(val - o.getDouble()) <= MIN_DIFFERENCE);
-	}
-
-	@Override
-	public AtomicType notequal(AtomicType o) {
-		return new BooleanType( Math.abs(val - o.getDouble()) > 0.000000001);
-	}
 	
+	
+	@Override
+	public AtomicType equal(AtomicType a) {
+		try {
+			return new BooleanType( Math.abs(val - a.getDouble()) <= MIN_DIFFERENCE);
+		} catch( Exception e) {
+			throw new RuntimeException(String.format(RUNTIME_ERROR4, getMessage(e), this, "==", a));
+		}
+	}
+
+	@Override
+	public AtomicType notequal(AtomicType a) {
+		try {
+			return new BooleanType( Math.abs(val - a.getDouble()) > MIN_DIFFERENCE);
+		} catch( Exception e) {
+			throw new RuntimeException(String.format(RUNTIME_ERROR4, getMessage(e), this, "!=", a));
+		}
+	}
+
+
+	@Override
+	public AtomicType cardinality() {
+		return new DoubleType(Double.MAX_VALUE);
+	}
 }
