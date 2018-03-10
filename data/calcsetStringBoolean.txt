@@ -1,4 +1,0 @@
-a = "ABCDEFG"
-b = "abcdefg"
-c = "HKLMNOP"
-a==b & a!=c & b!=c
