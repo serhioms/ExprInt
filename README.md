@@ -1,6 +1,6 @@
 # Expression interpretator
 
-Evaluate expressions with Number, Boolean and Sets algebra with String and Bit operations. Operational order controlled by brackets ().
+Evaluate expressions with Number, Boolean and Sets algebra with String and Bit operations.
 
 ### What is special?
 
@@ -8,14 +8,9 @@ Interpretator developed based on [ANTLR gramma](https://github.com/serhioms/Expr
 
 I like ANTLR!
 
-Special thanks to [Shmatov](https://github.com/shmatov/antlr4-calculator) and [mgrzeszczak](https://github.com/mgrzeszczak/set-calculator) for god examples of how to ANTLR.
+Special thanks to [Shmatov](https://github.com/shmatov/antlr4-calculator) and [mgrzeszczak](https://github.com/mgrzeszczak/set-calculator) for good examples of how to do ANTLR for number expression and simple set algebra.
 
-Boolean and Sets algebra following wiki below)
-    [Boolean algebra](https://en.wikipedia.org/wiki/Boolean_algebra)
-    [De Morgan laws](https://en.wikipedia.org/wiki/De_Morgan%27s_laws)
-    [Set math](https://en.wikipedia.org/wiki/Set_(mathematics))
-    [Set symmetric difference](https://en.wikipedia.org/wiki/Symmetric_difference)
-    [Complement set](https://en.wikipedia.org/wiki/Complement_(set_theory))
+Boolean and Sets algebra following wiki below: [Boolean algebra](https://en.wikipedia.org/wiki/Boolean_algebra), [De Morgan laws](https://en.wikipedia.org/wiki/De_Morgan%27s_laws), [Set math](https://en.wikipedia.org/wiki/Set_(mathematics)), [Set symmetric difference](https://en.wikipedia.org/wiki/Symmetric_difference), [Complement set](https://en.wikipedia.org/wiki/Complement_(set_theory)).
 
 ### Number expressions
 Available operations with real and integer numbers are +, -, *, /, ^ (power), == (equals), >=, >, <=, <.
