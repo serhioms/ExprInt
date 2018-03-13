@@ -1,13 +1,13 @@
 # Expression interpretator
 
-Evaluate expressions with Number, Boolean and Sets algebra with String and Bit operations. Able to declare variables by assignment of one of expression of 5 types: Real, Integer, Boolean, String and Set which able contains any of 5 types.
+Evaluate expressions with Number, Boolean and Sets algebra with String and Bit operations. Able to declare variables by assignment of one of expression of 5 types: Real, Integer, Boolean, String and Set. Set can contains all 5 types.
 
 ## Usage
 
 ### Download project and start run.cmd from command line.
 C:\ExprInt>run.cmd
 Enter expression, help or quit...
->2+2
+>2+2<br/>
 4
 
 ### Java8 must be available as below
