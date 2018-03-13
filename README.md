@@ -1,6 +1,6 @@
 # Expression interpretator
 
-Evaluate expressions with Number, Boolean and Sets algebra with String and Bit operations. Able to declare variables by assignment of one of expression of 5 types: Real, Integer, Boolean, String and Set. Set can contains all 5 types.
+Evaluate expressions with Number, Boolean and Sets algebra with String and Bit operations. Able to declare variables by expression assignment of 5 types: Real, Integer, Boolean, String and Set. Set can contain all 5 types (include set of sets).
 
 ## Usage
 
