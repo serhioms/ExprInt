@@ -5,9 +5,9 @@ Evaluate expressions with Number, Boolean and Sets algebra with String and Bit o
 ## Usage
 
 ### Download project and start run.cmd from command line.
-C:\ExprInt>run.cmd
-Enter expression, help or quit...
->>2+2<br/>
+C:\ExprInt>run.cmd<br/>
+Enter expression, help or quit...<br/>
+\>2+2<br/>
 4
 
 ### Java8 must be available as below
