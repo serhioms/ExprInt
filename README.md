@@ -4,7 +4,10 @@ Evaluate expressions with Number, Boolean and Sets algebra with String and Bit o
 
 ### What is special?
 
-Interpratator developed based on ANTLR gramma https://github.com/serhioms/ExprInt/blob/master/gramma/CalcSet.g4 plus ANTLR visitor implementation https://github.com/serhioms/ExprInt/blob/master/src/main/java/org/exprint/antlr/EvalVisitor.java plus five type implementations https://github.com/serhioms/ExprInt/tree/master/src/main/java/org/exprint/type.
+Interpratator developed based on ANTLR gramma
+https://github.com/serhioms/ExprInt/blob/master/gramma/CalcSet.g4 
+plus ANTLR visitor implementation https://github.com/serhioms/ExprInt/blob/master/src/main/java/org/exprint/antlr/EvalVisitor.java
+plus five type implementations https://github.com/serhioms/ExprInt/tree/master/src/main/java/org/exprint/type.
 
 Boolean and Sets algebra following wiki below
     https://en.wikipedia.org/wiki/Boolean_algebra
