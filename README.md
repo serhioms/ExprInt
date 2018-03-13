@@ -7,15 +7,15 @@ Evaluate expressions with Number, Boolean and Sets algebra with String and Bit o
 ### Download project and start run.cmd from command line.
 C:\ExprInt>run.cmd
 Enter expression, help or quit...
->2+2<br/>
+>>2+2<br/>
 4
 
 ### Java8 must be available as below
 
-C:\ExprInt>java -version
-java version "1.8.0_161"
-Java(TM) SE Runtime Environment (build 1.8.0_161-b12)
-Java HotSpot(TM) 64-Bit Server VM (build 25.161-b12, mixed mode)
+C:\ExprInt>java -version<br/>
+java version "1.8.0_161"<br/>
+Java(TM) SE Runtime Environment (build 1.8.0_161-b12)<br/>
+Java HotSpot(TM) 64-Bit Server VM (build 25.161-b12, mixed mode)<br/>
 
 ## What is special?
 
