@@ -19,7 +19,7 @@ Java HotSpot(TM) 64-Bit Server VM (build 25.161-b12, mixed mode)<br/>
 
 ## What is special?
 
-Interpretator developed based on [ANTLR gramma](https://github.com/serhioms/ExprInt/blob/master/gramma/CalcSet.g4), [ANTLR visitor](https://github.com/serhioms/ExprInt/blob/master/src/main/java/org/exprint/antlr/EvalVisitor.java) and [implementation of five types ](https://github.com/serhioms/ExprInt/tree/master/src/main/java/org/exprint/type).
+Interpretator developed based on [ANTLR gramma](https://github.com/serhioms/ExprInt/blob/master/gramma/CalcSet.g4), [ANTLR visitor](https://github.com/serhioms/ExprInt/blob/master/src/main/java/org/exprint/antlr/EvalVisitor.java) and [implementation of each of 5 types ](https://github.com/serhioms/ExprInt/tree/master/src/main/java/org/exprint/type).
 
 Is not it clean and straight forward? I like ANTLR!
 
