@@ -33,13 +33,21 @@ Available operations are >=, >, <=, <, == (equals), != or <> (not equal), && (or
 Examples here: [basic](https://github.com/serhioms/ExprInt/blob/master/data/booleanbasic.txt), [boolean laws](https://github.com/serhioms/ExprInt/blob/master/data/booleanlaw.txt), [the morgan laws](https://github.com/serhioms/ExprInt/blob/master/data/booleanmorgan.txt)
 
 ## Number expressions
-Available operations with real and integer numbers are +, -, *, /, ** (power), ==, >=, >, <=, <<br/>
+Available operations with real and integer numbers are +, -, *, /, ** (power), ==, >=, >, <=, <.<br/>
 There are two predefined real constants _pi (3.14) and  _e (2.71).
 
-Examples here: [arifmetika follows Shmatov example](https://github.com/serhioms/ExprInt/blob/master/data/numarifmetika.txt), [set var follows Shmatov example](https://github.com/serhioms/ExprInt/blob/master/data/setvar.txt)
+Here are examples: [arifmetika follows Shmatov example](https://github.com/serhioms/ExprInt/blob/master/data/numarifmetika.txt), [set var follows Shmatov example](https://github.com/serhioms/ExprInt/blob/master/data/setvar.txt)
 
 ### Bit operations with integer
-There are couple of [bit operations](https://www.programiz.com/java-programming/bitwise-operators) available for integers as ~ (inversion), >> (right shift), >>> (unsigned right shift), << (left shift), & (and), | (or), ^^(xor). Here are [bit example](https://github.com/serhioms/ExprInt/blob/master/data/bit.txt).
+There are couple of [bit operations](https://www.programiz.com/java-programming/bitwise-operators) available for integers as ~ (inversion), >> (right shift), >>> (unsigned right shift), << (left shift), & (and), | (or), ^^(xor). Here is [bit example](https://github.com/serhioms/ExprInt/blob/master/data/bit.txt).
 
+## String expressions
+"This is a string constant in double quotation marks"
+Available operations with strings are # (length), + (concatenation), ==, !=. Here is [string example](https://github.com/serhioms/ExprInt/blob/master/data/string.txt).
 
+## Sets expressions
+Available operations are # (cardinality), == (equals), @ (belongs), & (intersection), && (recursive intersection), | (union), \ (complements), /\ (disjunctive union), ' (complement set), ! (not empty).<br/>
+There couple special sets are {} (empty set), _u (universal set).
+
+Here are examples: [initialization](https://github.com/serhioms/ExprInt/blob/master/data/setsimple.txt), [basic](https://github.com/serhioms/ExprInt/blob/master/data/setbasic.txt), [cardinality](https://github.com/serhioms/ExprInt/blob/master/data/setcardinality.txt), [union](https://github.com/serhioms/ExprInt/blob/master/data/setunion.txt), [union laws](https://github.com/serhioms/ExprInt/blob/master/data/setunionlaw.txt), [intersection](https://github.com/serhioms/ExprInt/blob/master/data/setintersection.txt), [intersection laws](https://github.com/serhioms/ExprInt/blob/master/data/setintersectionlaw.txt), [complements](https://github.com/serhioms/ExprInt/blob/master/data/setcomplements.txt), [complements laws](https://github.com/serhioms/ExprInt/blob/master/data/setcomplementslaw.txt), [empty set laws](https://github.com/serhioms/ExprInt/blob/master/data/setemptylaw.txt), [membership](https://github.com/serhioms/ExprInt/blob/master/data/setmembershipbasic.txt), [subset laws](https://github.com/serhioms/ExprInt/blob/master/data/subsetlaw.txt), [universal set](https://github.com/serhioms/ExprInt/blob/master/data/setuniversalbasic.txt), [relative laws](https://github.com/serhioms/ExprInt/blob/master/data/setrelativelaw.txt), [symmetric difference](https://github.com/serhioms/ExprInt/blob/master/data/setsymmetricdifferencelaw.txt),  [complex set](https://github.com/serhioms/ExprInt/blob/master/data/setcomplex.txt)
 
