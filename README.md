@@ -27,6 +27,11 @@ Special thanks to [Shmatov](https://github.com/shmatov/antlr4-calculator) and [M
 
 Boolean and sets algebra following wiki below: [Boolean algebra](https://en.wikipedia.org/wiki/Boolean_algebra), [De Morgan laws](https://en.wikipedia.org/wiki/De_Morgan%27s_laws), [Set math](https://en.wikipedia.org/wiki/Set_(mathematics)), [Set symmetric difference](https://en.wikipedia.org/wiki/Symmetric_difference), [Complement set](https://en.wikipedia.org/wiki/Complement_(set_theory)), [Bit operations](https://www.programiz.com/java-programming/bitwise-operators). 
 
+## What is not covered
+
+- Interpretator gramma does not implement functions(args);
+- There are couple set operations are not implemented - cartesian product and powerset.
+
 ## Boolean expressions
 Available operations are >=, >, <=, <, == (equals), != or <> (not equal), && (or), || (and), -> (implication), !& (nand), !| (nor), X| (xor), X! (xnor). There are two predefined boolean constants true and false.
 
