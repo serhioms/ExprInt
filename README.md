@@ -27,9 +27,8 @@ Special thanks to [Shmatov](https://github.com/shmatov/antlr4-calculator) and [M
 
 Boolean and sets algebra following wiki below: [Boolean algebra](https://en.wikipedia.org/wiki/Boolean_algebra), [De Morgan laws](https://en.wikipedia.org/wiki/De_Morgan%27s_laws), [Set math](https://en.wikipedia.org/wiki/Set_(mathematics)), [Set symmetric difference](https://en.wikipedia.org/wiki/Symmetric_difference), [Complement set](https://en.wikipedia.org/wiki/Complement_(set_theory)).
 
-### Boolaen expressions
-Available operations are >=, >, <=, <, == (equals), != or <> (not equal), && (or), || (and), -> (implication), !& (nand), !| (nor), X| (xor), X! (xnor)<br/>
-There are two predefined boolean constants true and false.
+### Boolean expressions
+Available operations are >=, >, <=, <, == (equals), != or <> (not equal), && (or), || (and), -> (implication), !& (nand), !| (nor), X| (xor), X! (xnor). There are two predefined boolean constants true and false.
 
 Examples here: [basic](https://github.com/serhioms/ExprInt/blob/master/data/booleanbasic.txt), [boolean laws](https://github.com/serhioms/ExprInt/blob/master/data/booleanlaw.txt), [the morgan laws](https://github.com/serhioms/ExprInt/blob/master/data/booleanmorgan.txt)
 
@@ -39,10 +38,8 @@ There are two predefined real constants _pi (3.14) and  _e (2.71).
 
 Examples here: [arifmetika follows Shmatov example](https://github.com/serhioms/ExprInt/blob/master/data/numarifmetika.txt), [set var follows Shmatov example](https://github.com/serhioms/ExprInt/blob/master/data/setvar.txt)
 
-### Bit operations
-There are couple of [bit operations](https://www.programiz.com/java-programming/bitwise-operators) available for integers as ~ (inversion), >> (right shift), >>> (unsigned right shift), << (left shift), & (and), | (or), ^^(xor)<br/>
-
-Examples here: [bit](https://github.com/serhioms/ExprInt/blob/master/data/bit.txt)
+## Bit operations
+There are couple of [bit operations](https://www.programiz.com/java-programming/bitwise-operators) available for integers as ~ (inversion), >> (right shift), >>> (unsigned right shift), << (left shift), & (and), | (or), ^^(xor). Here are [bit example](https://github.com/serhioms/ExprInt/blob/master/data/bit.txt).
 
 
 
