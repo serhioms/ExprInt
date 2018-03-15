@@ -1,9 +1,8 @@
 grammar Sets;
 WS : [ \t\r]+ -> skip ;
-NL : '\n';
 INT : [0-9]+;
 
-input: expr NL;
+input: expr;
 
 expr: expr ADD_SUB term | term;
 term: term MUL factor | factor;

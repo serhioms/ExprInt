@@ -22,16 +22,15 @@ PLUS		: '+';
 MINUS		: '-';
 MULT		: '*';
 DIV			: '/';
-POW			: '**';
+POW			: '^';
 
 /*
 	Bit operations https://docs.oracle.com/javase/tutorial/java/nutsandbolts/op3.html
 */
-BIT_INVERS		: '~';
-BIT_XOR			: '^';
-BIT_LEFT		: '<<';
-BIT_RIGHT		: '>>';
-BIT_RIGHTU		: '>>>';
+BINVERS		: '~';
+BLEFT		: '<<';
+BRIGHT		: '>>';
+BRIGHTU		: '>>>';
 
 /*
 	Boolean and number algebra
@@ -62,13 +61,15 @@ XNOR		: 'X!';
 /* 
 	Sets https://en.wikipedia.org/wiki/Set_(mathematics)
  */
-CARDINALITY			: '#';
-INTERSECTION		: '&';
-UNION				: '|';
-COMPLEMENTS			: '\\';
-SUBSET				: '@';
-COMPLEMENT_SET		: '\'';   /* https://en.wikipedia.org/wiki/Complement_(set_theory) */
-DISJUNCTIVE_UNION	: '/\\';  /* https://en.wikipedia.org/wiki/Symmetric_difference */
+SUBSET			: '@';
+CARDINALITY		: '#';
+INTERSECTION	: '&';
+UNION			: '|';
+COMPLEMENTS		: '\\';
+/*
+	https://en.wikipedia.org/wiki/Symmetric_difference 
+ */
+DISJUNCTIVE_UNION : '/\\';
 
 LPAR		: '(';
 RPAR		: ')';
@@ -130,16 +131,11 @@ intersectionComplements
     ;
 
 multOrDiv
-    : multOrDiv MULT bit				# Multiplication
-    | multOrDiv DIV bit					# Division
-    | bit								# ToBit
-    ;
-
-bit
-    : bit BIT_LEFT pow					# BitLeft
-    | bit BIT_RIGHT pow					# BitRight
-    | bit BIT_RIGHTU pow				# BitRightUnsigned
-    | bit BIT_XOR pow					# BitXor
+    : multOrDiv MULT pow				# Multiplication
+    | multOrDiv DIV pow					# Division
+    | multOrDiv BLEFT pow				# BitLeft
+    | multOrDiv BRIGHT pow				# BitRight
+    | multOrDiv BRIGHTU pow				# BitRightUnsigned
     | pow								# ToPow
     ;
 
@@ -150,8 +146,7 @@ pow
 unaryMinus
     : MINUS unaryMinus 					# ChangeSign
     | NOT unaryMinus					# UnaryNot
-    | unaryMinus COMPLEMENT_SET			# ComplementSet
-    | BIT_INVERS unaryMinus				# BitInvers
+    | BINVERS unaryMinus				# BitInvers
     | CARDINALITY unaryMinus			# Cardinality
     | atom             					# ToAtom
     ;

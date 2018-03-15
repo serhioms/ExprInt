@@ -38,13 +38,13 @@ public class TestCalc {
 	}
 
 	@Test
-	public void numsetvar() throws IOException {
-        assertEquals(true, testCalc("data/numsetvar.txt", 3.0d));
+	public void plus() throws IOException {
+        assertEquals(true, testCalc("data/plus.txt", 3.0d));
 	}
 
 	@Test
-	public void numarifmetika() throws IOException {
-        assertEquals(true, testCalc("data/numarifmetika.txt", 33.0d));
+	public void arifmetika() throws IOException {
+        assertEquals(true, testCalc("data/arifmetika.txt", 33.0d));
 	}
 
 	/**
@@ -54,8 +54,8 @@ public class TestCalc {
 	public static void main(String[] args) throws Exception {
 		logger.info("Antlr test...");
 		
-		TestRig.main(new String[] {"calculator.Calculator", "input", "-gui","-tokens","-diagnostics","-trace","data/numsetvar.txt"});
-		TestRig.main(new String[] {"calculator.Calculator", "input", "-gui","-tokens","-diagnostics","-trace","data/numarifmetika.txt"});
+		TestRig.main(new String[] {"calculator.Calculator", "input", "-gui","-tokens","-diagnostics","-trace","data/plus.txt"});
+		TestRig.main(new String[] {"calculator.Calculator", "input", "-gui","-tokens","-diagnostics","-trace","data/arifmetika.txt"});
 		
 		logger.info("Goodbye!");
 	}

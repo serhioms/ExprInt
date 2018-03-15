@@ -6,8 +6,8 @@ abstract public class AtomicNotImplemented implements AtomicType, Comparable<Ato
 
 	public static final String UNEXPECTED_TYPE = "Unexpected type: ";
 	public static final String UNEXPECTED_OPERATION = "Unexpected operation: ";
-	public static final String NOT_IMPLEMENTED3 = "%s%s%s is not valid!";
-	public static final String NOT_IMPLEMENTED2 = "%s%s is not valid!";
+	public static final String NOT_IMPLEMENTED3 = "(%s) %s (%s) is not valid!";
+	public static final String NOT_IMPLEMENTED2 = "%s(%s) is not valid!";
 	public static final String NOT_IMPLEMENTED1 = "%s is not valid for %s!";
 	public static final String RUNTIME_ERROR4 = "%s: (%s) %s (%s)";
 	public static final String RUNTIME_ERROR3 = "%s: %s(%s)";
@@ -110,12 +110,6 @@ abstract public class AtomicNotImplemented implements AtomicType, Comparable<Ato
 	public AtomicType not() {
 		throw new RuntimeException(String.format(NOT_IMPLEMENTED2, "!", this.getClass().getSimpleName()));
 	}
-	
-	@Override
-	public AtomicType complementSet() {
-		throw new RuntimeException(String.format(NOT_IMPLEMENTED2, this.getClass().getSimpleName(), "'"));
-	}
-
 
 	@Override
 	public AtomicType implication(AtomicType a) {
@@ -184,11 +178,6 @@ abstract public class AtomicNotImplemented implements AtomicType, Comparable<Ato
 	
 	protected String getMessage(Exception e) {
 		return e.getMessage() != null? e.getMessage(): e.getClass().getSimpleName();
-	}
-
-	@Override
-	public AtomicType bitXor(AtomicType a) {
-		throw new RuntimeException(String.format(NOT_IMPLEMENTED3, this.getClass().getSimpleName(), "^^", a.getClass().getSimpleName()));
 	}
 
 	@Override

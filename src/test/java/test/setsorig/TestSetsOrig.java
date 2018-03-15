@@ -58,9 +58,9 @@ public class TestSetsOrig {
 	public static void main(String[] args) throws Exception {
 		logger.info("Antlr test...");
 		
-		TestRig.main(new String[] {"setsorig.SetsOrig", "input", "-gui","-tokens","-diagnostics","-trace","data/setunion.txt"});
-		TestRig.main(new String[] {"setsorig.SetsOrig", "input", "-gui","-tokens","-diagnostics","-trace","data/setintersection.txt"});
-		TestRig.main(new String[] {"setsorig.SetsOrig", "input", "-gui","-tokens","-diagnostics","-trace","data/setcomplements.txt"});
+		TestRig.main(new String[] {"setsorig.SetsOrig", "expr", "-gui","-tokens","-diagnostics","-trace","data/setunion.txt"});
+		TestRig.main(new String[] {"setsorig.SetsOrig", "expr", "-gui","-tokens","-diagnostics","-trace","data/setintersection.txt"});
+		TestRig.main(new String[] {"setsorig.SetsOrig", "expr", "-gui","-tokens","-diagnostics","-trace","data/setcomplements.txt"});
 		
 		logger.info("Goodbye!");
 	}

@@ -16,7 +16,6 @@ public interface AtomicType {
 	public AtomicType power(AtomicType a);
 	public AtomicType changeSign();
 	
-	public AtomicType bitXor(AtomicType a);
 	public AtomicType bitRightUnsigned(AtomicType a);
 	public AtomicType bitLeft(AtomicType a);
 	public AtomicType bitRight(AtomicType a);
@@ -41,7 +40,6 @@ public interface AtomicType {
 	public AtomicType powerset();
 	public AtomicType cardinality();
 	public AtomicType disjunctiveUnion(AtomicType a);
-	public AtomicType complementSet();
 	
 	public Boolean getBoolean();
 	

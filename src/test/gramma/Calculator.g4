@@ -5,7 +5,7 @@ INT    : [0-9]+;
 DOUBLE : [0-9]+'.'[0-9]+;
 PI     : 'pi';
 E      : 'e';
-POW    : '**';
+POW    : '^';
 ID     : [a-zA-Z_][a-zA-Z_0-9]*;
 
 PLUS  : '+';

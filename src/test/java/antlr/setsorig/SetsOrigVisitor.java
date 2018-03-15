@@ -11,12 +11,6 @@ import org.antlr.v4.runtime.tree.ParseTreeVisitor;
  */
 public interface SetsOrigVisitor<T> extends ParseTreeVisitor<T> {
 	/**
-	 * Visit a parse tree produced by {@link SetsOrigParser#input}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitInput(SetsOrigParser.InputContext ctx);
-	/**
 	 * Visit a parse tree produced by {@link SetsOrigParser#expr}.
 	 * @param ctx the parse tree
 	 * @return the visitor result

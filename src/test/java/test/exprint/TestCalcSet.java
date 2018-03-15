@@ -20,11 +20,11 @@ import antlr.calcset.CalcSetParser;
 /*
  * Test cases based on following info:
  * 
- * 		https://en.wikipedia.org/wiki/Boolean_algebra
- * 		https://en.wikipedia.org/wiki/De_Morgan%27s_laws
  * 		https://en.wikipedia.org/wiki/Set_(mathematics)
  * 		https://en.wikipedia.org/wiki/Symmetric_difference
  * 		https://en.wikipedia.org/wiki/Complement_(set_theory)
+ * 		https://en.wikipedia.org/wiki/Boolean_algebra
+ * 		https://en.wikipedia.org/wiki/De_Morgan%27s_laws
  *   
  */
 
@@ -57,13 +57,13 @@ public class TestCalcSet {
 	}
 
 	@Test
-	public void numsetvar() throws IOException {
-		assertEquals("true", testCalcSet("data/numsetvar.txt", "3"));
+	public void plus() throws IOException {
+		assertEquals("true", testCalcSet("data/plus.txt", "3"));
 	}
 	
 	@Test
-	public void numarifmetika() throws IOException {
-		assertEquals("true", testCalcSet("data/numarifmetika.txt", "33"));
+	public void arifmetika() throws IOException {
+		assertEquals("true", testCalcSet("data/arifmetika.txt", "33"));
 	}
 	
 	@Test
@@ -112,8 +112,8 @@ public class TestCalcSet {
 	}
 	
 	@Test
-	public void setunionlaws() throws IOException {
-		assertEquals("true", testCalcSet("data/setunionlaws.txt", "true"));
+	public void union() throws IOException {
+		assertEquals("true", testCalcSet("data/union.txt", "true"));
 	}
 	
 	@Test
@@ -167,6 +167,16 @@ public class TestCalcSet {
 	}
 
 	@Test
+	public void booleanint01() throws IOException {
+		assertEquals("true", testCalcSet("data/booleanint01.txt", "true"));
+	}
+
+	@Test
+	public void boleanint10() throws IOException {
+		assertEquals("true", testCalcSet("data/boleanint10.txt", "true"));
+	}
+
+	@Test
 	public void bit() throws IOException {
 		assertEquals("true", testCalcSet("data/bit.txt", "true"));
 	}
@@ -184,10 +194,9 @@ public class TestCalcSet {
 	public static void main(String[] args) throws Exception {
 		logger.info("Antlr test...");
 		
-		org.antlr.v4.gui.TestRig.main(new String[] {"calcset.CalcSet", "input", "-gui","-tokens","-diagnostics","-trace","data/numsetvar.txt"});
-		org.antlr.v4.gui.TestRig.main(new String[] {"calcset.CalcSet", "input", "-gui","-tokens","-diagnostics","-trace","data/numarifmetika.txt"});
+		org.antlr.v4.gui.TestRig.main(new String[] {"calcset.CalcSet", "input", "-gui","-tokens","-diagnostics","-trace","data/plus.txt"});
+		org.antlr.v4.gui.TestRig.main(new String[] {"calcset.CalcSet", "input", "-gui","-tokens","-diagnostics","-trace","data/arifmetika.txt"});
 		org.antlr.v4.gui.TestRig.main(new String[] {"calcset.CalcSet", "input", "-gui","-tokens","-diagnostics","-trace","data/setunion.txt"});
-		org.antlr.v4.gui.TestRig.main(new String[] {"calcset.CalcSet", "input", "-gui","-tokens","-diagnostics","-trace","data/setunionlaws.txt"});
 		org.antlr.v4.gui.TestRig.main(new String[] {"calcset.CalcSet", "input", "-gui","-tokens","-diagnostics","-trace","data/setintersection.txt"});
 		org.antlr.v4.gui.TestRig.main(new String[] {"calcset.CalcSet", "input", "-gui","-tokens","-diagnostics","-trace","data/setcomplements.txt"});
 		org.antlr.v4.gui.TestRig.main(new String[] {"calcset.CalcSet", "input", "-gui","-tokens","-diagnostics","-trace","data/setemptylaw.txt"});
@@ -205,6 +214,8 @@ public class TestCalcSet {
 		org.antlr.v4.gui.TestRig.main(new String[] {"calcset.CalcSet", "input", "-gui","-tokens","-diagnostics","-trace","data/setrelativelaw.txt"});
 		org.antlr.v4.gui.TestRig.main(new String[] {"calcset.CalcSet", "input", "-gui","-tokens","-diagnostics","-trace","data/booleanlaw.txt"});
 		org.antlr.v4.gui.TestRig.main(new String[] {"calcset.CalcSet", "input", "-gui","-tokens","-diagnostics","-trace","data/setintersectionlaw.txt"});
+		org.antlr.v4.gui.TestRig.main(new String[] {"calcset.CalcSet", "input", "-gui","-tokens","-diagnostics","-trace","data/booleanint01.txt"});
+		org.antlr.v4.gui.TestRig.main(new String[] {"calcset.CalcSet", "input", "-gui","-tokens","-diagnostics","-trace","data/boleanint10.txt"});
 		org.antlr.v4.gui.TestRig.main(new String[] {"calcset.CalcSet", "input", "-gui","-tokens","-diagnostics","-trace","data/bit.txt"});
 		org.antlr.v4.gui.TestRig.main(new String[] {"calcset.CalcSet", "input", "-gui","-tokens","-diagnostics","-trace","data/setcomplementslaw.txt"});
 		org.antlr.v4.gui.TestRig.main(new String[] {"calcset.CalcSet", "input", "-gui","-tokens","-diagnostics","-trace","data/setuniversalbasic.txt"});

@@ -1,7 +1,7 @@
 a = {1,2,3}
 b = {3,4}
 c = {1,2,3,4,5}
-complementA = a'
+complementA = _u\a
 p0 = a \ b != b \ a
 p1 = complementA == "ComplementOf{1,2,3}"
 p2 = a|complementA == _u && complementA|a == _u
