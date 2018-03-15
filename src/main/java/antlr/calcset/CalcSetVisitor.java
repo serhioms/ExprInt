@@ -214,19 +214,19 @@ public interface CalcSetVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitComplementsSet(CalcSetParser.ComplementsSetContext ctx);
 	/**
+	 * Visit a parse tree produced by the {@code ToBit}
+	 * labeled alternative in {@link CalcSetParser#multOrDiv}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitToBit(CalcSetParser.ToBitContext ctx);
+	/**
 	 * Visit a parse tree produced by the {@code Multiplication}
 	 * labeled alternative in {@link CalcSetParser#multOrDiv}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitMultiplication(CalcSetParser.MultiplicationContext ctx);
-	/**
-	 * Visit a parse tree produced by the {@code BitRightUnsigned}
-	 * labeled alternative in {@link CalcSetParser#multOrDiv}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitBitRightUnsigned(CalcSetParser.BitRightUnsignedContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code Division}
 	 * labeled alternative in {@link CalcSetParser#multOrDiv}.
@@ -235,22 +235,36 @@ public interface CalcSetVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitDivision(CalcSetParser.DivisionContext ctx);
 	/**
+	 * Visit a parse tree produced by the {@code BitXor}
+	 * labeled alternative in {@link CalcSetParser#bit}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitBitXor(CalcSetParser.BitXorContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code BitRightUnsigned}
+	 * labeled alternative in {@link CalcSetParser#bit}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitBitRightUnsigned(CalcSetParser.BitRightUnsignedContext ctx);
+	/**
 	 * Visit a parse tree produced by the {@code BitLeft}
-	 * labeled alternative in {@link CalcSetParser#multOrDiv}.
+	 * labeled alternative in {@link CalcSetParser#bit}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitBitLeft(CalcSetParser.BitLeftContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code BitRight}
-	 * labeled alternative in {@link CalcSetParser#multOrDiv}.
+	 * labeled alternative in {@link CalcSetParser#bit}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitBitRight(CalcSetParser.BitRightContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code ToPow}
-	 * labeled alternative in {@link CalcSetParser#multOrDiv}.
+	 * labeled alternative in {@link CalcSetParser#bit}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
@@ -263,12 +277,12 @@ public interface CalcSetVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitPower(CalcSetParser.PowerContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code ChangeSign}
+	 * Visit a parse tree produced by the {@code ComplementSet}
 	 * labeled alternative in {@link CalcSetParser#unaryMinus}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitChangeSign(CalcSetParser.ChangeSignContext ctx);
+	T visitComplementSet(CalcSetParser.ComplementSetContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code UnaryNot}
 	 * labeled alternative in {@link CalcSetParser#unaryMinus}.
@@ -277,12 +291,12 @@ public interface CalcSetVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitUnaryNot(CalcSetParser.UnaryNotContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code BitInvers}
+	 * Visit a parse tree produced by the {@code ChangeSign}
 	 * labeled alternative in {@link CalcSetParser#unaryMinus}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitBitInvers(CalcSetParser.BitInversContext ctx);
+	T visitChangeSign(CalcSetParser.ChangeSignContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code Cardinality}
 	 * labeled alternative in {@link CalcSetParser#unaryMinus}.
@@ -290,6 +304,13 @@ public interface CalcSetVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitCardinality(CalcSetParser.CardinalityContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code BitInvers}
+	 * labeled alternative in {@link CalcSetParser#unaryMinus}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitBitInvers(CalcSetParser.BitInversContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code ToAtom}
 	 * labeled alternative in {@link CalcSetParser#unaryMinus}.

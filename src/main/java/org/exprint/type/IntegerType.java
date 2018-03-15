@@ -154,95 +154,6 @@ public class IntegerType extends AtomicNotImplemented implements AtomicType, Com
 		}
 	}
 
-	
-	
-	
-	@Override
-	public AtomicType equal(AtomicType a) {
-		try {
-			return new BooleanType( val.equals(a.getInteger()));
-		} catch( Exception e) {
-			throw new RuntimeException(String.format(RUNTIME_ERROR4, getMessage(e), this, "==", a));
-		}
-	}
-
-	@Override
-	public AtomicType notequal(AtomicType a) {
-		try {
-			return new BooleanType( !val.equals(a.getInteger()));
-		} catch( Exception e) {
-			throw new RuntimeException(String.format(RUNTIME_ERROR4, getMessage(e), this, "!=", a));
-		}
-	}
-	
-	
-	
-	@Override
-	public AtomicType or(AtomicType a) {
-		try {
-			return new BooleanType(val.intValue() >= 1 || a.getInteger().intValue() >= 1);
-		} catch( Exception e) {
-			throw new RuntimeException(String.format(RUNTIME_ERROR4, getMessage(e), this, "||", a));
-		}
-	}
-
-	@Override
-	public AtomicType and(AtomicType a) {
-		try {
-			return new BooleanType(val.intValue() >=1 && a.getInteger().intValue() >=1);
-		} catch(Exception e) {
-			throw new RuntimeException(String.format(RUNTIME_ERROR4, getMessage(e), this, "&&", a));
-		}
-	}
-
-	@Override
-	public AtomicType not() {
-		try {
-			return new BooleanType(val.intValue() >= 1);
-		} catch(Exception e) {
-			throw new RuntimeException(String.format(RUNTIME_ERROR3, getMessage(e), "!", this));
-		}
-	}
-
-	@Override
-	public AtomicType xor(AtomicType a) {
-		try {
-			return new BooleanType((val.intValue() >=1 && !(a.getInteger().intValue() >=1))||(!(val.intValue() >=1) && a.getInteger().intValue() >=1));
-		} catch( Exception e) {
-			throw new RuntimeException(String.format(RUNTIME_ERROR4, getMessage(e), this, "X|", a));
-		}
-	}
-
-	@Override
-	public AtomicType nand(AtomicType a) {
-		try {
-			return new BooleanType(!(val.intValue() >=1 && a.getInteger().intValue() >=1));
-		} catch( Exception e) {
-			throw new RuntimeException(String.format(RUNTIME_ERROR4, getMessage(e), this, "!&", a));
-		}
-	}
-
-	@Override
-	public AtomicType xnor(AtomicType a) {
-		try {
-			return new BooleanType((val.intValue()>=1 && a.getInteger().intValue()>=1)|(!(val.intValue()>=1) && !(a.getInteger().intValue()>=1)));
-		} catch( Exception e) {
-			throw new RuntimeException(String.format(RUNTIME_ERROR4, getMessage(e), this, "x|", a));
-		}
-	}
-
-	@Override
-	public AtomicType nor(AtomicType a) {
-		try {
-			return new BooleanType(!(val.intValue()>=1 || a.getInteger().intValue()>=1));
-		} catch( Exception e) {
-			throw new RuntimeException(String.format(RUNTIME_ERROR4, getMessage(e), this, "!|", a));
-		}
-	}
-
-
-
-
 	@Override
 	public AtomicType bitRightUnsigned(AtomicType a) {
 		try {
@@ -269,7 +180,7 @@ public class IntegerType extends AtomicNotImplemented implements AtomicType, Com
 			throw new RuntimeException(String.format(RUNTIME_ERROR4, getMessage(e), this, ">>", a));
 		}
 	}
-	
+
 	@Override
 	public AtomicType bitInvers() {
 		try {
@@ -284,7 +195,7 @@ public class IntegerType extends AtomicNotImplemented implements AtomicType, Com
 		try {
 			return new IntegerType(val.intValue() & a.getInteger().intValue());
 		} catch(Exception e) {
-			throw new RuntimeException(String.format(RUNTIME_ERROR4, getMessage(e), this, "&&", a));
+			throw new RuntimeException(String.format(RUNTIME_ERROR4, getMessage(e), this, "&", a));
 		}
 	}
 
@@ -293,7 +204,16 @@ public class IntegerType extends AtomicNotImplemented implements AtomicType, Com
 		try {
 			return new IntegerType(val.intValue() | a.getInteger().intValue());
 		} catch( Exception e) {
-			throw new RuntimeException(String.format(RUNTIME_ERROR4, getMessage(e), this, "||", a));
+			throw new RuntimeException(String.format(RUNTIME_ERROR4, getMessage(e), this, "|", a));
+		}
+	}
+
+	@Override
+	public AtomicType bitXor(AtomicType a) {
+		try {
+			return new IntegerType(val.intValue() ^ a.getInteger().intValue());
+		} catch(Exception e) {
+			throw new RuntimeException(String.format(RUNTIME_ERROR4, getMessage(e), this, "^^", a));
 		}
 	}
 
