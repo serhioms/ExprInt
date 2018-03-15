@@ -2,3 +2,4 @@ a = "ABCDEFG"
 b = "abcdefg"
 c = "HKLMNOP"
 #a == 7 && a==b && a!=c && b!=c && a+c == "AbCdEfGhKlMnOp"
+
