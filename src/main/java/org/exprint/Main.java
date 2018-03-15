@@ -50,11 +50,11 @@ public class Main {
 							"clear                  // clear program text\n"+
 							"ident = expression     // variable assignment where expression is:\n"+
 							"\n"+
-							"Number algebra: +, -, *, /, ^ for integers 1,2,3 and real _pi (3.14), _e (2.71)\n"+
-							"String operations: + (concatenation), # (length) for \"strings\"\n"+
-							"Bit operations: ~, >>, >>>, <<, &, | for integers only\n"+
-							"Boolean algebra: true, false, >, >=, <, <=, == (equals), != (not equals), && (and), || (or), ! (not), -> (implication), !& (nand), !| (nor), X| (xor), X! (xnor)\n"+
-							"Set algebra: {} (empty set), _u (universal set), @ (belongs), # (cardinality), & (intersection), && (recursive intersection), | (union), \\ (complements), /\\ (disjunctive union)\n"+
+							"Boolean algebra: true, false, >, >=, <, <=, == (equals), != (not equal), && (and), || (or), ! (not), -> (implication), !& (nand), !| (nor), X| (xor), X! (xnor)\n"+
+							"Number algebra: _pi, _e, +, -, *, /, ** (power), # (cardinality), ==, !=, <=, <, >=, > for both Integer and Real\n"+
+							"String operations: # (length), + (concatenation), ==, != for \"this is a string constant\"\n"+
+							"Bit operations: ~ (inversion), >> (right shift), >>> (unsigned right shift), << (left shift), & (and), | (or), ^^(xor) for integers only\n"+
+							"Sets algebra: {} (empty set), _u (universal set), # (cardinality), == (equals), @ (belongs), & (intersection), && (recursive intersection), | (union), \\ (complements), /\\ (disjunctive union), ' (complement set), ! (not empty)\n"+
 							""
 						);
 		        	System.out.print(text+"\n>");

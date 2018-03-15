@@ -25,6 +25,10 @@ public class SetType<T extends AtomicType> extends AtomicNotImplemented implemen
         this.complementarySet = complementarySet;
     }
 
+	public static SetType<AtomicType> emptySet() {
+        return new SetType<AtomicType>(new HashSet<AtomicType>(), null);
+    }
+
     @SuppressWarnings({ "unchecked", "rawtypes" })
 	public static <S extends AtomicType> SetType<S> normalSet(Set<?> set) {
         return new SetType(set, null);
@@ -175,7 +179,7 @@ public class SetType<T extends AtomicType> extends AtomicNotImplemented implemen
 			if( isNormalSet() && a.isNormalSet() ) {
 				return normalSet(complementsOf(set, a.getSet()));									// A \ B
 			} else if( isUniversalSet() && a.isUniversalSet() ) {
-				return normalSet(new HashSet<>());													// U - U = {} 		
+				return emptySet();																	// U - U = {} 		
 			} else if( isComplimentarySet() && a.isComplimentarySet() ) {
 				return normalSet(complementsOf(a.getComplementarySet(), complementarySet));			// A' - B' = B \ A; A' - A' = {}
 			} else if( isUniversalSet() ) {
@@ -185,7 +189,7 @@ public class SetType<T extends AtomicType> extends AtomicNotImplemented implemen
 					return complementarySet(a.cloneInstance().getSet());							// U \ A = A'; U \ {} = U
 				}
 			} else if( a.isUniversalSet() ) {
-				return  normalSet(new HashSet<>());													// A \ U = {}; A' & U = {}; {} \ U = U 		
+				return emptySet();																	// A \ U = {}; A' & U = {}; {} \ U = U 		
 			} else if( a.isComplimentarySet() ) {
 		        return normalSet(intersectionOf(set, (Set<T>)a.getComplementarySet()));				// A \ A' = A; A \ B' = A & B 
 			} else if( isComplimentarySet() ) {
@@ -195,6 +199,37 @@ public class SetType<T extends AtomicType> extends AtomicNotImplemented implemen
 			throw new RuntimeException(String.format(RUNTIME_ERROR4, getMessage(e), this, "\\", a),e);
 		}
 		throw new RuntimeException(String.format(NOT_IMPLEMENTED3, this, "\\", a));
+	}
+
+	
+	@Override
+	public AtomicType complementSet() {
+		try {
+			if( isNormalSet() ) {																	// !A = U \ A = A'; U \ {} = U
+				return complementarySet(cloneInstance().getSet());
+			} else if( isComplimentarySet() ) {														// !A' = U \ A' = A; U \ {} = U
+				return getComplementarySet().isEmpty()? universalSet(): normalSet(cloneInstance().getComplementarySet());
+			} else if( isUniversalSet() ) {															// !U = U \ U = {}
+				return emptySet();
+			}
+		} catch( Exception e) {
+			throw new RuntimeException(String.format(RUNTIME_ERROR3, getMessage(e), "!", this), e);
+		}
+		throw new RuntimeException(String.format(NOT_IMPLEMENTED2, "!", this));
+	}
+	
+	@Override
+	public AtomicType disjunctiveUnion(AtomicType a) {
+		try {
+			if( isNormalSet() && a.isNormalSet() ) {
+				return complements(a).union(a.complements(this));
+			} else if( isComplimentarySet() && a.isComplimentarySet() ) {
+				return normalSet(unionOf(complementsOf(complementarySet,a.getComplementarySet()), complementsOf(a.getComplementarySet(),complementarySet)));
+			}
+		} catch( Exception e) {
+			throw new RuntimeException(String.format(RUNTIME_ERROR4, getMessage(e), this, "/\\", a), e);
+		}
+		throw new RuntimeException(String.format(NOT_IMPLEMENTED3, this, "/\\", a));
 	}
 
 	@SuppressWarnings("unchecked")
@@ -240,22 +275,6 @@ public class SetType<T extends AtomicType> extends AtomicNotImplemented implemen
 	}
 
 	@Override
-	public AtomicType cardinality() {
-		try {
-			if( isNormalSet() ) {
-				return new IntegerType(set.size());
-			} else if( isUniversalSet() ) {
-				return new IntegerType(Integer.MAX_VALUE);
-			} else if( isComplimentarySet() ) {
-				return new IntegerType(Integer.MAX_VALUE - complementarySet.size());
-			}
-		} catch( Exception e) {
-			throw new RuntimeException(String.format(RUNTIME_ERROR3, getMessage(e), "#", this), e);
-		}
-		throw new RuntimeException(String.format(NOT_IMPLEMENTED2, "#", this));
-	}
-
-	@Override
 	public AtomicType not() {
 		try {
 			if( isNormalSet() ) {
@@ -280,19 +299,21 @@ public class SetType<T extends AtomicType> extends AtomicNotImplemented implemen
 			throw new RuntimeException(String.format(RUNTIME_ERROR3, getMessage(e), "getBoolean", this), e);
 		}
 	}
-
+	
 	@Override
-	public AtomicType disjunctiveUnion(AtomicType a) {
+	public AtomicType cardinality() {
 		try {
-			if( isNormalSet() && a.isNormalSet() ) {
-				return complements(a).union(a.complements(this));
-			} else if( isComplimentarySet() && a.isComplimentarySet() ) {
-				return normalSet(unionOf(complementsOf(complementarySet,a.getComplementarySet()), complementsOf(a.getComplementarySet(),complementarySet)));
+			if( isNormalSet() ) {
+				return new IntegerType(set.size());
+			} else if( isUniversalSet() ) {
+				return new IntegerType(Integer.MAX_VALUE);
+			} else if( isComplimentarySet() ) {
+				return new IntegerType(Integer.MAX_VALUE - complementarySet.size());
 			}
 		} catch( Exception e) {
-			throw new RuntimeException(String.format(RUNTIME_ERROR4, getMessage(e), this, "/\\", a), e);
+			throw new RuntimeException(String.format(RUNTIME_ERROR3, getMessage(e), "#", this), e);
 		}
-		throw new RuntimeException(String.format(NOT_IMPLEMENTED3, this, "/\\", a));
+		throw new RuntimeException(String.format(NOT_IMPLEMENTED2, "#", this));
 	}
 
 	@Override
@@ -314,4 +335,6 @@ public class SetType<T extends AtomicType> extends AtomicNotImplemented implemen
 	public boolean isSet() {
 		return true;
 	}
+	
+	
 }

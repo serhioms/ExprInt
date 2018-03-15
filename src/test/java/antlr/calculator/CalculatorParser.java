@@ -27,7 +27,7 @@ public class CalculatorParser extends Parser {
 	};
 
 	private static final String[] _LITERAL_NAMES = {
-		null, "'\n'", null, null, null, "'pi'", "'e'", "'^'", null, "'+'", "'='", 
+		null, "'\n'", null, null, null, "'pi'", "'e'", "'**'", null, "'+'", "'='", 
 		"'-'", "'*'", "'/'", "'('", "')'"
 	};
 	private static final String[] _SYMBOLIC_NAMES = {

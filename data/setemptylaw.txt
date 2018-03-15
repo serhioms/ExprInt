@@ -1,6 +1,5 @@
 a = {1,2,3}
 p1 = a & {} == {} 
-p2 = !(a & {}) 
 p3 = a | {} == a
 p4 = {} \ a == {} 
 p5 = a \ {} == a
@@ -8,9 +7,10 @@ p6 = a \ a == {}
 p7 = {} \ {} == {}
 p8 = _u \ _u == {}
 p9 = _u \ {} == _u
-p10 = {} \ _u == {}
-p11 = a \ _u == {}
-complementA = _u\a
-p12 = a & complementA == {} 
-p13 = complementA & a == {}
-p1 && p2 && p3 && p4 && p8 && p9 && p10 && p11 && p12 && p13
+p10= _u \ {}' == {}
+p11 = {} \ _u == {}
+p12 = a \ _u == {}
+complementA = a'
+p13 = a & complementA == {} 
+p14 = complementA & a == {}
+p1 && p3 && p4 && p8 && p9 && p10 && p11 && p12 && p13 && p14

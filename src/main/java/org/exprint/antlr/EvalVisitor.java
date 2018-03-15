@@ -6,7 +6,7 @@ import java.util.Set;
 
 import org.exprint.type.AtomicType;
 import org.exprint.type.BooleanType;
-import org.exprint.type.DoubleType;
+import org.exprint.type.RealType;
 import org.exprint.type.IntegerType;
 import org.exprint.type.SetType;
 import org.exprint.type.StringType;
@@ -18,10 +18,12 @@ import antlr.calcset.CalcSetParser.BitInversContext;
 import antlr.calcset.CalcSetParser.BitLeftContext;
 import antlr.calcset.CalcSetParser.BitRightContext;
 import antlr.calcset.CalcSetParser.BitRightUnsignedContext;
+import antlr.calcset.CalcSetParser.BitXorContext;
 import antlr.calcset.CalcSetParser.BooleanContext;
 import antlr.calcset.CalcSetParser.BooleanOpContext;
 import antlr.calcset.CalcSetParser.CalculateContext;
 import antlr.calcset.CalcSetParser.CardinalityContext;
+import antlr.calcset.CalcSetParser.ComplementSetContext;
 import antlr.calcset.CalcSetParser.ComplementsSetContext;
 import antlr.calcset.CalcSetParser.DisjunctiveUnionContext;
 import antlr.calcset.CalcSetParser.EqualContext;
@@ -187,28 +189,33 @@ public class EvalVisitor extends CalcSetBaseVisitor<AtomicType> {
 
 	@Override
 	public AtomicType visitMultiplication(CalcSetParser.MultiplicationContext ctx) {
-		return visit(ctx.multOrDiv()).multiplication(visit(ctx.pow()));
+		return visit(ctx.multOrDiv()).multiplication(visit(ctx.bit()));
 	}
 
 	@Override
 	public AtomicType visitDivision(CalcSetParser.DivisionContext ctx) {
-		return visit(ctx.multOrDiv()).division(visit(ctx.pow()));
+		return visit(ctx.multOrDiv()).division(visit(ctx.bit()));
 	}
 
 	
  	@Override
 	public AtomicType visitBitRightUnsigned(BitRightUnsignedContext ctx) {
-		return visit(ctx.multOrDiv()).bitRightUnsigned(visit(ctx.pow()));
+		return visit(ctx.bit()).bitRightUnsigned(visit(ctx.pow()));
 	}
 
 	@Override
 	public AtomicType visitBitLeft(BitLeftContext ctx) {
-		return visit(ctx.multOrDiv()).bitLeft(visit(ctx.pow()));
+		return visit(ctx.bit()).bitLeft(visit(ctx.pow()));
 	}
 
 	@Override
 	public AtomicType visitBitRight(BitRightContext ctx) {
-		return visit(ctx.multOrDiv()).bitRight(visit(ctx.pow()));
+		return visit(ctx.bit()).bitRight(visit(ctx.pow()));
+	}
+
+	@Override
+	public AtomicType visitBitXor(BitXorContext ctx) {
+		return visit(ctx.bit()).bitXor(visit(ctx.pow()));
 	}
 
 	@Override
@@ -248,6 +255,11 @@ public class EvalVisitor extends CalcSetBaseVisitor<AtomicType> {
 	}
 	
 	@Override
+	public AtomicType visitComplementSet(ComplementSetContext ctx) {
+		return visit(ctx.unaryMinus()).complementSet();
+	}
+
+	@Override
 	public AtomicType visitBitInvers(BitInversContext ctx) {
 		return visit(ctx.unaryMinus()).bitInvers();
 	}
@@ -264,12 +276,12 @@ public class EvalVisitor extends CalcSetBaseVisitor<AtomicType> {
 
 	@Override
 	public AtomicType visitConstantPI(CalcSetParser.ConstantPIContext ctx) {
-		return new DoubleType(Math.PI);
+		return new RealType(Math.PI);
 	}
 
 	@Override
 	public AtomicType visitConstantE(CalcSetParser.ConstantEContext ctx) {
-		return new DoubleType(Math.E);
+		return new RealType(Math.E);
 	}
 
 	@Override
@@ -289,7 +301,7 @@ public class EvalVisitor extends CalcSetBaseVisitor<AtomicType> {
 
 	@Override
 	public AtomicType visitDouble(CalcSetParser.DoubleContext ctx) {
-		return new DoubleType(ctx.getText());
+		return new RealType(ctx.getText());
 	}
 
 	@Override
