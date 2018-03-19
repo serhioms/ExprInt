@@ -23,7 +23,7 @@ public class StringType extends AtomicNotImplemented implements AtomicType, Comp
 	@Override
 	public AtomicType cloneInstance() {
 		try {
-			return new StringType(val.toString());
+			return new StringType(val);
 		} catch( Exception e) {
 			throw new RuntimeException(String.format(RUNTIME_ERROR3, getMessage(e), "cloneInstance", val));
 		}
@@ -39,22 +39,8 @@ public class StringType extends AtomicNotImplemented implements AtomicType, Comp
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		try {
-			return val.equals(obj.toString());
-		} catch( Exception e) {
-			throw new RuntimeException(String.format(RUNTIME_ERROR3, getMessage(e), "equals", this));
-		}
-	}
-
-	@Override
 	public int hashCode() {
 		return val.hashCode();
-	}
-
-	@Override
-	public int compareTo(AtomicType obj) {
-		return val.compareTo(obj.getString());
 	}
 
 	@Override

@@ -1,15 +1,14 @@
 package org.exprint.antlr;
 
 import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Set;
 
 import org.exprint.type.AtomicType;
 import org.exprint.type.BooleanType;
-import org.exprint.type.RealType;
 import org.exprint.type.IntegerType;
+import org.exprint.type.RealType;
 import org.exprint.type.SetType;
 import org.exprint.type.StringType;
+import org.exprint.util.UtilSet;
 
 import antlr.calcset.CalcSetBaseVisitor;
 import antlr.calcset.CalcSetParser;
@@ -40,13 +39,20 @@ import antlr.calcset.CalcSetParser.NandContext;
 import antlr.calcset.CalcSetParser.NequalContext;
 import antlr.calcset.CalcSetParser.NorContext;
 import antlr.calcset.CalcSetParser.OrContext;
-import antlr.calcset.CalcSetParser.SetContext;
+import antlr.calcset.CalcSetParser.OrderedComplementSetInstContext;
+import antlr.calcset.CalcSetParser.OrderedEmptySetInstContext;
+import antlr.calcset.CalcSetParser.OrderedSetInstContext;
+import antlr.calcset.CalcSetParser.OrderedUniversalSetInstContext;
 import antlr.calcset.CalcSetParser.SetVariableContext;
 import antlr.calcset.CalcSetParser.StringContext;
 import antlr.calcset.CalcSetParser.SubSetContext;
 import antlr.calcset.CalcSetParser.UnaryNotContext;
 import antlr.calcset.CalcSetParser.UnionSetContext;
 import antlr.calcset.CalcSetParser.UniversalSetContext;
+import antlr.calcset.CalcSetParser.UnorderedComplementSetInstContext;
+import antlr.calcset.CalcSetParser.UnorderedEmptySetInstContext;
+import antlr.calcset.CalcSetParser.UnorderedSetInstContext;
+import antlr.calcset.CalcSetParser.UnorderedUniversalSetInstContext;
 import antlr.calcset.CalcSetParser.XnorContext;
 import antlr.calcset.CalcSetParser.XorContext;
 
@@ -58,19 +64,14 @@ public class EvalVisitor extends CalcSetBaseVisitor<AtomicType> {
 	public AtomicType visitExpr(ExprContext ctx) {
 		if (ctx.expr() != null) {
 			return visit(ctx.expr());
+		} else if( ctx.orderedset() != null ){
+			return visit(ctx.orderedset());
 		} else {
-			return visit(ctx.set());
+			return visit(ctx.unorderedset());
 		}
 	}
 
-	@Override
-	public AtomicType visitSet(SetContext ctx) {
-		return visitList(ctx.list());
-	}
-
-	@Override
-	public AtomicType visitList(ListContext ctx) {
-		Set<AtomicType> set = new HashSet<>();
+	public AtomicType visitList(ListContext ctx, SetType<AtomicType> set) {
 		if( ctx != null ) {
 			set.add(visit(ctx.atom()));
 			while (ctx.list() != null) {
@@ -78,14 +79,53 @@ public class EvalVisitor extends CalcSetBaseVisitor<AtomicType> {
 				set.add(visit(ctx.atom()));
 			}
 		}
-		return SetType.normalSet(set);
+		return set;
 	}
 
+	@Override
+	public AtomicType visitUnorderedSetInst(UnorderedSetInstContext ctx) {
+		return visitList(ctx.list(), SetType.normalSet(UtilSet.unorderedSet()));
+	}
+
+	@Override
+	public AtomicType visitUnorderedComplementSetInst(UnorderedComplementSetInstContext ctx) {
+		return visitList(ctx.list(), SetType.complementarySet(UtilSet.unorderedSet()));
+	}
+
+	@Override
+	public AtomicType visitUnorderedEmptySetInst(UnorderedEmptySetInstContext ctx) {
+		return SetType.normalSet(UtilSet.unorderedSet());
+	}
+
+	@Override
+	public AtomicType visitUnorderedUniversalSetInst(UnorderedUniversalSetInstContext ctx) {
+		return SetType.complementarySet(UtilSet.unorderedSet());
+	}
+
+	@Override
+	public AtomicType visitOrderedSetInst(OrderedSetInstContext ctx) {
+		return visitList(ctx.list(), SetType.normalSet(UtilSet.orderedSet()));
+	}
+
+	@Override
+	public AtomicType visitOrderedComplementSetInst(OrderedComplementSetInstContext ctx) {
+		return visitList(ctx.list(), SetType.complementarySet(UtilSet.orderedSet()));
+	}
+
+	@Override
+	public AtomicType visitOrderedEmptySetInst(OrderedEmptySetInstContext ctx) {
+		return SetType.normalSet(UtilSet.orderedSet());
+	}
+
+	@Override
+	public AtomicType visitOrderedUniversalSetInst(OrderedUniversalSetInstContext ctx) {
+		return SetType.complementarySet(UtilSet.orderedSet());
+	}
+	
 	/*
 	 * *********************************
 	 */
 
-	
 	@Override
 	public AtomicType visitOr(OrContext ctx) {
 		return visit(ctx.booleanOp()).or(visit(ctx.equalNotequal()));

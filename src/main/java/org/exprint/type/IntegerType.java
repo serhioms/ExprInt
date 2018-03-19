@@ -39,28 +39,16 @@ public class IntegerType extends AtomicNotImplemented implements AtomicType, Com
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if( obj instanceof IntegerType) {
-			return val.equals(((IntegerType)obj).val);
-		} else if( obj instanceof Integer) {
-			return val.equals((Integer)obj);
-		} else {
-			//throw new RuntimeException(UNEXPECTED_TYPE+obj.getClass().getName());
-			return false;
-		}
-	}
-
-	@Override
 	public int hashCode() {
 		return val.hashCode();
 	}
 
 	@Override
 	public int compareTo(AtomicType a) {
-		try {
+		if( a instanceof IntegerType ) {
 			return val.compareTo(a.getInteger());
-		} catch( Exception e) {
-			throw new RuntimeException(String.format(RUNTIME_ERROR4, getMessage(e), this, "compareTo", a));
+		} else {
+			return super.compareTo(a);
 		}
 	}
 
@@ -141,7 +129,7 @@ public class IntegerType extends AtomicNotImplemented implements AtomicType, Com
 		try {
 			return new IntegerType(new Double(Math.pow(val, a.getDouble())).intValue());
 		} catch( Exception e) {
-			throw new RuntimeException(String.format(RUNTIME_ERROR3, getMessage(e), "^", this));
+			throw new RuntimeException(String.format(RUNTIME_ERROR3, getMessage(e), "**", this));
 		}
 	}
 

@@ -167,13 +167,34 @@ atom
     | DOUBLE				# Double
     | INT					# Int
     | LPAR booleanOp RPAR	# Braces
-    | expr					# ToExpr
+    | expr					# ToExprFrAtom
 	;
 
 /*
 	Set definition
 */
-expr: set | '(' expr ')';
-set: '{' list '}' | '{' '}';
-list: atom ',' list | atom;
+expr
+	: unorderedset 
+	| orderedset
+	| '(' expr ')'
+	;
+	
+unorderedset
+	: '{' list '}' 						# UnorderedSetInst
+	| '{' list '}' COMPLEMENT_SET		# UnorderedComplementSetInst
+	| '{' '}'							# UnorderedEmptySetInst
+	| '{' '}' COMPLEMENT_SET			# UnorderedUniversalSetInst
+	;
+	
+orderedset
+	: '[' list ']' 						# OrderedSetInst
+	| '[' list ']' COMPLEMENT_SET		# OrderedComplementSetInst
+	| '[' ']'							# OrderedEmptySetInst
+	| '[' ']' COMPLEMENT_SET			# OrderedUniversalSetInst
+	;
+	
+list
+	: atom ',' list 
+	| atom
+	;
 	

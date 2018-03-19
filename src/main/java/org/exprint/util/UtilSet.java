@@ -1,62 +1,54 @@
 package org.exprint.util;
 
-import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.Set;
-import java.util.stream.Collectors;
+import java.util.TreeSet;
 import java.util.stream.Stream;
 
-import org.exprint.type.AtomicType;
-import org.exprint.type.SetType;
+import javautilstream.MyCollectors;
 
 public class UtilSet {
 
-    @SuppressWarnings({ "unchecked", "rawtypes" })
-    private static <S> Set<S> ofSet(Set<?> data) {
-        return new HashSet(data);
+	public static <S> Set<S> emptySet(Set<?> set) {
+		if( set instanceof TreeSet ) {
+	        return unorderedSet();
+		} else if( set instanceof LinkedHashSet ) {
+	        return orderedSet();
+	    } else {
+	    	throw new RuntimeException(String.format("Expected TreeSet or LinkedHashSet but not %s!", set.getClass().getSimpleName()));
+	    }
+	}
+
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	public static <S> Set<S> unorderedSet(Set<?> ...data ) {
+		Set set = new TreeSet(); // TreeSet sort unordered pair ({1,2}=={2,1}), HashSet - sometime does not 
+		for(Set<?> ini: data) {
+			set.addAll(ini);
+		}
+		return set;
+    }
+
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	public static <S> Set<S> orderedSet(Set<?> ...data ) {
+		Set set = new LinkedHashSet(); // LinkedHashSet keep ordered pair ({1,2}!={2,1}), HashSet - not ({1,2}=={2,1}). 
+		for(Set<?> ini: data) {
+			set.addAll(ini);
+		}
+		return set;
     }
 
     /*
      * {3,4,{5,6,{8,9}}} & {3,5,{6,7,{8,9}}} = {3}
      */
 	static public <T> Set<T> intersectionOf(Set<T> a, Set<T> b) {
-		return a.parallelStream().filter(b::contains).collect(Collectors.toSet());
-	}
-
-	/*
-	 * {3,4,{5,6,{8,9}}} & {3,5,{6,7,{8,9}}} = {3,{6,{8,9}}} 
-	 */
-	@SuppressWarnings("unchecked")
-	static public <T extends AtomicType> Set<T> recursiveIntersectionOf(Set<T> a, Set<T> b) {
-		Set<T> ab = intersectionOf(a, b);
-
-		Set<T> anext = nextLevel(a);
-		Set<T> bnext = nextLevel(b);
-		
-		if( anext.isEmpty() || bnext.isEmpty() ) {
-			return null;
-		}
-		
-		for (AtomicType aa : anext) {
-			for (AtomicType bb: bnext) {
-				Set<T> result = recursiveIntersectionOf((Set<T>)aa.getSet(), (Set<T>)bb.getSet());
-				if( result != null ) {
-					((Set<AtomicType>)ab).add(SetType.normalSet(result));
-				}
-			}
-		}
-		
-		return ab;
-	}
-
-	private static <T extends AtomicType> Set<T> nextLevel(Set<T> set) {
-		return set.parallelStream().filter(s -> s.isSet()).collect(Collectors.toSet());
+		return a.parallelStream().filter(b::contains).collect(MyCollectors.toTreeSet());
 	}
 
 	static public <T> Set<T> unionOf(Set<T> a, Set<?> b) {
-		return Stream.concat(a.stream(), b.parallelStream()).collect(Collectors.collectingAndThen(Collectors.toSet(), UtilSet::ofSet));	
+		return Stream.concat(a.stream(), b.parallelStream()).collect(MyCollectors.collectingAndThen(MyCollectors.toTreeSet(), UtilSet::unorderedSet));	
 	}
 
 	static public <T> Set<T> complementsOf(Set<T> a, Set<?> b) {
-		return a.parallelStream().filter(i -> !b.contains(i)).collect(Collectors.toSet());
+		return a.parallelStream().filter(aa -> !b.contains(aa)).collect(MyCollectors.toTreeSet());
 	}
 }

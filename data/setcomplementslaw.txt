@@ -3,7 +3,7 @@ b = {3,4}
 c = {1,2,3,4,5}
 complementA = a'
 p0 = a \ b != b \ a
-p1 = complementA == "ComplementOf{1,2,3}"
+p1 = complementA == "{1,2,3}'"
 p2 = a|complementA == _u && complementA|a == _u
 p3 = a & complementA == {} && complementA & a == {}
 Involution = _u\complementA == a

@@ -21,6 +21,8 @@ import antlr.calcset.CalcSetParser;
 public class UtilExprInt {
 
 	public static AtomicType evaluate(String newtext) throws Exception {
+		newtext += "\n";
+		
 		ANTLRInputStream inputs = new ANTLRInputStream(newtext);
 		
         CalcSetLexer lexer = new CalcSetLexer(inputs);

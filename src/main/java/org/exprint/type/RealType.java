@@ -41,28 +41,16 @@ public class RealType extends AtomicNotImplemented implements AtomicType, Compar
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if( obj instanceof RealType) {
-			return val.equals(((RealType)obj).val);
-		} else if( obj instanceof Double) {
-			return val.equals((Double)obj);
-		} else {
-			//throw new RuntimeException(UNEXPECTED_TYPE+obj.getClass().getName());
-			return false;
-		}
-	}
-
-	@Override
 	public int hashCode() {
 		return val.hashCode();
 	}
 
 	@Override
 	public int compareTo(AtomicType a) {
-		try {
+		if( a instanceof RealType ) {
 			return val.compareTo(a.getDouble());
-		} catch( Exception e) {
-			throw new RuntimeException(String.format(RUNTIME_ERROR4, getMessage(e), this, "compareTo", a));
+		} else {
+			return super.compareTo(a);
 		}
 	}
 
@@ -130,7 +118,7 @@ public class RealType extends AtomicNotImplemented implements AtomicType, Compar
 		try {
 			return new RealType(Math.pow(val, o.getDouble()));
 		} catch( Exception e) {
-			throw new RuntimeException(String.format(RUNTIME_ERROR3, getMessage(e), "^", this));
+			throw new RuntimeException(String.format(RUNTIME_ERROR3, getMessage(e), "**", this));
 		}
 	}
 

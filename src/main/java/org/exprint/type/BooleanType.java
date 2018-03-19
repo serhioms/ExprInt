@@ -36,29 +36,17 @@ public class BooleanType extends AtomicNotImplemented implements AtomicType, Com
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if( obj instanceof BooleanType) {
-			return val.equals(((BooleanType)obj).val);
-		} else if( obj instanceof Boolean) {
-			return val.equals((Boolean)obj);
+	public int compareTo(AtomicType a) {
+		if( a instanceof BooleanType ) {
+			return val.compareTo(a.getBoolean());
 		} else {
-			//throw new RuntimeException(UNEXPECTED_TYPE+obj.getClass().getName());
-			return false;
+			return super.compareTo(a);
 		}
 	}
-
+	
 	@Override
 	public int hashCode() {
 		return val.hashCode();
-	}
-
-	@Override
-	public int compareTo(AtomicType a) {
-		try {
-			return val.compareTo(a.getBoolean());
-		} catch( Exception e) {
-			throw new RuntimeException(String.format(RUNTIME_ERROR4, getMessage(e), this, "compareTo", a));
-		}
 	}
 
 	@Override

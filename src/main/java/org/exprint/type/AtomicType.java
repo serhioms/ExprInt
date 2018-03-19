@@ -37,8 +37,6 @@ public interface AtomicType {
 	public AtomicType intersection(AtomicType a);
 	public AtomicType complements(AtomicType a);
 	public AtomicType subset(AtomicType a);
-	public AtomicType cartesian(AtomicType a);
-	public AtomicType powerset();
 	public AtomicType cardinality();
 	public AtomicType disjunctiveUnion(AtomicType a);
 	public AtomicType complementSet();
@@ -60,4 +58,6 @@ public interface AtomicType {
 	public AtomicType greater(AtomicType a);
 	public AtomicType lessEqual(AtomicType a);
 	public AtomicType greaterEqual(AtomicType a);
+
+	default public String toMyString() {return this instanceof StringType? "\""+this.toString()+"\"": this.toString();}
 }
