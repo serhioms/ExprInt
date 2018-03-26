@@ -10,7 +10,7 @@ MATH_PI			: '_pi';
 MATH_E			: '_e';
 TRUE			: 'true';
 FALSE			: 'false';
-ID				: [a-zA-Z_][a-zA-Z_0-9]*;
+ID			: [a-zA-Z_][a-zA-Z_0-9]*;
 STRING			: '"' ~( '\r' | '\n' | '"' )* '"';
 
 /*
@@ -20,8 +20,8 @@ ASSIGN		: '=';
 PLUS		: '+';
 MINUS		: '-';
 MULT		: '*';
-DIV			: '/';
-POW			: '**';
+DIV		: '/';
+POW		: '**';
 
 /*
 	Bit operations https://docs.oracle.com/javase/tutorial/java/nutsandbolts/op3.html
@@ -160,8 +160,8 @@ atom
     | DOUBLE				# Double
     | INT				# Int
     |  '(' orand ')'			# Braces
-    |  '|' orand '|'			# Cardinality /* https://en.wikipedia.org/wiki/Cardinal_number#Cardinal_arithmetic */
-    | '||' orand '||'			# Norm /* https://en.wikipedia.org/wiki/Norm_(mathematics) */
+    |  '|' orand '|'			# Cardinality 	/* https://en.wikipedia.org/wiki/Cardinal_number#Cardinal_arithmetic */
+    | '||' orand '||'			# Norm		/* https://en.wikipedia.org/wiki/Norm_(mathematics) */
     | expression			# ToExprFrAtom
 	;
 
