@@ -5,9 +5,7 @@ import static org.exprint.util.UtilSet.intersectionOf;
 import static org.exprint.util.UtilSet.unionOf;
 
 import java.util.Collection;
-import java.util.LinkedHashSet;
 import java.util.Set;
-import java.util.TreeSet;
 import java.util.stream.Collectors;
 
 import org.exprint.util.UtilSet;
@@ -39,10 +37,6 @@ public class SetType<T extends AtomicType> extends AtomicNotImplemented implemen
         return new SetType(set, null);
     }
 
-	public static <S extends AtomicType> SetType<S> universalSet() {
-        return new SetType<>(null, null);
-    }
-
     @SuppressWarnings({ "unchecked", "rawtypes" })
     public static <S extends AtomicType> SetType<S> complementarySet(Set<?> set) {
         return new SetType(null, set);
@@ -67,36 +61,22 @@ public class SetType<T extends AtomicType> extends AtomicNotImplemented implemen
 
 	@Override
     public String toString() {
-		if( set == null && complementarySet == null) {
-	    	return "_u";
-	    }
-		
 		String result = "";
-		if( set instanceof TreeSet ) {
-			result += "{" + set.stream().map(AtomicType::toMyString).collect(Collectors.joining(","))+"}";
-		}
-		if( set instanceof LinkedHashSet ) {
-			result += "[" + set.stream().map(AtomicType::toMyString).collect(Collectors.joining(","))+"]"; 
-	    } 
 		
-		if( set != null && complementarySet != null) {
-			result += "*";
+		if( set != null ) {
+			result += set.toString(); 							// Normal Set
+			if( complementarySet != null && !complementarySet.isEmpty() ) {
+		    	result += "*"+complementarySet.toString()+"'";	// Cartesian product A*B' or B'*A
+			}
+		} else if( complementarySet == null ) {
+	    	result += "{}'"; 									// Unknown Universe
+		} else {
+	    	result += complementarySet.toString()+"'"; 			// Known Universe
 	    }
-
-		if( complementarySet instanceof TreeSet ) {
-	    	result += "{" + complementarySet.stream().map(AtomicType::toMyString).collect(Collectors.joining(",")) + "}'";
-		} 
-		if( complementarySet instanceof LinkedHashSet ) {
-			result += "[" + complementarySet.stream().map(AtomicType::toMyString).collect(Collectors.joining(",")) + "]'";
-	    }
+		
 		return result;
 	}
 
-	@Override
-	public boolean equals(Object o) {
-		return this.toString().replaceAll("\\[", "{").replaceAll("\\]", "}").equals(o.toString().replaceAll("\\[", "{").replaceAll("\\]", "}"));
-	}
-	
 	@Override
 	public int compareTo(AtomicType a) {
 		return this.toString().replaceAll("\\[", "{").replaceAll("\\]", "}").compareTo(a.toString().replaceAll("\\[", "{").replaceAll("\\]", "}"));
@@ -144,7 +124,7 @@ public class SetType<T extends AtomicType> extends AtomicNotImplemented implemen
 			if( isNormalSet() && a.isNormalSet() ) {
 		        return normalSet(unionOf(set, a.getSet())); 										// A | B 
 			} else if( isUniversalSet() || a.isUniversalSet() ) {
-				return universalSet();																// A | U = U; A' | U = U; U | U = U 
+				return cloneInstance();																// A | U = U; A' | U = U; U | U = U 
 			} else if( isComplimentarySet() && a.isComplimentarySet() ) {
 				return complementarySet(intersectionOf(complementarySet, (Set<T>)a.getComplementarySet())); // A' | B' = U \ (A & B);  A' | A' = A' 
 			} else if( a.isComplimentarySet() ) {
@@ -165,7 +145,7 @@ public class SetType<T extends AtomicType> extends AtomicNotImplemented implemen
 			if( isNormalSet() && a.isNormalSet() ) {
 		        return normalSet(intersectionOf(set, (Set<T>)a.getSet()));									// normal A & B 
 			} else if( isUniversalSet() && a.isUniversalSet() ) {
-				return universalSet();																// U & U = U 
+				return cloneInstance();																// U & U = U 
 			} else if( isComplimentarySet() && a.isComplimentarySet() ) {
 				return complementarySet(unionOf(complementarySet, a.getComplementarySet()));		// A' & B' = U \ (A | B); A' & A' = A' 
 			} else if( isUniversalSet() ) {
@@ -209,7 +189,7 @@ public class SetType<T extends AtomicType> extends AtomicNotImplemented implemen
 				return normalSet(complementsOf(a.getComplementarySet(), complementarySet));			// A' - B' = B \ A; A' - A' = {}
 			} else if( isUniversalSet() ) {
 				if( a.isComplimentarySet() ) {														// U \ A' = A; U \ {} = U
-					return a.getComplementarySet().isEmpty()? universalSet(): normalSet(a.cloneInstance().getComplementarySet());
+					return a.getComplementarySet().isEmpty()? cloneInstance(): normalSet(a.cloneInstance().getComplementarySet());
 				} else if( a.isNormalSet() ) {
 					return complementarySet(a.cloneInstance().getSet());							// U \ A = A'; U \ {} = U
 				}
@@ -233,7 +213,7 @@ public class SetType<T extends AtomicType> extends AtomicNotImplemented implemen
 			if( isNormalSet() ) {																	// !A = U \ A = A'; U \ {} = U
 				return complementarySet(cloneInstance().getSet());
 			} else if( isComplimentarySet() ) {														// !A' = U \ A' = A; U \ {} = U
-				return getComplementarySet().isEmpty()? universalSet(): normalSet(cloneInstance().getComplementarySet());
+				return getComplementarySet().isEmpty()? cloneInstance(): normalSet(cloneInstance().getComplementarySet());
 			} else if( isUniversalSet() ) {															// !U = U \ U = {}
 				return unorderedEmptySet();
 			}
@@ -279,32 +259,6 @@ public class SetType<T extends AtomicType> extends AtomicNotImplemented implemen
 			throw new RuntimeException(String.format(RUNTIME_ERROR4, getMessage(e), this, "@", a), e);
 		}
 		throw new RuntimeException(String.format(NOT_VALID3, this, "@", a));
-	}
-
-	@Override
-	public AtomicType not() {
-		try {
-			if( isNormalSet() ) {
-				return new BooleanType(set == null || set.isEmpty());
-			} else {
-				return new BooleanType(false);
-			}
-		} catch( Exception e) {
-			throw new RuntimeException(String.format(RUNTIME_ERROR3, getMessage(e), "!", this), e);
-		}
-	}
-	
-	@Override
-	public Boolean getBoolean() {
-		try {
-			if( isNormalSet() ) {
-				return !set.isEmpty();
-			} else {
-				return true;
-			}
-		} catch( Exception e) {
-			throw new RuntimeException(String.format(RUNTIME_ERROR3, getMessage(e), "getBoolean", this), e);
-		}
 	}
 	
 	@Override
@@ -385,7 +339,7 @@ public class SetType<T extends AtomicType> extends AtomicNotImplemented implemen
 
 	@SuppressWarnings("unchecked")
 	private static <T extends AtomicType> Set<T> cartesianOf(Set<T> a, Set<T> b) {
-		Set<AtomicType> r = UtilSet.unorderedSet();
+		Set<AtomicType> r = UtilSet.orderedSet();
 		for (AtomicType aa : a) {
 			for (AtomicType bb: b) {
 				if( aa instanceof SetType && bb instanceof SetType) {
@@ -394,8 +348,8 @@ public class SetType<T extends AtomicType> extends AtomicNotImplemented implemen
 					r.add(aa.cloneInstance());
 					r.add(normalSet(toOrderedSet(bb.cloneInstance())));
 				} else if(  bb instanceof SetType ){
-					r.add(bb.cloneInstance());
 					r.add(normalSet(toOrderedSet(aa.cloneInstance())));
+					r.add(bb.cloneInstance());
 				} else {
 					r.add(normalSet(toOrderedSet(aa.cloneInstance(), bb.cloneInstance())));
 				}
@@ -406,7 +360,7 @@ public class SetType<T extends AtomicType> extends AtomicNotImplemented implemen
 
 	@SuppressWarnings("unchecked")
 	private Set<T> complementaryCartesianOf(Set<T> a, AtomicType b) {
-		Set<AtomicType> r = UtilSet.unorderedSet();
+		Set<AtomicType> r = UtilSet.orderedSet();
 		for (AtomicType aa : a) {
 			r.add(normalSet(toOrderedSet(aa.cloneInstance(), complementarySet(b.cloneInstance().getComplementarySet()))));
 		}
@@ -415,7 +369,7 @@ public class SetType<T extends AtomicType> extends AtomicNotImplemented implemen
 
 	@SuppressWarnings("unchecked")
 	private Set<T> complementaryCartesianOf(SetType<T> a, Set<T> b) {
-		Set<AtomicType> r = UtilSet.unorderedSet();
+		Set<AtomicType> r = UtilSet.orderedSet();
 		for (AtomicType bb : b) {
 			r.add(normalSet(toOrderedSet(complementarySet(a.cloneInstance().getComplementarySet()), bb.cloneInstance())));
 		}
@@ -440,5 +394,21 @@ public class SetType<T extends AtomicType> extends AtomicNotImplemented implemen
 		} else {
 			throw new RuntimeException("Can't add element to "+toString());
 		}
+	}
+
+	@Override
+	public AtomicType power(AtomicType a) {
+		if( !(a instanceof IntegerType) ) {
+			return super.power(a);
+		}
+		int max=a.getInteger();
+		if( max <= 0 ) {
+			throw new RuntimeException(String.format(RUNTIME_ERROR4, "Power must be greater then zero", this, "**", a));
+		}
+		AtomicType b = this;
+		for(int i=1; i<max; i++) {
+			b = b.multiplication(this);
+		}
+		return b;
 	}
 }

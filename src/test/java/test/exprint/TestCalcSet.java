@@ -72,6 +72,11 @@ public class TestCalcSet {
 	}
 	
 	@Test
+	public void setcardinalitylaws() throws IOException {
+		assertEquals("true", evaluate("data/setcardinalitylaws.txt", "true"));
+	}
+	
+	@Test
 	public void setbasic() throws IOException {
 		assertEquals("true", evaluate("data/setbasic.txt", "true"));
 	}
@@ -206,6 +211,7 @@ public class TestCalcSet {
 		org.antlr.v4.gui.TestRig.main(new String[] {"calcset.CalcSet", "input", "-gui","-tokens","-diagnostics","-trace","data/setemptylaw.txt"});
 		org.antlr.v4.gui.TestRig.main(new String[] {"calcset.CalcSet", "input", "-gui","-tokens","-diagnostics","-trace","data/calcsetSubsetEmpty.txt"});
 		org.antlr.v4.gui.TestRig.main(new String[] {"calcset.CalcSet", "input", "-gui","-tokens","-diagnostics","-trace","data/setcardinality.txt"});
+		org.antlr.v4.gui.TestRig.main(new String[] {"calcset.CalcSet", "input", "-gui","-tokens","-diagnostics","-trace","data/setcardinalitylaws.txt"});
 		org.antlr.v4.gui.TestRig.main(new String[] {"calcset.CalcSet", "input", "-gui","-tokens","-diagnostics","-trace","data/setbasic.txt"});
 		org.antlr.v4.gui.TestRig.main(new String[] {"calcset.CalcSet", "input", "-gui","-tokens","-diagnostics","-trace","data/setsimple.txt"});
 		org.antlr.v4.gui.TestRig.main(new String[] {"calcset.CalcSet", "input", "-gui","-tokens","-diagnostics","-trace","data/booleanbasic.txt"});

@@ -304,13 +304,6 @@ public class CalcSetBaseVisitor<T> extends AbstractParseTreeVisitor<T> implement
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitCardinality(CalcSetParser.CardinalityContext ctx) { return visitChildren(ctx); }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation returns the result of calling
-	 * {@link #visitChildren} on {@code ctx}.</p>
-	 */
 	@Override public T visitBitInvers(CalcSetParser.BitInversContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
@@ -340,13 +333,6 @@ public class CalcSetBaseVisitor<T> extends AbstractParseTreeVisitor<T> implement
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
 	@Override public T visitConstantE(CalcSetParser.ConstantEContext ctx) { return visitChildren(ctx); }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation returns the result of calling
-	 * {@link #visitChildren} on {@code ctx}.</p>
-	 */
-	@Override public T visitUniversalSet(CalcSetParser.UniversalSetContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -388,6 +374,13 @@ public class CalcSetBaseVisitor<T> extends AbstractParseTreeVisitor<T> implement
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
+	@Override public T visitAtomCardinality(CalcSetParser.AtomCardinalityContext ctx) { return visitChildren(ctx); }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
 	@Override public T visitToExprFrAtom(CalcSetParser.ToExprFrAtomContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
@@ -402,56 +395,70 @@ public class CalcSetBaseVisitor<T> extends AbstractParseTreeVisitor<T> implement
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitUnorderedSetInst(CalcSetParser.UnorderedSetInstContext ctx) { return visitChildren(ctx); }
+	@Override public T visitUnorderedSet(CalcSetParser.UnorderedSetContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitUnorderedComplementSetInst(CalcSetParser.UnorderedComplementSetInstContext ctx) { return visitChildren(ctx); }
+	@Override public T visitUnorderedSetCardinality(CalcSetParser.UnorderedSetCardinalityContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitUnorderedEmptySetInst(CalcSetParser.UnorderedEmptySetInstContext ctx) { return visitChildren(ctx); }
+	@Override public T visitUnorderedComplementSet(CalcSetParser.UnorderedComplementSetContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitUnorderedUniversalSetInst(CalcSetParser.UnorderedUniversalSetInstContext ctx) { return visitChildren(ctx); }
+	@Override public T visitUnorderedEmptySet(CalcSetParser.UnorderedEmptySetContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitOrderedSetInst(CalcSetParser.OrderedSetInstContext ctx) { return visitChildren(ctx); }
+	@Override public T visitUnorderedUniversalSet(CalcSetParser.UnorderedUniversalSetContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitOrderedComplementSetInst(CalcSetParser.OrderedComplementSetInstContext ctx) { return visitChildren(ctx); }
+	@Override public T visitOrderedSet(CalcSetParser.OrderedSetContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitOrderedEmptySetInst(CalcSetParser.OrderedEmptySetInstContext ctx) { return visitChildren(ctx); }
+	@Override public T visitOrderedSetCardinality(CalcSetParser.OrderedSetCardinalityContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitOrderedUniversalSetInst(CalcSetParser.OrderedUniversalSetInstContext ctx) { return visitChildren(ctx); }
+	@Override public T visitOrderedComplementSet(CalcSetParser.OrderedComplementSetContext ctx) { return visitChildren(ctx); }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
+	@Override public T visitOrderedEmptySet(CalcSetParser.OrderedEmptySetContext ctx) { return visitChildren(ctx); }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
+	@Override public T visitOrderedUniversalSet(CalcSetParser.OrderedUniversalSetContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *

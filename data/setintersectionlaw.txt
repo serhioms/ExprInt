@@ -6,6 +6,6 @@ p2 = a & (b & c) == (a & b) & c
 p3 = a & b @ a
 p4 = a & a == a
 p5 = a & {} == {}
-p6 = a @ b && a & b == a
-p7 = !(c @ b && c & b == c)
+p6 = (a @ b) -> (a & b == a)
+p7 = !(c @ b) -> !(c & b == c)
 p1 && p2 && p3 && p4 && p5 && p6 && p7

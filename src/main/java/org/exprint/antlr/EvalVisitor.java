@@ -13,6 +13,7 @@ import org.exprint.util.UtilSet;
 import antlr.calcset.CalcSetBaseVisitor;
 import antlr.calcset.CalcSetParser;
 import antlr.calcset.CalcSetParser.AndContext;
+import antlr.calcset.CalcSetParser.AtomCardinalityContext;
 import antlr.calcset.CalcSetParser.BitInversContext;
 import antlr.calcset.CalcSetParser.BitLeftContext;
 import antlr.calcset.CalcSetParser.BitRightContext;
@@ -21,7 +22,6 @@ import antlr.calcset.CalcSetParser.BitXorContext;
 import antlr.calcset.CalcSetParser.BooleanContext;
 import antlr.calcset.CalcSetParser.BooleanOpContext;
 import antlr.calcset.CalcSetParser.CalculateContext;
-import antlr.calcset.CalcSetParser.CardinalityContext;
 import antlr.calcset.CalcSetParser.ComplementSetContext;
 import antlr.calcset.CalcSetParser.ComplementsSetContext;
 import antlr.calcset.CalcSetParser.DisjunctiveUnionContext;
@@ -39,37 +39,27 @@ import antlr.calcset.CalcSetParser.NandContext;
 import antlr.calcset.CalcSetParser.NequalContext;
 import antlr.calcset.CalcSetParser.NorContext;
 import antlr.calcset.CalcSetParser.OrContext;
-import antlr.calcset.CalcSetParser.OrderedComplementSetInstContext;
-import antlr.calcset.CalcSetParser.OrderedEmptySetInstContext;
-import antlr.calcset.CalcSetParser.OrderedSetInstContext;
-import antlr.calcset.CalcSetParser.OrderedUniversalSetInstContext;
+import antlr.calcset.CalcSetParser.OrderedComplementSetContext;
+import antlr.calcset.CalcSetParser.OrderedEmptySetContext;
+import antlr.calcset.CalcSetParser.OrderedSetCardinalityContext;
+import antlr.calcset.CalcSetParser.OrderedSetContext;
+import antlr.calcset.CalcSetParser.OrderedUniversalSetContext;
 import antlr.calcset.CalcSetParser.SetVariableContext;
 import antlr.calcset.CalcSetParser.StringContext;
 import antlr.calcset.CalcSetParser.SubSetContext;
 import antlr.calcset.CalcSetParser.UnaryNotContext;
 import antlr.calcset.CalcSetParser.UnionSetContext;
-import antlr.calcset.CalcSetParser.UniversalSetContext;
-import antlr.calcset.CalcSetParser.UnorderedComplementSetInstContext;
-import antlr.calcset.CalcSetParser.UnorderedEmptySetInstContext;
-import antlr.calcset.CalcSetParser.UnorderedSetInstContext;
-import antlr.calcset.CalcSetParser.UnorderedUniversalSetInstContext;
+import antlr.calcset.CalcSetParser.UnorderedComplementSetContext;
+import antlr.calcset.CalcSetParser.UnorderedEmptySetContext;
+import antlr.calcset.CalcSetParser.UnorderedSetCardinalityContext;
+import antlr.calcset.CalcSetParser.UnorderedSetContext;
+import antlr.calcset.CalcSetParser.UnorderedUniversalSetContext;
 import antlr.calcset.CalcSetParser.XnorContext;
 import antlr.calcset.CalcSetParser.XorContext;
 
 public class EvalVisitor extends CalcSetBaseVisitor<AtomicType> {
 
 	private HashMap<String, AtomicType> variables = new HashMap<String, AtomicType>();
-
-	@Override
-	public AtomicType visitExpr(ExprContext ctx) {
-		if (ctx.expr() != null) {
-			return visit(ctx.expr());
-		} else if( ctx.orderedset() != null ){
-			return visit(ctx.orderedset());
-		} else {
-			return visit(ctx.unorderedset());
-		}
-	}
 
 	public AtomicType visitList(ListContext ctx, SetType<AtomicType> set) {
 		if( ctx != null ) {
@@ -83,42 +73,68 @@ public class EvalVisitor extends CalcSetBaseVisitor<AtomicType> {
 	}
 
 	@Override
-	public AtomicType visitUnorderedSetInst(UnorderedSetInstContext ctx) {
+	public AtomicType visitExpr(ExprContext ctx) {
+		if (ctx.expr() != null) {
+			return visit(ctx.expr());
+		} else if( ctx.orderedsetexpr() != null ){
+			return visit(ctx.orderedsetexpr());
+		} else {
+			return visit(ctx.unorderedsetexpr());
+		}
+	}
+
+	@Override
+	public AtomicType visitAtomCardinality(AtomCardinalityContext ctx) {
+		return visit(ctx.booleanOp()).cardinality();
+	}
+
+	@Override
+	public AtomicType visitOrderedSetCardinality(OrderedSetCardinalityContext ctx) {
+		return visit(ctx.list()).cardinality();
+	}
+
+	@Override
+	public AtomicType visitUnorderedSetCardinality(UnorderedSetCardinalityContext ctx) {
+		return visit(ctx.list()).cardinality();
+	}
+
+	@Override
+	public AtomicType visitUnorderedSet(UnorderedSetContext ctx) {
 		return visitList(ctx.list(), SetType.normalSet(UtilSet.unorderedSet()));
 	}
 
 	@Override
-	public AtomicType visitUnorderedComplementSetInst(UnorderedComplementSetInstContext ctx) {
+	public AtomicType visitUnorderedComplementSet(UnorderedComplementSetContext ctx) {
 		return visitList(ctx.list(), SetType.complementarySet(UtilSet.unorderedSet()));
 	}
 
 	@Override
-	public AtomicType visitUnorderedEmptySetInst(UnorderedEmptySetInstContext ctx) {
+	public AtomicType visitUnorderedEmptySet(UnorderedEmptySetContext ctx) {
 		return SetType.normalSet(UtilSet.unorderedSet());
 	}
 
 	@Override
-	public AtomicType visitUnorderedUniversalSetInst(UnorderedUniversalSetInstContext ctx) {
+	public AtomicType visitUnorderedUniversalSet(UnorderedUniversalSetContext ctx) {
 		return SetType.complementarySet(UtilSet.unorderedSet());
 	}
 
 	@Override
-	public AtomicType visitOrderedSetInst(OrderedSetInstContext ctx) {
+	public AtomicType visitOrderedSet(OrderedSetContext ctx) {
 		return visitList(ctx.list(), SetType.normalSet(UtilSet.orderedSet()));
 	}
 
 	@Override
-	public AtomicType visitOrderedComplementSetInst(OrderedComplementSetInstContext ctx) {
+	public AtomicType visitOrderedComplementSet(OrderedComplementSetContext ctx) {
 		return visitList(ctx.list(), SetType.complementarySet(UtilSet.orderedSet()));
 	}
 
 	@Override
-	public AtomicType visitOrderedEmptySetInst(OrderedEmptySetInstContext ctx) {
+	public AtomicType visitOrderedEmptySet(OrderedEmptySetContext ctx) {
 		return SetType.normalSet(UtilSet.orderedSet());
 	}
 
 	@Override
-	public AtomicType visitOrderedUniversalSetInst(OrderedUniversalSetInstContext ctx) {
+	public AtomicType visitOrderedUniversalSet(OrderedUniversalSetContext ctx) {
 		return SetType.complementarySet(UtilSet.orderedSet());
 	}
 	
@@ -305,11 +321,6 @@ public class EvalVisitor extends CalcSetBaseVisitor<AtomicType> {
 	}
 
 	@Override
-	public AtomicType visitCardinality(CardinalityContext ctx) {
-		return visit(ctx.unaryMinus()).cardinality();
-	}
-
-	@Override
 	public AtomicType visitBraces(CalcSetParser.BracesContext ctx) {
 		return visit(ctx.booleanOp());
 	}
@@ -322,11 +333,6 @@ public class EvalVisitor extends CalcSetBaseVisitor<AtomicType> {
 	@Override
 	public AtomicType visitConstantE(CalcSetParser.ConstantEContext ctx) {
 		return new RealType(Math.E);
-	}
-
-	@Override
-	public AtomicType visitUniversalSet(UniversalSetContext ctx) {
-		return SetType.universalSet();
 	}
 
 	@Override

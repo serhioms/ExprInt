@@ -1,22 +1,10 @@
 a = {1,2,3}
 b = {3,4,5}
-p1 = _u == _u
-p2 = _u \ _u == {}
-p3 = a \ _u == {}
-complementEmptySet = _u \ {}
-p4 = complementEmptySet == {}'
-complementA = a'
-p5 = complementA == "{1,2,3}'"
-p6 = a | complementA == {}' 
-p7 = complementA | a == _u
-p8 = _u \ complementA == a
-p9 = a \ complementA == a
-complementB = b'
-p10= complementB == "{3,4,5}'"
-p11= b | complementB == _u 
-p12= complementB | b == _u
-p13= _u \ complementB == b
-p14= b \ complementB == b
-p15= _u == {}'
-p16= _u == "_u"
-p1 && p2 && p3 && p4 && p5 && p6 && p7 && p8 && p9 && p10 && p11 && p12 && p13 && p14 && p15 && p16
+p1 = a \ {}' == {}
+p2 = a' == "{1,2,3}'"
+p3 = a | a' == {}'
+p4 = a' | a == {}'
+p5 = {}' \ a' == a
+p6 = a \ a' == a
+p7= b' == "{3,4,5}'"
+p1 && p2 && p3 && p4 && p5 && p6 && p7

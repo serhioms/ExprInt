@@ -298,13 +298,6 @@ public interface CalcSetVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitChangeSign(CalcSetParser.ChangeSignContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code Cardinality}
-	 * labeled alternative in {@link CalcSetParser#unaryMinus}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitCardinality(CalcSetParser.CardinalityContext ctx);
-	/**
 	 * Visit a parse tree produced by the {@code BitInvers}
 	 * labeled alternative in {@link CalcSetParser#unaryMinus}.
 	 * @param ctx the parse tree
@@ -339,13 +332,6 @@ public interface CalcSetVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitConstantE(CalcSetParser.ConstantEContext ctx);
-	/**
-	 * Visit a parse tree produced by the {@code UniversalSet}
-	 * labeled alternative in {@link CalcSetParser#atom}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitUniversalSet(CalcSetParser.UniversalSetContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code String}
 	 * labeled alternative in {@link CalcSetParser#atom}.
@@ -382,6 +368,13 @@ public interface CalcSetVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitBraces(CalcSetParser.BracesContext ctx);
 	/**
+	 * Visit a parse tree produced by the {@code AtomCardinality}
+	 * labeled alternative in {@link CalcSetParser#atom}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitAtomCardinality(CalcSetParser.AtomCardinalityContext ctx);
+	/**
 	 * Visit a parse tree produced by the {@code ToExprFrAtom}
 	 * labeled alternative in {@link CalcSetParser#atom}.
 	 * @param ctx the parse tree
@@ -395,61 +388,75 @@ public interface CalcSetVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitExpr(CalcSetParser.ExprContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code UnorderedSetInst}
-	 * labeled alternative in {@link CalcSetParser#unorderedset}.
+	 * Visit a parse tree produced by the {@code UnorderedSet}
+	 * labeled alternative in {@link CalcSetParser#unorderedsetexpr}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitUnorderedSetInst(CalcSetParser.UnorderedSetInstContext ctx);
+	T visitUnorderedSet(CalcSetParser.UnorderedSetContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code UnorderedComplementSetInst}
-	 * labeled alternative in {@link CalcSetParser#unorderedset}.
+	 * Visit a parse tree produced by the {@code UnorderedSetCardinality}
+	 * labeled alternative in {@link CalcSetParser#unorderedsetexpr}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitUnorderedComplementSetInst(CalcSetParser.UnorderedComplementSetInstContext ctx);
+	T visitUnorderedSetCardinality(CalcSetParser.UnorderedSetCardinalityContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code UnorderedEmptySetInst}
-	 * labeled alternative in {@link CalcSetParser#unorderedset}.
+	 * Visit a parse tree produced by the {@code UnorderedComplementSet}
+	 * labeled alternative in {@link CalcSetParser#unorderedsetexpr}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitUnorderedEmptySetInst(CalcSetParser.UnorderedEmptySetInstContext ctx);
+	T visitUnorderedComplementSet(CalcSetParser.UnorderedComplementSetContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code UnorderedUniversalSetInst}
-	 * labeled alternative in {@link CalcSetParser#unorderedset}.
+	 * Visit a parse tree produced by the {@code UnorderedEmptySet}
+	 * labeled alternative in {@link CalcSetParser#unorderedsetexpr}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitUnorderedUniversalSetInst(CalcSetParser.UnorderedUniversalSetInstContext ctx);
+	T visitUnorderedEmptySet(CalcSetParser.UnorderedEmptySetContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code OrderedSetInst}
-	 * labeled alternative in {@link CalcSetParser#orderedset}.
+	 * Visit a parse tree produced by the {@code UnorderedUniversalSet}
+	 * labeled alternative in {@link CalcSetParser#unorderedsetexpr}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitOrderedSetInst(CalcSetParser.OrderedSetInstContext ctx);
+	T visitUnorderedUniversalSet(CalcSetParser.UnorderedUniversalSetContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code OrderedComplementSetInst}
-	 * labeled alternative in {@link CalcSetParser#orderedset}.
+	 * Visit a parse tree produced by the {@code OrderedSet}
+	 * labeled alternative in {@link CalcSetParser#orderedsetexpr}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitOrderedComplementSetInst(CalcSetParser.OrderedComplementSetInstContext ctx);
+	T visitOrderedSet(CalcSetParser.OrderedSetContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code OrderedEmptySetInst}
-	 * labeled alternative in {@link CalcSetParser#orderedset}.
+	 * Visit a parse tree produced by the {@code OrderedSetCardinality}
+	 * labeled alternative in {@link CalcSetParser#orderedsetexpr}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitOrderedEmptySetInst(CalcSetParser.OrderedEmptySetInstContext ctx);
+	T visitOrderedSetCardinality(CalcSetParser.OrderedSetCardinalityContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code OrderedUniversalSetInst}
-	 * labeled alternative in {@link CalcSetParser#orderedset}.
+	 * Visit a parse tree produced by the {@code OrderedComplementSet}
+	 * labeled alternative in {@link CalcSetParser#orderedsetexpr}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitOrderedUniversalSetInst(CalcSetParser.OrderedUniversalSetInstContext ctx);
+	T visitOrderedComplementSet(CalcSetParser.OrderedComplementSetContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code OrderedEmptySet}
+	 * labeled alternative in {@link CalcSetParser#orderedsetexpr}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitOrderedEmptySet(CalcSetParser.OrderedEmptySetContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code OrderedUniversalSet}
+	 * labeled alternative in {@link CalcSetParser#orderedsetexpr}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitOrderedUniversalSet(CalcSetParser.OrderedUniversalSetContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link CalcSetParser#list}.
 	 * @param ctx the parse tree

@@ -1,15 +1,17 @@
 package org.exprint.type;
 
 import java.util.Set;
+import java.util.regex.Pattern;
 
 abstract public class AtomicNotImplemented implements AtomicType, Comparable<AtomicType> {
 
+	public static final String IMPOSSIBLE_CASE = "Impossible case!";
 	public static final String UNEXPECTED_TYPE = "Unexpected type: ";
 	public static final String UNEXPECTED_OPERATION = "Unexpected operation: ";
-	public static final String NOT_IMPLEMENTED4 = "%s %s%s%s is not implemented!";
-	public static final String NOT_VALID3 = "%s %s %s is not valid!";
-	public static final String NOT_VALID2 = "%s(%s) is not valid!";
-	public static final String NOT_VALID1 = "%s is not valid for %s!";
+	public static final String NOT_IMPLEMENTED4 = "%s %s%s%s is not implemented";
+	public static final String NOT_VALID3 = "%s %s %s is not valid";
+	public static final String NOT_VALID2 = "%s(%s) is not valid";
+	public static final String NOT_VALID1 = "%s is not valid for %s";
 	public static final String RUNTIME_ERROR4 = "%s: %s %s %s";
 	public static final String RUNTIME_ERROR3 = "%s: %s(%s)";
 
@@ -287,10 +289,34 @@ abstract public class AtomicNotImplemented implements AtomicType, Comparable<Ato
 		return this.toString().compareTo(a.toString());
 	}
 
+	static private Pattern brackets = Pattern.compile("[\\[\\]{}]");
+	static private String replaceTo = "|";
+	static private String quote = "\"";
 	
 	@Override
 	public boolean equals(Object o) {
-		return this.toString().equals(o.toString());
+		boolean isO = o instanceof StringType;
+		boolean isT = this instanceof StringType;
+		
+		String stro = o.toString();
+		String strt = this.toString();
+		
+		if( o instanceof SetType || isO) {
+			stro = brackets.matcher(stro).replaceAll(replaceTo);
+		}
+		if( this instanceof SetType || isT) {
+			strt = brackets.matcher(strt).replaceAll(replaceTo);
+		}
+		
+		if( isO && isT ) {
+			return strt.equals(stro);
+		} else if( isO ) {
+			return stro.equals(quote+strt+quote);
+		} else if( isT ) {
+			return strt.equals(quote+stro+quote);
+		} else {
+			return strt.equals(stro);
+		}
 	}	
 	
 }

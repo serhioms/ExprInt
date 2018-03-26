@@ -58,6 +58,4 @@ public interface AtomicType {
 	public AtomicType greater(AtomicType a);
 	public AtomicType lessEqual(AtomicType a);
 	public AtomicType greaterEqual(AtomicType a);
-
-	default public String toMyString() {return this instanceof StringType? "\""+this.toString()+"\"": this.toString();}
 }

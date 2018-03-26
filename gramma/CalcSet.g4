@@ -8,7 +8,6 @@ INT				: [0-9]+;
 DOUBLE			: [0-9]+'.'[0-9]+;
 MATH_PI			: '_pi';
 MATH_E			: '_e';
-UNIVERSAL_SET	: '_u';
 TRUE			: 'true';
 FALSE			: 'false';
 ID				: [a-zA-Z_][a-zA-Z_0-9]*;
@@ -62,16 +61,12 @@ XNOR		: 'X!';
 /* 
 	Sets https://en.wikipedia.org/wiki/Set_(mathematics)
  */
-CARDINALITY			: '#';
 INTERSECTION		: '&';
 UNION				: '|';
 COMPLEMENTS			: '\\';
 SUBSET				: '@';
 COMPLEMENT_SET		: '\'';   /* https://en.wikipedia.org/wiki/Complement_(set_theory) */
 DISJUNCTIVE_UNION	: '/\\';  /* https://en.wikipedia.org/wiki/Symmetric_difference */
-
-LPAR		: '(';
-RPAR		: ')';
 
 /*
 	Input string - expression
@@ -152,7 +147,6 @@ unaryMinus
     | NOT unaryMinus					# UnaryNot
     | unaryMinus COMPLEMENT_SET			# ComplementSet
     | BIT_INVERS unaryMinus				# BitInvers
-    | CARDINALITY unaryMinus			# Cardinality
     | atom             					# ToAtom
     ;
 
@@ -160,13 +154,13 @@ atom
     : ID					# Variable
     | MATH_PI				# ConstantPI
     | MATH_E				# ConstantE
-    | UNIVERSAL_SET			# UniversalSet
     | STRING				# String
     | TRUE					# Boolean
     | FALSE					# Boolean
     | DOUBLE				# Double
     | INT					# Int
-    | LPAR booleanOp RPAR	# Braces
+    | '(' booleanOp ')'		# Braces
+    | '|' booleanOp '|'		# AtomCardinality /* https://en.wikipedia.org/wiki/Cardinal_number#Cardinal_arithmetic */
     | expr					# ToExprFrAtom
 	;
 
@@ -174,23 +168,25 @@ atom
 	Set definition
 */
 expr
-	: unorderedset 
-	| orderedset
+	: unorderedsetexpr 
+	| orderedsetexpr
 	| '(' expr ')'
 	;
 	
-unorderedset
-	: '{' list '}' 						# UnorderedSetInst
-	| '{' list '}' COMPLEMENT_SET		# UnorderedComplementSetInst
-	| '{' '}'							# UnorderedEmptySetInst
-	| '{' '}' COMPLEMENT_SET			# UnorderedUniversalSetInst
+unorderedsetexpr
+	: '{' list '}' 						# UnorderedSet
+	| '|' list '|' 						# UnorderedSetCardinality /* https://en.wikipedia.org/wiki/Cardinal_number#Cardinal_arithmetic */
+	| '{' list '}' COMPLEMENT_SET		# UnorderedComplementSet
+	| '{' '}'							# UnorderedEmptySet
+	| '{' '}' COMPLEMENT_SET			# UnorderedUniversalSet
 	;
 	
-orderedset
-	: '[' list ']' 						# OrderedSetInst
-	| '[' list ']' COMPLEMENT_SET		# OrderedComplementSetInst
-	| '[' ']'							# OrderedEmptySetInst
-	| '[' ']' COMPLEMENT_SET			# OrderedUniversalSetInst
+orderedsetexpr
+	: '[' list ']' 						# OrderedSet
+	| '|' list '|' 						# OrderedSetCardinality /* https://en.wikipedia.org/wiki/Cardinal_number#Cardinal_arithmetic */
+	| '[' list ']' COMPLEMENT_SET		# OrderedComplementSet
+	| '[' ']'							# OrderedEmptySet
+	| '[' ']' COMPLEMENT_SET			# OrderedUniversalSet
 	;
 	
 list

@@ -4,21 +4,18 @@ c = {5,6,7,8,9}
 d = {0,1,2,3,4,5,6,7,8,9}
 p1 = {} @ a
 p2 = a @ a
-p3 = a @ _u
-p4 = a == b && a @ b && b @ a
-p5 = a != d && !(a @ d && d @ a)
+p3 = a @ {}'
+p4 = (a == b) -> (a @ b && b @ a)
+p5 = (a != d) -> !(a @ d && d @ a)
 p6 = !(a @ c)
-complementA = a'
-p7 = !(a @ complementA)
-complementC = _u \ c
-p8 = a @ complementC
-complementD = _u \ d
-p9 = !(a @ complementD)
-p10 = !(complementA @ a)
-p11 = !(complementC @ a)
-p12 = complementA @ complementA
-p13 = !(complementA @ complementC)
-p14 = !(complementC @ complementA)
-p15 = !(complementA @ complementD)
-p16 = complementD @ complementA
+p7 = !(a @ a')
+p8 = a @ c'
+p9 = !(a @ d')
+p10 = !(a' @ a)
+p11 = !(c' @ a)
+p12 = a' @ a'
+p13 = !(a' @ c')
+p14 = !(c' @ a')
+p15 = !(a' @ d')
+p16 = d' @ a'
 p1 && p2 && p3 && p4 && p5 && p6 && p7 && p8 && p9 && p10 && p11 && p12 && p13 && p14 && p15 && p16

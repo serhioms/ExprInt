@@ -17,41 +17,39 @@ public class CalcSetParser extends Parser {
 	protected static final PredictionContextCache _sharedContextCache =
 		new PredictionContextCache();
 	public static final int
-		T__0=1, T__1=2, T__2=3, T__3=4, T__4=5, WS=6, NL=7, INT=8, DOUBLE=9, MATH_PI=10, 
-		MATH_E=11, UNIVERSAL_SET=12, TRUE=13, FALSE=14, ID=15, STRING=16, ASSIGN=17, 
-		PLUS=18, MINUS=19, MULT=20, DIV=21, POW=22, BIT_INVERS=23, BIT_XOR=24, 
-		BIT_LEFT=25, BIT_RIGHT=26, BIT_RIGHTU=27, GR=28, GRE=29, LS=30, LSE=31, 
-		EQUAL=32, NEQUAL=33, AND=34, OR=35, NOT=36, IMPLICATION=37, NAND=38, NOR=39, 
-		XOR=40, XNOR=41, CARDINALITY=42, INTERSECTION=43, UNION=44, COMPLEMENTS=45, 
-		SUBSET=46, COMPLEMENT_SET=47, DISJUNCTIVE_UNION=48, LPAR=49, RPAR=50;
+		T__0=1, T__1=2, T__2=3, T__3=4, T__4=5, T__5=6, T__6=7, COMMENT=8, WS=9, 
+		NL=10, INT=11, DOUBLE=12, MATH_PI=13, MATH_E=14, TRUE=15, FALSE=16, ID=17, 
+		STRING=18, ASSIGN=19, PLUS=20, MINUS=21, MULT=22, DIV=23, POW=24, BIT_INVERS=25, 
+		BIT_XOR=26, BIT_LEFT=27, BIT_RIGHT=28, BIT_RIGHTU=29, GR=30, GRE=31, LS=32, 
+		LSE=33, EQUAL=34, NEQUAL=35, AND=36, OR=37, NOT=38, IMPLICATION=39, NAND=40, 
+		NOR=41, XOR=42, XNOR=43, INTERSECTION=44, UNION=45, COMPLEMENTS=46, SUBSET=47, 
+		COMPLEMENT_SET=48, DISJUNCTIVE_UNION=49;
 	public static final int
 		RULE_input = 0, RULE_setVar = 1, RULE_booleanOp = 2, RULE_equalNotequal = 3, 
 		RULE_plusOrMinus = 4, RULE_implicationSubset = 5, RULE_union = 6, RULE_intersectionComplements = 7, 
 		RULE_multOrDiv = 8, RULE_bit = 9, RULE_pow = 10, RULE_unaryMinus = 11, 
-		RULE_atom = 12, RULE_expr = 13, RULE_unorderedset = 14, RULE_orderedset = 15, 
+		RULE_atom = 12, RULE_expr = 13, RULE_unorderedsetexpr = 14, RULE_orderedsetexpr = 15, 
 		RULE_list = 16;
 	public static final String[] ruleNames = {
 		"input", "setVar", "booleanOp", "equalNotequal", "plusOrMinus", "implicationSubset", 
 		"union", "intersectionComplements", "multOrDiv", "bit", "pow", "unaryMinus", 
-		"atom", "expr", "unorderedset", "orderedset", "list"
+		"atom", "expr", "unorderedsetexpr", "orderedsetexpr", "list"
 	};
 
 	private static final String[] _LITERAL_NAMES = {
-		null, "'{'", "'}'", "'['", "']'", "','", null, "'\n'", null, null, "'_pi'", 
-		"'_e'", "'_u'", "'true'", "'false'", null, null, "'='", "'+'", "'-'", 
-		"'*'", "'/'", "'**'", "'~'", "'^'", "'<<'", "'>>'", "'>>>'", "'>'", "'>='", 
-		"'<'", "'<='", "'=='", "'!='", "'&&'", "'||'", "'!'", "'->'", "'!&'", 
-		"'!|'", "'X|'", "'X!'", "'#'", "'&'", "'|'", "'\\'", "'@'", "'''", "'/\\'", 
-		"'('", "')'"
+		null, "'('", "')'", "'{'", "'}'", "'['", "']'", "','", null, null, "'\n'", 
+		null, null, "'_pi'", "'_e'", "'true'", "'false'", null, null, "'='", "'+'", 
+		"'-'", "'*'", "'/'", "'**'", "'~'", "'^'", "'<<'", "'>>'", "'>>>'", "'>'", 
+		"'>='", "'<'", "'<='", "'=='", "'!='", "'&&'", "'||'", "'!'", "'->'", 
+		"'!&'", "'!|'", "'X|'", "'X!'", "'&'", "'|'", "'\\'", "'@'", "'''", "'/\\'"
 	};
 	private static final String[] _SYMBOLIC_NAMES = {
-		null, null, null, null, null, null, "WS", "NL", "INT", "DOUBLE", "MATH_PI", 
-		"MATH_E", "UNIVERSAL_SET", "TRUE", "FALSE", "ID", "STRING", "ASSIGN", 
-		"PLUS", "MINUS", "MULT", "DIV", "POW", "BIT_INVERS", "BIT_XOR", "BIT_LEFT", 
-		"BIT_RIGHT", "BIT_RIGHTU", "GR", "GRE", "LS", "LSE", "EQUAL", "NEQUAL", 
-		"AND", "OR", "NOT", "IMPLICATION", "NAND", "NOR", "XOR", "XNOR", "CARDINALITY", 
-		"INTERSECTION", "UNION", "COMPLEMENTS", "SUBSET", "COMPLEMENT_SET", "DISJUNCTIVE_UNION", 
-		"LPAR", "RPAR"
+		null, null, null, null, null, null, null, null, "COMMENT", "WS", "NL", 
+		"INT", "DOUBLE", "MATH_PI", "MATH_E", "TRUE", "FALSE", "ID", "STRING", 
+		"ASSIGN", "PLUS", "MINUS", "MULT", "DIV", "POW", "BIT_INVERS", "BIT_XOR", 
+		"BIT_LEFT", "BIT_RIGHT", "BIT_RIGHTU", "GR", "GRE", "LS", "LSE", "EQUAL", 
+		"NEQUAL", "AND", "OR", "NOT", "IMPLICATION", "NAND", "NOR", "XOR", "XNOR", 
+		"INTERSECTION", "UNION", "COMPLEMENTS", "SUBSET", "COMPLEMENT_SET", "DISJUNCTIVE_UNION"
 	};
 	public static final Vocabulary VOCABULARY = new VocabularyImpl(_LITERAL_NAMES, _SYMBOLIC_NAMES);
 
@@ -1668,18 +1666,6 @@ public class CalcSetParser extends Parser {
 			else return visitor.visitChildren(this);
 		}
 	}
-	public static class CardinalityContext extends UnaryMinusContext {
-		public TerminalNode CARDINALITY() { return getToken(CalcSetParser.CARDINALITY, 0); }
-		public UnaryMinusContext unaryMinus() {
-			return getRuleContext(UnaryMinusContext.class,0);
-		}
-		public CardinalityContext(UnaryMinusContext ctx) { copyFrom(ctx); }
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof CalcSetVisitor ) return ((CalcSetVisitor<? extends T>)visitor).visitCardinality(this);
-			else return visitor.visitChildren(this);
-		}
-	}
 	public static class BitInversContext extends UnaryMinusContext {
 		public TerminalNode BIT_INVERS() { return getToken(CalcSetParser.BIT_INVERS, 0); }
 		public UnaryMinusContext unaryMinus() {
@@ -1719,7 +1705,7 @@ public class CalcSetParser extends Parser {
 			int _alt;
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(204);
+			setState(202);
 			_errHandler.sync(this);
 			switch (_input.LA(1)) {
 			case MINUS:
@@ -1731,7 +1717,7 @@ public class CalcSetParser extends Parser {
 				setState(195);
 				match(MINUS);
 				setState(196);
-				unaryMinus(6);
+				unaryMinus(5);
 				}
 				break;
 			case NOT:
@@ -1742,7 +1728,7 @@ public class CalcSetParser extends Parser {
 				setState(197);
 				match(NOT);
 				setState(198);
-				unaryMinus(5);
+				unaryMinus(4);
 				}
 				break;
 			case BIT_INVERS:
@@ -1753,37 +1739,26 @@ public class CalcSetParser extends Parser {
 				setState(199);
 				match(BIT_INVERS);
 				setState(200);
-				unaryMinus(3);
-				}
-				break;
-			case CARDINALITY:
-				{
-				_localctx = new CardinalityContext(_localctx);
-				_ctx = _localctx;
-				_prevctx = _localctx;
-				setState(201);
-				match(CARDINALITY);
-				setState(202);
 				unaryMinus(2);
 				}
 				break;
 			case T__0:
 			case T__2:
+			case T__4:
 			case INT:
 			case DOUBLE:
 			case MATH_PI:
 			case MATH_E:
-			case UNIVERSAL_SET:
 			case TRUE:
 			case FALSE:
 			case ID:
 			case STRING:
-			case LPAR:
+			case UNION:
 				{
 				_localctx = new ToAtomContext(_localctx);
 				_ctx = _localctx;
 				_prevctx = _localctx;
-				setState(203);
+				setState(201);
 				atom();
 				}
 				break;
@@ -1791,7 +1766,7 @@ public class CalcSetParser extends Parser {
 				throw new NoViableAltException(this);
 			}
 			_ctx.stop = _input.LT(-1);
-			setState(210);
+			setState(208);
 			_errHandler.sync(this);
 			_alt = getInterpreter().adaptivePredict(_input,19,_ctx);
 			while ( _alt!=2 && _alt!=org.antlr.v4.runtime.atn.ATN.INVALID_ALT_NUMBER ) {
@@ -1802,14 +1777,14 @@ public class CalcSetParser extends Parser {
 					{
 					_localctx = new ComplementSetContext(new UnaryMinusContext(_parentctx, _parentState));
 					pushNewRecursionContext(_localctx, _startState, RULE_unaryMinus);
-					setState(206);
-					if (!(precpred(_ctx, 4))) throw new FailedPredicateException(this, "precpred(_ctx, 4)");
-					setState(207);
+					setState(204);
+					if (!(precpred(_ctx, 3))) throw new FailedPredicateException(this, "precpred(_ctx, 3)");
+					setState(205);
 					match(COMPLEMENT_SET);
 					}
 					} 
 				}
-				setState(212);
+				setState(210);
 				_errHandler.sync(this);
 				_alt = getInterpreter().adaptivePredict(_input,19,_ctx);
 			}
@@ -1856,11 +1831,9 @@ public class CalcSetParser extends Parser {
 		}
 	}
 	public static class BracesContext extends AtomContext {
-		public TerminalNode LPAR() { return getToken(CalcSetParser.LPAR, 0); }
 		public BooleanOpContext booleanOp() {
 			return getRuleContext(BooleanOpContext.class,0);
 		}
-		public TerminalNode RPAR() { return getToken(CalcSetParser.RPAR, 0); }
 		public BracesContext(AtomContext ctx) { copyFrom(ctx); }
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
@@ -1874,15 +1847,6 @@ public class CalcSetParser extends Parser {
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
 			if ( visitor instanceof CalcSetVisitor ) return ((CalcSetVisitor<? extends T>)visitor).visitConstantE(this);
-			else return visitor.visitChildren(this);
-		}
-	}
-	public static class UniversalSetContext extends AtomContext {
-		public TerminalNode UNIVERSAL_SET() { return getToken(CalcSetParser.UNIVERSAL_SET, 0); }
-		public UniversalSetContext(AtomContext ctx) { copyFrom(ctx); }
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof CalcSetVisitor ) return ((CalcSetVisitor<? extends T>)visitor).visitUniversalSet(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -1934,19 +1898,30 @@ public class CalcSetParser extends Parser {
 			else return visitor.visitChildren(this);
 		}
 	}
+	public static class AtomCardinalityContext extends AtomContext {
+		public BooleanOpContext booleanOp() {
+			return getRuleContext(BooleanOpContext.class,0);
+		}
+		public AtomCardinalityContext(AtomContext ctx) { copyFrom(ctx); }
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof CalcSetVisitor ) return ((CalcSetVisitor<? extends T>)visitor).visitAtomCardinality(this);
+			else return visitor.visitChildren(this);
+		}
+	}
 
 	public final AtomContext atom() throws RecognitionException {
 		AtomContext _localctx = new AtomContext(_ctx, getState());
 		enterRule(_localctx, 24, RULE_atom);
 		try {
-			setState(227);
+			setState(228);
 			_errHandler.sync(this);
 			switch ( getInterpreter().adaptivePredict(_input,20,_ctx) ) {
 			case 1:
 				_localctx = new VariableContext(_localctx);
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(213);
+				setState(211);
 				match(ID);
 				}
 				break;
@@ -1954,7 +1929,7 @@ public class CalcSetParser extends Parser {
 				_localctx = new ConstantPIContext(_localctx);
 				enterOuterAlt(_localctx, 2);
 				{
-				setState(214);
+				setState(212);
 				match(MATH_PI);
 				}
 				break;
@@ -1962,75 +1937,79 @@ public class CalcSetParser extends Parser {
 				_localctx = new ConstantEContext(_localctx);
 				enterOuterAlt(_localctx, 3);
 				{
-				setState(215);
+				setState(213);
 				match(MATH_E);
 				}
 				break;
 			case 4:
-				_localctx = new UniversalSetContext(_localctx);
+				_localctx = new StringContext(_localctx);
 				enterOuterAlt(_localctx, 4);
 				{
-				setState(216);
-				match(UNIVERSAL_SET);
+				setState(214);
+				match(STRING);
 				}
 				break;
 			case 5:
-				_localctx = new StringContext(_localctx);
+				_localctx = new BooleanContext(_localctx);
 				enterOuterAlt(_localctx, 5);
 				{
-				setState(217);
-				match(STRING);
+				setState(215);
+				match(TRUE);
 				}
 				break;
 			case 6:
 				_localctx = new BooleanContext(_localctx);
 				enterOuterAlt(_localctx, 6);
 				{
-				setState(218);
-				match(TRUE);
-				}
-				break;
-			case 7:
-				_localctx = new BooleanContext(_localctx);
-				enterOuterAlt(_localctx, 7);
-				{
-				setState(219);
+				setState(216);
 				match(FALSE);
 				}
 				break;
-			case 8:
+			case 7:
 				_localctx = new DoubleContext(_localctx);
-				enterOuterAlt(_localctx, 8);
+				enterOuterAlt(_localctx, 7);
 				{
-				setState(220);
+				setState(217);
 				match(DOUBLE);
 				}
 				break;
-			case 9:
+			case 8:
 				_localctx = new IntContext(_localctx);
-				enterOuterAlt(_localctx, 9);
+				enterOuterAlt(_localctx, 8);
 				{
-				setState(221);
+				setState(218);
 				match(INT);
 				}
 				break;
-			case 10:
+			case 9:
 				_localctx = new BracesContext(_localctx);
+				enterOuterAlt(_localctx, 9);
+				{
+				setState(219);
+				match(T__0);
+				setState(220);
+				booleanOp(0);
+				setState(221);
+				match(T__1);
+				}
+				break;
+			case 10:
+				_localctx = new AtomCardinalityContext(_localctx);
 				enterOuterAlt(_localctx, 10);
 				{
-				setState(222);
-				match(LPAR);
 				setState(223);
-				booleanOp(0);
+				match(UNION);
 				setState(224);
-				match(RPAR);
+				booleanOp(0);
+				setState(225);
+				match(UNION);
 				}
 				break;
 			case 11:
 				_localctx = new ToExprFrAtomContext(_localctx);
 				enterOuterAlt(_localctx, 11);
 				{
-				setState(226);
+				setState(227);
 				expr();
 				}
 				break;
@@ -2048,11 +2027,11 @@ public class CalcSetParser extends Parser {
 	}
 
 	public static class ExprContext extends ParserRuleContext {
-		public UnorderedsetContext unorderedset() {
-			return getRuleContext(UnorderedsetContext.class,0);
+		public UnorderedsetexprContext unorderedsetexpr() {
+			return getRuleContext(UnorderedsetexprContext.class,0);
 		}
-		public OrderedsetContext orderedset() {
-			return getRuleContext(OrderedsetContext.class,0);
+		public OrderedsetexprContext orderedsetexpr() {
+			return getRuleContext(OrderedsetexprContext.class,0);
 		}
 		public ExprContext expr() {
 			return getRuleContext(ExprContext.class,0);
@@ -2072,154 +2051,32 @@ public class CalcSetParser extends Parser {
 		ExprContext _localctx = new ExprContext(_ctx, getState());
 		enterRule(_localctx, 26, RULE_expr);
 		try {
-			setState(235);
+			setState(236);
 			_errHandler.sync(this);
-			switch (_input.LA(1)) {
-			case T__0:
+			switch ( getInterpreter().adaptivePredict(_input,21,_ctx) ) {
+			case 1:
 				enterOuterAlt(_localctx, 1);
-				{
-				setState(229);
-				unorderedset();
-				}
-				break;
-			case T__2:
-				enterOuterAlt(_localctx, 2);
 				{
 				setState(230);
-				orderedset();
-				}
-				break;
-			case LPAR:
-				enterOuterAlt(_localctx, 3);
-				{
-				setState(231);
-				match(LPAR);
-				setState(232);
-				expr();
-				setState(233);
-				match(RPAR);
-				}
-				break;
-			default:
-				throw new NoViableAltException(this);
-			}
-		}
-		catch (RecognitionException re) {
-			_localctx.exception = re;
-			_errHandler.reportError(this, re);
-			_errHandler.recover(this, re);
-		}
-		finally {
-			exitRule();
-		}
-		return _localctx;
-	}
-
-	public static class UnorderedsetContext extends ParserRuleContext {
-		public UnorderedsetContext(ParserRuleContext parent, int invokingState) {
-			super(parent, invokingState);
-		}
-		@Override public int getRuleIndex() { return RULE_unorderedset; }
-	 
-		public UnorderedsetContext() { }
-		public void copyFrom(UnorderedsetContext ctx) {
-			super.copyFrom(ctx);
-		}
-	}
-	public static class UnorderedEmptySetInstContext extends UnorderedsetContext {
-		public UnorderedEmptySetInstContext(UnorderedsetContext ctx) { copyFrom(ctx); }
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof CalcSetVisitor ) return ((CalcSetVisitor<? extends T>)visitor).visitUnorderedEmptySetInst(this);
-			else return visitor.visitChildren(this);
-		}
-	}
-	public static class UnorderedSetInstContext extends UnorderedsetContext {
-		public ListContext list() {
-			return getRuleContext(ListContext.class,0);
-		}
-		public UnorderedSetInstContext(UnorderedsetContext ctx) { copyFrom(ctx); }
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof CalcSetVisitor ) return ((CalcSetVisitor<? extends T>)visitor).visitUnorderedSetInst(this);
-			else return visitor.visitChildren(this);
-		}
-	}
-	public static class UnorderedComplementSetInstContext extends UnorderedsetContext {
-		public ListContext list() {
-			return getRuleContext(ListContext.class,0);
-		}
-		public TerminalNode COMPLEMENT_SET() { return getToken(CalcSetParser.COMPLEMENT_SET, 0); }
-		public UnorderedComplementSetInstContext(UnorderedsetContext ctx) { copyFrom(ctx); }
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof CalcSetVisitor ) return ((CalcSetVisitor<? extends T>)visitor).visitUnorderedComplementSetInst(this);
-			else return visitor.visitChildren(this);
-		}
-	}
-	public static class UnorderedUniversalSetInstContext extends UnorderedsetContext {
-		public TerminalNode COMPLEMENT_SET() { return getToken(CalcSetParser.COMPLEMENT_SET, 0); }
-		public UnorderedUniversalSetInstContext(UnorderedsetContext ctx) { copyFrom(ctx); }
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof CalcSetVisitor ) return ((CalcSetVisitor<? extends T>)visitor).visitUnorderedUniversalSetInst(this);
-			else return visitor.visitChildren(this);
-		}
-	}
-
-	public final UnorderedsetContext unorderedset() throws RecognitionException {
-		UnorderedsetContext _localctx = new UnorderedsetContext(_ctx, getState());
-		enterRule(_localctx, 28, RULE_unorderedset);
-		try {
-			setState(251);
-			_errHandler.sync(this);
-			switch ( getInterpreter().adaptivePredict(_input,22,_ctx) ) {
-			case 1:
-				_localctx = new UnorderedSetInstContext(_localctx);
-				enterOuterAlt(_localctx, 1);
-				{
-				setState(237);
-				match(T__0);
-				setState(238);
-				list();
-				setState(239);
-				match(T__1);
+				unorderedsetexpr();
 				}
 				break;
 			case 2:
-				_localctx = new UnorderedComplementSetInstContext(_localctx);
 				enterOuterAlt(_localctx, 2);
 				{
-				setState(241);
-				match(T__0);
-				setState(242);
-				list();
-				setState(243);
-				match(T__1);
-				setState(244);
-				match(COMPLEMENT_SET);
+				setState(231);
+				orderedsetexpr();
 				}
 				break;
 			case 3:
-				_localctx = new UnorderedEmptySetInstContext(_localctx);
 				enterOuterAlt(_localctx, 3);
 				{
-				setState(246);
+				setState(232);
 				match(T__0);
-				setState(247);
+				setState(233);
+				expr();
+				setState(234);
 				match(T__1);
-				}
-				break;
-			case 4:
-				_localctx = new UnorderedUniversalSetInstContext(_localctx);
-				enterOuterAlt(_localctx, 4);
-				{
-				setState(248);
-				match(T__0);
-				setState(249);
-				match(T__1);
-				setState(250);
-				match(COMPLEMENT_SET);
 				}
 				break;
 			}
@@ -2235,110 +2092,276 @@ public class CalcSetParser extends Parser {
 		return _localctx;
 	}
 
-	public static class OrderedsetContext extends ParserRuleContext {
-		public OrderedsetContext(ParserRuleContext parent, int invokingState) {
+	public static class UnorderedsetexprContext extends ParserRuleContext {
+		public UnorderedsetexprContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
-		@Override public int getRuleIndex() { return RULE_orderedset; }
+		@Override public int getRuleIndex() { return RULE_unorderedsetexpr; }
 	 
-		public OrderedsetContext() { }
-		public void copyFrom(OrderedsetContext ctx) {
+		public UnorderedsetexprContext() { }
+		public void copyFrom(UnorderedsetexprContext ctx) {
 			super.copyFrom(ctx);
 		}
 	}
-	public static class OrderedComplementSetInstContext extends OrderedsetContext {
+	public static class UnorderedEmptySetContext extends UnorderedsetexprContext {
+		public UnorderedEmptySetContext(UnorderedsetexprContext ctx) { copyFrom(ctx); }
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof CalcSetVisitor ) return ((CalcSetVisitor<? extends T>)visitor).visitUnorderedEmptySet(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+	public static class UnorderedSetCardinalityContext extends UnorderedsetexprContext {
+		public ListContext list() {
+			return getRuleContext(ListContext.class,0);
+		}
+		public UnorderedSetCardinalityContext(UnorderedsetexprContext ctx) { copyFrom(ctx); }
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof CalcSetVisitor ) return ((CalcSetVisitor<? extends T>)visitor).visitUnorderedSetCardinality(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+	public static class UnorderedComplementSetContext extends UnorderedsetexprContext {
 		public ListContext list() {
 			return getRuleContext(ListContext.class,0);
 		}
 		public TerminalNode COMPLEMENT_SET() { return getToken(CalcSetParser.COMPLEMENT_SET, 0); }
-		public OrderedComplementSetInstContext(OrderedsetContext ctx) { copyFrom(ctx); }
+		public UnorderedComplementSetContext(UnorderedsetexprContext ctx) { copyFrom(ctx); }
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof CalcSetVisitor ) return ((CalcSetVisitor<? extends T>)visitor).visitOrderedComplementSetInst(this);
+			if ( visitor instanceof CalcSetVisitor ) return ((CalcSetVisitor<? extends T>)visitor).visitUnorderedComplementSet(this);
 			else return visitor.visitChildren(this);
 		}
 	}
-	public static class OrderedEmptySetInstContext extends OrderedsetContext {
-		public OrderedEmptySetInstContext(OrderedsetContext ctx) { copyFrom(ctx); }
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof CalcSetVisitor ) return ((CalcSetVisitor<? extends T>)visitor).visitOrderedEmptySetInst(this);
-			else return visitor.visitChildren(this);
-		}
-	}
-	public static class OrderedUniversalSetInstContext extends OrderedsetContext {
-		public TerminalNode COMPLEMENT_SET() { return getToken(CalcSetParser.COMPLEMENT_SET, 0); }
-		public OrderedUniversalSetInstContext(OrderedsetContext ctx) { copyFrom(ctx); }
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof CalcSetVisitor ) return ((CalcSetVisitor<? extends T>)visitor).visitOrderedUniversalSetInst(this);
-			else return visitor.visitChildren(this);
-		}
-	}
-	public static class OrderedSetInstContext extends OrderedsetContext {
+	public static class UnorderedSetContext extends UnorderedsetexprContext {
 		public ListContext list() {
 			return getRuleContext(ListContext.class,0);
 		}
-		public OrderedSetInstContext(OrderedsetContext ctx) { copyFrom(ctx); }
+		public UnorderedSetContext(UnorderedsetexprContext ctx) { copyFrom(ctx); }
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof CalcSetVisitor ) return ((CalcSetVisitor<? extends T>)visitor).visitOrderedSetInst(this);
+			if ( visitor instanceof CalcSetVisitor ) return ((CalcSetVisitor<? extends T>)visitor).visitUnorderedSet(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+	public static class UnorderedUniversalSetContext extends UnorderedsetexprContext {
+		public TerminalNode COMPLEMENT_SET() { return getToken(CalcSetParser.COMPLEMENT_SET, 0); }
+		public UnorderedUniversalSetContext(UnorderedsetexprContext ctx) { copyFrom(ctx); }
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof CalcSetVisitor ) return ((CalcSetVisitor<? extends T>)visitor).visitUnorderedUniversalSet(this);
 			else return visitor.visitChildren(this);
 		}
 	}
 
-	public final OrderedsetContext orderedset() throws RecognitionException {
-		OrderedsetContext _localctx = new OrderedsetContext(_ctx, getState());
-		enterRule(_localctx, 30, RULE_orderedset);
+	public final UnorderedsetexprContext unorderedsetexpr() throws RecognitionException {
+		UnorderedsetexprContext _localctx = new UnorderedsetexprContext(_ctx, getState());
+		enterRule(_localctx, 28, RULE_unorderedsetexpr);
 		try {
-			setState(267);
+			setState(256);
 			_errHandler.sync(this);
-			switch ( getInterpreter().adaptivePredict(_input,23,_ctx) ) {
+			switch ( getInterpreter().adaptivePredict(_input,22,_ctx) ) {
 			case 1:
-				_localctx = new OrderedSetInstContext(_localctx);
+				_localctx = new UnorderedSetContext(_localctx);
 				enterOuterAlt(_localctx, 1);
+				{
+				setState(238);
+				match(T__2);
+				setState(239);
+				list();
+				setState(240);
+				match(T__3);
+				}
+				break;
+			case 2:
+				_localctx = new UnorderedSetCardinalityContext(_localctx);
+				enterOuterAlt(_localctx, 2);
+				{
+				setState(242);
+				match(UNION);
+				setState(243);
+				list();
+				setState(244);
+				match(UNION);
+				}
+				break;
+			case 3:
+				_localctx = new UnorderedComplementSetContext(_localctx);
+				enterOuterAlt(_localctx, 3);
+				{
+				setState(246);
+				match(T__2);
+				setState(247);
+				list();
+				setState(248);
+				match(T__3);
+				setState(249);
+				match(COMPLEMENT_SET);
+				}
+				break;
+			case 4:
+				_localctx = new UnorderedEmptySetContext(_localctx);
+				enterOuterAlt(_localctx, 4);
+				{
+				setState(251);
+				match(T__2);
+				setState(252);
+				match(T__3);
+				}
+				break;
+			case 5:
+				_localctx = new UnorderedUniversalSetContext(_localctx);
+				enterOuterAlt(_localctx, 5);
 				{
 				setState(253);
 				match(T__2);
 				setState(254);
-				list();
+				match(T__3);
 				setState(255);
-				match(T__3);
-				}
-				break;
-			case 2:
-				_localctx = new OrderedComplementSetInstContext(_localctx);
-				enterOuterAlt(_localctx, 2);
-				{
-				setState(257);
-				match(T__2);
-				setState(258);
-				list();
-				setState(259);
-				match(T__3);
-				setState(260);
 				match(COMPLEMENT_SET);
 				}
 				break;
-			case 3:
-				_localctx = new OrderedEmptySetInstContext(_localctx);
-				enterOuterAlt(_localctx, 3);
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			exitRule();
+		}
+		return _localctx;
+	}
+
+	public static class OrderedsetexprContext extends ParserRuleContext {
+		public OrderedsetexprContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_orderedsetexpr; }
+	 
+		public OrderedsetexprContext() { }
+		public void copyFrom(OrderedsetexprContext ctx) {
+			super.copyFrom(ctx);
+		}
+	}
+	public static class OrderedSetContext extends OrderedsetexprContext {
+		public ListContext list() {
+			return getRuleContext(ListContext.class,0);
+		}
+		public OrderedSetContext(OrderedsetexprContext ctx) { copyFrom(ctx); }
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof CalcSetVisitor ) return ((CalcSetVisitor<? extends T>)visitor).visitOrderedSet(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+	public static class OrderedUniversalSetContext extends OrderedsetexprContext {
+		public TerminalNode COMPLEMENT_SET() { return getToken(CalcSetParser.COMPLEMENT_SET, 0); }
+		public OrderedUniversalSetContext(OrderedsetexprContext ctx) { copyFrom(ctx); }
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof CalcSetVisitor ) return ((CalcSetVisitor<? extends T>)visitor).visitOrderedUniversalSet(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+	public static class OrderedSetCardinalityContext extends OrderedsetexprContext {
+		public ListContext list() {
+			return getRuleContext(ListContext.class,0);
+		}
+		public OrderedSetCardinalityContext(OrderedsetexprContext ctx) { copyFrom(ctx); }
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof CalcSetVisitor ) return ((CalcSetVisitor<? extends T>)visitor).visitOrderedSetCardinality(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+	public static class OrderedComplementSetContext extends OrderedsetexprContext {
+		public ListContext list() {
+			return getRuleContext(ListContext.class,0);
+		}
+		public TerminalNode COMPLEMENT_SET() { return getToken(CalcSetParser.COMPLEMENT_SET, 0); }
+		public OrderedComplementSetContext(OrderedsetexprContext ctx) { copyFrom(ctx); }
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof CalcSetVisitor ) return ((CalcSetVisitor<? extends T>)visitor).visitOrderedComplementSet(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+	public static class OrderedEmptySetContext extends OrderedsetexprContext {
+		public OrderedEmptySetContext(OrderedsetexprContext ctx) { copyFrom(ctx); }
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof CalcSetVisitor ) return ((CalcSetVisitor<? extends T>)visitor).visitOrderedEmptySet(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+
+	public final OrderedsetexprContext orderedsetexpr() throws RecognitionException {
+		OrderedsetexprContext _localctx = new OrderedsetexprContext(_ctx, getState());
+		enterRule(_localctx, 30, RULE_orderedsetexpr);
+		try {
+			setState(276);
+			_errHandler.sync(this);
+			switch ( getInterpreter().adaptivePredict(_input,23,_ctx) ) {
+			case 1:
+				_localctx = new OrderedSetContext(_localctx);
+				enterOuterAlt(_localctx, 1);
+				{
+				setState(258);
+				match(T__4);
+				setState(259);
+				list();
+				setState(260);
+				match(T__5);
+				}
+				break;
+			case 2:
+				_localctx = new OrderedSetCardinalityContext(_localctx);
+				enterOuterAlt(_localctx, 2);
 				{
 				setState(262);
-				match(T__2);
+				match(UNION);
 				setState(263);
-				match(T__3);
+				list();
+				setState(264);
+				match(UNION);
+				}
+				break;
+			case 3:
+				_localctx = new OrderedComplementSetContext(_localctx);
+				enterOuterAlt(_localctx, 3);
+				{
+				setState(266);
+				match(T__4);
+				setState(267);
+				list();
+				setState(268);
+				match(T__5);
+				setState(269);
+				match(COMPLEMENT_SET);
 				}
 				break;
 			case 4:
-				_localctx = new OrderedUniversalSetInstContext(_localctx);
+				_localctx = new OrderedEmptySetContext(_localctx);
 				enterOuterAlt(_localctx, 4);
 				{
-				setState(264);
-				match(T__2);
-				setState(265);
-				match(T__3);
-				setState(266);
+				setState(271);
+				match(T__4);
+				setState(272);
+				match(T__5);
+				}
+				break;
+			case 5:
+				_localctx = new OrderedUniversalSetContext(_localctx);
+				enterOuterAlt(_localctx, 5);
+				{
+				setState(273);
+				match(T__4);
+				setState(274);
+				match(T__5);
+				setState(275);
 				match(COMPLEMENT_SET);
 				}
 				break;
@@ -2377,24 +2400,24 @@ public class CalcSetParser extends Parser {
 		ListContext _localctx = new ListContext(_ctx, getState());
 		enterRule(_localctx, 32, RULE_list);
 		try {
-			setState(274);
+			setState(283);
 			_errHandler.sync(this);
 			switch ( getInterpreter().adaptivePredict(_input,24,_ctx) ) {
 			case 1:
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(269);
+				setState(278);
 				atom();
-				setState(270);
-				match(T__4);
-				setState(271);
+				setState(279);
+				match(T__6);
+				setState(280);
 				list();
 				}
 				break;
 			case 2:
 				enterOuterAlt(_localctx, 2);
 				{
-				setState(273);
+				setState(282);
 				atom();
 				}
 				break;
@@ -2529,13 +2552,13 @@ public class CalcSetParser extends Parser {
 	private boolean unaryMinus_sempred(UnaryMinusContext _localctx, int predIndex) {
 		switch (predIndex) {
 		case 26:
-			return precpred(_ctx, 4);
+			return precpred(_ctx, 3);
 		}
 		return true;
 	}
 
 	public static final String _serializedATN =
-		"\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3\64\u0117\4\2\t\2"+
+		"\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3\63\u0120\4\2\t\2"+
 		"\4\3\t\3\4\4\t\4\4\5\t\5\4\6\t\6\4\7\t\7\4\b\t\b\4\t\t\t\4\n\t\n\4\13"+
 		"\t\13\4\f\t\f\4\r\t\r\4\16\t\16\4\17\t\17\4\20\t\20\4\21\t\21\4\22\t\22"+
 		"\3\2\3\2\3\2\3\2\3\2\3\2\3\2\5\2,\n\2\3\3\3\3\3\3\3\3\3\4\3\4\3\4\3\4"+
@@ -2549,88 +2572,91 @@ public class CalcSetParser extends Parser {
 		"\3\n\3\n\3\n\7\n\u00a7\n\n\f\n\16\n\u00aa\13\n\3\13\3\13\3\13\3\13\3\13"+
 		"\3\13\3\13\3\13\3\13\3\13\3\13\3\13\3\13\3\13\3\13\7\13\u00bb\n\13\f\13"+
 		"\16\13\u00be\13\13\3\f\3\f\3\f\5\f\u00c3\n\f\3\r\3\r\3\r\3\r\3\r\3\r\3"+
-		"\r\3\r\3\r\3\r\5\r\u00cf\n\r\3\r\3\r\7\r\u00d3\n\r\f\r\16\r\u00d6\13\r"+
-		"\3\16\3\16\3\16\3\16\3\16\3\16\3\16\3\16\3\16\3\16\3\16\3\16\3\16\3\16"+
-		"\5\16\u00e6\n\16\3\17\3\17\3\17\3\17\3\17\3\17\5\17\u00ee\n\17\3\20\3"+
-		"\20\3\20\3\20\3\20\3\20\3\20\3\20\3\20\3\20\3\20\3\20\3\20\3\20\5\20\u00fe"+
-		"\n\20\3\21\3\21\3\21\3\21\3\21\3\21\3\21\3\21\3\21\3\21\3\21\3\21\3\21"+
-		"\3\21\5\21\u010e\n\21\3\22\3\22\3\22\3\22\3\22\5\22\u0115\n\22\3\22\2"+
-		"\13\6\b\n\f\16\20\22\24\30\23\2\4\6\b\n\f\16\20\22\24\26\30\32\34\36 "+
-		"\"\2\2\2\u0139\2+\3\2\2\2\4-\3\2\2\2\6\61\3\2\2\2\bK\3\2\2\2\ne\3\2\2"+
-		"\2\fs\3\2\2\2\16\u0081\3\2\2\2\20\u008f\3\2\2\2\22\u009d\3\2\2\2\24\u00ab"+
-		"\3\2\2\2\26\u00bf\3\2\2\2\30\u00ce\3\2\2\2\32\u00e5\3\2\2\2\34\u00ed\3"+
-		"\2\2\2\36\u00fd\3\2\2\2 \u010d\3\2\2\2\"\u0114\3\2\2\2$%\5\4\3\2%&\7\t"+
-		"\2\2&\'\5\2\2\2\',\3\2\2\2()\5\6\4\2)*\7\t\2\2*,\3\2\2\2+$\3\2\2\2+(\3"+
-		"\2\2\2,\3\3\2\2\2-.\7\21\2\2./\7\23\2\2/\60\5\6\4\2\60\5\3\2\2\2\61\62"+
-		"\b\4\1\2\62\63\5\b\5\2\63H\3\2\2\2\64\65\f\t\2\2\65\66\7%\2\2\66G\5\b"+
-		"\5\2\678\f\b\2\289\7*\2\29G\5\b\5\2:;\f\7\2\2;<\7)\2\2<G\5\b\5\2=>\f\6"+
-		"\2\2>?\7+\2\2?G\5\b\5\2@A\f\5\2\2AB\7$\2\2BG\5\b\5\2CD\f\4\2\2DE\7(\2"+
-		"\2EG\5\b\5\2F\64\3\2\2\2F\67\3\2\2\2F:\3\2\2\2F=\3\2\2\2F@\3\2\2\2FC\3"+
-		"\2\2\2GJ\3\2\2\2HF\3\2\2\2HI\3\2\2\2I\7\3\2\2\2JH\3\2\2\2KL\b\5\1\2LM"+
-		"\5\n\6\2Mb\3\2\2\2NO\f\t\2\2OP\7\"\2\2Pa\5\n\6\2QR\f\b\2\2RS\7#\2\2Sa"+
-		"\5\n\6\2TU\f\7\2\2UV\7\36\2\2Va\5\n\6\2WX\f\6\2\2XY\7\37\2\2Ya\5\n\6\2"+
-		"Z[\f\5\2\2[\\\7 \2\2\\a\5\n\6\2]^\f\4\2\2^_\7!\2\2_a\5\n\6\2`N\3\2\2\2"+
-		"`Q\3\2\2\2`T\3\2\2\2`W\3\2\2\2`Z\3\2\2\2`]\3\2\2\2ad\3\2\2\2b`\3\2\2\2"+
-		"bc\3\2\2\2c\t\3\2\2\2db\3\2\2\2ef\b\6\1\2fg\5\f\7\2gp\3\2\2\2hi\f\5\2"+
-		"\2ij\7\24\2\2jo\5\f\7\2kl\f\4\2\2lm\7\25\2\2mo\5\f\7\2nh\3\2\2\2nk\3\2"+
-		"\2\2or\3\2\2\2pn\3\2\2\2pq\3\2\2\2q\13\3\2\2\2rp\3\2\2\2st\b\7\1\2tu\5"+
-		"\16\b\2u~\3\2\2\2vw\f\5\2\2wx\7\'\2\2x}\5\16\b\2yz\f\4\2\2z{\7\60\2\2"+
-		"{}\5\16\b\2|v\3\2\2\2|y\3\2\2\2}\u0080\3\2\2\2~|\3\2\2\2~\177\3\2\2\2"+
-		"\177\r\3\2\2\2\u0080~\3\2\2\2\u0081\u0082\b\b\1\2\u0082\u0083\5\20\t\2"+
-		"\u0083\u008c\3\2\2\2\u0084\u0085\f\5\2\2\u0085\u0086\7.\2\2\u0086\u008b"+
-		"\5\20\t\2\u0087\u0088\f\4\2\2\u0088\u0089\7\62\2\2\u0089\u008b\5\20\t"+
-		"\2\u008a\u0084\3\2\2\2\u008a\u0087\3\2\2\2\u008b\u008e\3\2\2\2\u008c\u008a"+
-		"\3\2\2\2\u008c\u008d\3\2\2\2\u008d\17\3\2\2\2\u008e\u008c\3\2\2\2\u008f"+
-		"\u0090\b\t\1\2\u0090\u0091\5\22\n\2\u0091\u009a\3\2\2\2\u0092\u0093\f"+
-		"\5\2\2\u0093\u0094\7-\2\2\u0094\u0099\5\22\n\2\u0095\u0096\f\4\2\2\u0096"+
-		"\u0097\7/\2\2\u0097\u0099\5\22\n\2\u0098\u0092\3\2\2\2\u0098\u0095\3\2"+
-		"\2\2\u0099\u009c\3\2\2\2\u009a\u0098\3\2\2\2\u009a\u009b\3\2\2\2\u009b"+
-		"\21\3\2\2\2\u009c\u009a\3\2\2\2\u009d\u009e\b\n\1\2\u009e\u009f\5\24\13"+
-		"\2\u009f\u00a8\3\2\2\2\u00a0\u00a1\f\5\2\2\u00a1\u00a2\7\26\2\2\u00a2"+
-		"\u00a7\5\24\13\2\u00a3\u00a4\f\4\2\2\u00a4\u00a5\7\27\2\2\u00a5\u00a7"+
-		"\5\24\13\2\u00a6\u00a0\3\2\2\2\u00a6\u00a3\3\2\2\2\u00a7\u00aa\3\2\2\2"+
-		"\u00a8\u00a6\3\2\2\2\u00a8\u00a9\3\2\2\2\u00a9\23\3\2\2\2\u00aa\u00a8"+
-		"\3\2\2\2\u00ab\u00ac\b\13\1\2\u00ac\u00ad\5\26\f\2\u00ad\u00bc\3\2\2\2"+
-		"\u00ae\u00af\f\7\2\2\u00af\u00b0\7\33\2\2\u00b0\u00bb\5\26\f\2\u00b1\u00b2"+
-		"\f\6\2\2\u00b2\u00b3\7\34\2\2\u00b3\u00bb\5\26\f\2\u00b4\u00b5\f\5\2\2"+
-		"\u00b5\u00b6\7\35\2\2\u00b6\u00bb\5\26\f\2\u00b7\u00b8\f\4\2\2\u00b8\u00b9"+
-		"\7\32\2\2\u00b9\u00bb\5\26\f\2\u00ba\u00ae\3\2\2\2\u00ba\u00b1\3\2\2\2"+
-		"\u00ba\u00b4\3\2\2\2\u00ba\u00b7\3\2\2\2\u00bb\u00be\3\2\2\2\u00bc\u00ba"+
-		"\3\2\2\2\u00bc\u00bd\3\2\2\2\u00bd\25\3\2\2\2\u00be\u00bc\3\2\2\2\u00bf"+
-		"\u00c2\5\30\r\2\u00c0\u00c1\7\30\2\2\u00c1\u00c3\5\26\f\2\u00c2\u00c0"+
-		"\3\2\2\2\u00c2\u00c3\3\2\2\2\u00c3\27\3\2\2\2\u00c4\u00c5\b\r\1\2\u00c5"+
-		"\u00c6\7\25\2\2\u00c6\u00cf\5\30\r\b\u00c7\u00c8\7&\2\2\u00c8\u00cf\5"+
-		"\30\r\7\u00c9\u00ca\7\31\2\2\u00ca\u00cf\5\30\r\5\u00cb\u00cc\7,\2\2\u00cc"+
-		"\u00cf\5\30\r\4\u00cd\u00cf\5\32\16\2\u00ce\u00c4\3\2\2\2\u00ce\u00c7"+
-		"\3\2\2\2\u00ce\u00c9\3\2\2\2\u00ce\u00cb\3\2\2\2\u00ce\u00cd\3\2\2\2\u00cf"+
-		"\u00d4\3\2\2\2\u00d0\u00d1\f\6\2\2\u00d1\u00d3\7\61\2\2\u00d2\u00d0\3"+
-		"\2\2\2\u00d3\u00d6\3\2\2\2\u00d4\u00d2\3\2\2\2\u00d4\u00d5\3\2\2\2\u00d5"+
-		"\31\3\2\2\2\u00d6\u00d4\3\2\2\2\u00d7\u00e6\7\21\2\2\u00d8\u00e6\7\f\2"+
-		"\2\u00d9\u00e6\7\r\2\2\u00da\u00e6\7\16\2\2\u00db\u00e6\7\22\2\2\u00dc"+
-		"\u00e6\7\17\2\2\u00dd\u00e6\7\20\2\2\u00de\u00e6\7\13\2\2\u00df\u00e6"+
-		"\7\n\2\2\u00e0\u00e1\7\63\2\2\u00e1\u00e2\5\6\4\2\u00e2\u00e3\7\64\2\2"+
-		"\u00e3\u00e6\3\2\2\2\u00e4\u00e6\5\34\17\2\u00e5\u00d7\3\2\2\2\u00e5\u00d8"+
-		"\3\2\2\2\u00e5\u00d9\3\2\2\2\u00e5\u00da\3\2\2\2\u00e5\u00db\3\2\2\2\u00e5"+
-		"\u00dc\3\2\2\2\u00e5\u00dd\3\2\2\2\u00e5\u00de\3\2\2\2\u00e5\u00df\3\2"+
-		"\2\2\u00e5\u00e0\3\2\2\2\u00e5\u00e4\3\2\2\2\u00e6\33\3\2\2\2\u00e7\u00ee"+
-		"\5\36\20\2\u00e8\u00ee\5 \21\2\u00e9\u00ea\7\63\2\2\u00ea\u00eb\5\34\17"+
-		"\2\u00eb\u00ec\7\64\2\2\u00ec\u00ee\3\2\2\2\u00ed\u00e7\3\2\2\2\u00ed"+
-		"\u00e8\3\2\2\2\u00ed\u00e9\3\2\2\2\u00ee\35\3\2\2\2\u00ef\u00f0\7\3\2"+
-		"\2\u00f0\u00f1\5\"\22\2\u00f1\u00f2\7\4\2\2\u00f2\u00fe\3\2\2\2\u00f3"+
-		"\u00f4\7\3\2\2\u00f4\u00f5\5\"\22\2\u00f5\u00f6\7\4\2\2\u00f6\u00f7\7"+
-		"\61\2\2\u00f7\u00fe\3\2\2\2\u00f8\u00f9\7\3\2\2\u00f9\u00fe\7\4\2\2\u00fa"+
-		"\u00fb\7\3\2\2\u00fb\u00fc\7\4\2\2\u00fc\u00fe\7\61\2\2\u00fd\u00ef\3"+
-		"\2\2\2\u00fd\u00f3\3\2\2\2\u00fd\u00f8\3\2\2\2\u00fd\u00fa\3\2\2\2\u00fe"+
-		"\37\3\2\2\2\u00ff\u0100\7\5\2\2\u0100\u0101\5\"\22\2\u0101\u0102\7\6\2"+
-		"\2\u0102\u010e\3\2\2\2\u0103\u0104\7\5\2\2\u0104\u0105\5\"\22\2\u0105"+
-		"\u0106\7\6\2\2\u0106\u0107\7\61\2\2\u0107\u010e\3\2\2\2\u0108\u0109\7"+
-		"\5\2\2\u0109\u010e\7\6\2\2\u010a\u010b\7\5\2\2\u010b\u010c\7\6\2\2\u010c"+
-		"\u010e\7\61\2\2\u010d\u00ff\3\2\2\2\u010d\u0103\3\2\2\2\u010d\u0108\3"+
-		"\2\2\2\u010d\u010a\3\2\2\2\u010e!\3\2\2\2\u010f\u0110\5\32\16\2\u0110"+
-		"\u0111\7\7\2\2\u0111\u0112\5\"\22\2\u0112\u0115\3\2\2\2\u0113\u0115\5"+
-		"\32\16\2\u0114\u010f\3\2\2\2\u0114\u0113\3\2\2\2\u0115#\3\2\2\2\33+FH"+
-		"`bnp|~\u008a\u008c\u0098\u009a\u00a6\u00a8\u00ba\u00bc\u00c2\u00ce\u00d4"+
-		"\u00e5\u00ed\u00fd\u010d\u0114";
+		"\r\3\r\5\r\u00cd\n\r\3\r\3\r\7\r\u00d1\n\r\f\r\16\r\u00d4\13\r\3\16\3"+
+		"\16\3\16\3\16\3\16\3\16\3\16\3\16\3\16\3\16\3\16\3\16\3\16\3\16\3\16\3"+
+		"\16\3\16\5\16\u00e7\n\16\3\17\3\17\3\17\3\17\3\17\3\17\5\17\u00ef\n\17"+
+		"\3\20\3\20\3\20\3\20\3\20\3\20\3\20\3\20\3\20\3\20\3\20\3\20\3\20\3\20"+
+		"\3\20\3\20\3\20\3\20\5\20\u0103\n\20\3\21\3\21\3\21\3\21\3\21\3\21\3\21"+
+		"\3\21\3\21\3\21\3\21\3\21\3\21\3\21\3\21\3\21\3\21\3\21\5\21\u0117\n\21"+
+		"\3\22\3\22\3\22\3\22\3\22\5\22\u011e\n\22\3\22\2\13\6\b\n\f\16\20\22\24"+
+		"\30\23\2\4\6\b\n\f\16\20\22\24\26\30\32\34\36 \"\2\2\2\u0143\2+\3\2\2"+
+		"\2\4-\3\2\2\2\6\61\3\2\2\2\bK\3\2\2\2\ne\3\2\2\2\fs\3\2\2\2\16\u0081\3"+
+		"\2\2\2\20\u008f\3\2\2\2\22\u009d\3\2\2\2\24\u00ab\3\2\2\2\26\u00bf\3\2"+
+		"\2\2\30\u00cc\3\2\2\2\32\u00e6\3\2\2\2\34\u00ee\3\2\2\2\36\u0102\3\2\2"+
+		"\2 \u0116\3\2\2\2\"\u011d\3\2\2\2$%\5\4\3\2%&\7\f\2\2&\'\5\2\2\2\',\3"+
+		"\2\2\2()\5\6\4\2)*\7\f\2\2*,\3\2\2\2+$\3\2\2\2+(\3\2\2\2,\3\3\2\2\2-."+
+		"\7\23\2\2./\7\25\2\2/\60\5\6\4\2\60\5\3\2\2\2\61\62\b\4\1\2\62\63\5\b"+
+		"\5\2\63H\3\2\2\2\64\65\f\t\2\2\65\66\7\'\2\2\66G\5\b\5\2\678\f\b\2\28"+
+		"9\7,\2\29G\5\b\5\2:;\f\7\2\2;<\7+\2\2<G\5\b\5\2=>\f\6\2\2>?\7-\2\2?G\5"+
+		"\b\5\2@A\f\5\2\2AB\7&\2\2BG\5\b\5\2CD\f\4\2\2DE\7*\2\2EG\5\b\5\2F\64\3"+
+		"\2\2\2F\67\3\2\2\2F:\3\2\2\2F=\3\2\2\2F@\3\2\2\2FC\3\2\2\2GJ\3\2\2\2H"+
+		"F\3\2\2\2HI\3\2\2\2I\7\3\2\2\2JH\3\2\2\2KL\b\5\1\2LM\5\n\6\2Mb\3\2\2\2"+
+		"NO\f\t\2\2OP\7$\2\2Pa\5\n\6\2QR\f\b\2\2RS\7%\2\2Sa\5\n\6\2TU\f\7\2\2U"+
+		"V\7 \2\2Va\5\n\6\2WX\f\6\2\2XY\7!\2\2Ya\5\n\6\2Z[\f\5\2\2[\\\7\"\2\2\\"+
+		"a\5\n\6\2]^\f\4\2\2^_\7#\2\2_a\5\n\6\2`N\3\2\2\2`Q\3\2\2\2`T\3\2\2\2`"+
+		"W\3\2\2\2`Z\3\2\2\2`]\3\2\2\2ad\3\2\2\2b`\3\2\2\2bc\3\2\2\2c\t\3\2\2\2"+
+		"db\3\2\2\2ef\b\6\1\2fg\5\f\7\2gp\3\2\2\2hi\f\5\2\2ij\7\26\2\2jo\5\f\7"+
+		"\2kl\f\4\2\2lm\7\27\2\2mo\5\f\7\2nh\3\2\2\2nk\3\2\2\2or\3\2\2\2pn\3\2"+
+		"\2\2pq\3\2\2\2q\13\3\2\2\2rp\3\2\2\2st\b\7\1\2tu\5\16\b\2u~\3\2\2\2vw"+
+		"\f\5\2\2wx\7)\2\2x}\5\16\b\2yz\f\4\2\2z{\7\61\2\2{}\5\16\b\2|v\3\2\2\2"+
+		"|y\3\2\2\2}\u0080\3\2\2\2~|\3\2\2\2~\177\3\2\2\2\177\r\3\2\2\2\u0080~"+
+		"\3\2\2\2\u0081\u0082\b\b\1\2\u0082\u0083\5\20\t\2\u0083\u008c\3\2\2\2"+
+		"\u0084\u0085\f\5\2\2\u0085\u0086\7/\2\2\u0086\u008b\5\20\t\2\u0087\u0088"+
+		"\f\4\2\2\u0088\u0089\7\63\2\2\u0089\u008b\5\20\t\2\u008a\u0084\3\2\2\2"+
+		"\u008a\u0087\3\2\2\2\u008b\u008e\3\2\2\2\u008c\u008a\3\2\2\2\u008c\u008d"+
+		"\3\2\2\2\u008d\17\3\2\2\2\u008e\u008c\3\2\2\2\u008f\u0090\b\t\1\2\u0090"+
+		"\u0091\5\22\n\2\u0091\u009a\3\2\2\2\u0092\u0093\f\5\2\2\u0093\u0094\7"+
+		".\2\2\u0094\u0099\5\22\n\2\u0095\u0096\f\4\2\2\u0096\u0097\7\60\2\2\u0097"+
+		"\u0099\5\22\n\2\u0098\u0092\3\2\2\2\u0098\u0095\3\2\2\2\u0099\u009c\3"+
+		"\2\2\2\u009a\u0098\3\2\2\2\u009a\u009b\3\2\2\2\u009b\21\3\2\2\2\u009c"+
+		"\u009a\3\2\2\2\u009d\u009e\b\n\1\2\u009e\u009f\5\24\13\2\u009f\u00a8\3"+
+		"\2\2\2\u00a0\u00a1\f\5\2\2\u00a1\u00a2\7\30\2\2\u00a2\u00a7\5\24\13\2"+
+		"\u00a3\u00a4\f\4\2\2\u00a4\u00a5\7\31\2\2\u00a5\u00a7\5\24\13\2\u00a6"+
+		"\u00a0\3\2\2\2\u00a6\u00a3\3\2\2\2\u00a7\u00aa\3\2\2\2\u00a8\u00a6\3\2"+
+		"\2\2\u00a8\u00a9\3\2\2\2\u00a9\23\3\2\2\2\u00aa\u00a8\3\2\2\2\u00ab\u00ac"+
+		"\b\13\1\2\u00ac\u00ad\5\26\f\2\u00ad\u00bc\3\2\2\2\u00ae\u00af\f\7\2\2"+
+		"\u00af\u00b0\7\35\2\2\u00b0\u00bb\5\26\f\2\u00b1\u00b2\f\6\2\2\u00b2\u00b3"+
+		"\7\36\2\2\u00b3\u00bb\5\26\f\2\u00b4\u00b5\f\5\2\2\u00b5\u00b6\7\37\2"+
+		"\2\u00b6\u00bb\5\26\f\2\u00b7\u00b8\f\4\2\2\u00b8\u00b9\7\34\2\2\u00b9"+
+		"\u00bb\5\26\f\2\u00ba\u00ae\3\2\2\2\u00ba\u00b1\3\2\2\2\u00ba\u00b4\3"+
+		"\2\2\2\u00ba\u00b7\3\2\2\2\u00bb\u00be\3\2\2\2\u00bc\u00ba\3\2\2\2\u00bc"+
+		"\u00bd\3\2\2\2\u00bd\25\3\2\2\2\u00be\u00bc\3\2\2\2\u00bf\u00c2\5\30\r"+
+		"\2\u00c0\u00c1\7\32\2\2\u00c1\u00c3\5\26\f\2\u00c2\u00c0\3\2\2\2\u00c2"+
+		"\u00c3\3\2\2\2\u00c3\27\3\2\2\2\u00c4\u00c5\b\r\1\2\u00c5\u00c6\7\27\2"+
+		"\2\u00c6\u00cd\5\30\r\7\u00c7\u00c8\7(\2\2\u00c8\u00cd\5\30\r\6\u00c9"+
+		"\u00ca\7\33\2\2\u00ca\u00cd\5\30\r\4\u00cb\u00cd\5\32\16\2\u00cc\u00c4"+
+		"\3\2\2\2\u00cc\u00c7\3\2\2\2\u00cc\u00c9\3\2\2\2\u00cc\u00cb\3\2\2\2\u00cd"+
+		"\u00d2\3\2\2\2\u00ce\u00cf\f\5\2\2\u00cf\u00d1\7\62\2\2\u00d0\u00ce\3"+
+		"\2\2\2\u00d1\u00d4\3\2\2\2\u00d2\u00d0\3\2\2\2\u00d2\u00d3\3\2\2\2\u00d3"+
+		"\31\3\2\2\2\u00d4\u00d2\3\2\2\2\u00d5\u00e7\7\23\2\2\u00d6\u00e7\7\17"+
+		"\2\2\u00d7\u00e7\7\20\2\2\u00d8\u00e7\7\24\2\2\u00d9\u00e7\7\21\2\2\u00da"+
+		"\u00e7\7\22\2\2\u00db\u00e7\7\16\2\2\u00dc\u00e7\7\r\2\2\u00dd\u00de\7"+
+		"\3\2\2\u00de\u00df\5\6\4\2\u00df\u00e0\7\4\2\2\u00e0\u00e7\3\2\2\2\u00e1"+
+		"\u00e2\7/\2\2\u00e2\u00e3\5\6\4\2\u00e3\u00e4\7/\2\2\u00e4\u00e7\3\2\2"+
+		"\2\u00e5\u00e7\5\34\17\2\u00e6\u00d5\3\2\2\2\u00e6\u00d6\3\2\2\2\u00e6"+
+		"\u00d7\3\2\2\2\u00e6\u00d8\3\2\2\2\u00e6\u00d9\3\2\2\2\u00e6\u00da\3\2"+
+		"\2\2\u00e6\u00db\3\2\2\2\u00e6\u00dc\3\2\2\2\u00e6\u00dd\3\2\2\2\u00e6"+
+		"\u00e1\3\2\2\2\u00e6\u00e5\3\2\2\2\u00e7\33\3\2\2\2\u00e8\u00ef\5\36\20"+
+		"\2\u00e9\u00ef\5 \21\2\u00ea\u00eb\7\3\2\2\u00eb\u00ec\5\34\17\2\u00ec"+
+		"\u00ed\7\4\2\2\u00ed\u00ef\3\2\2\2\u00ee\u00e8\3\2\2\2\u00ee\u00e9\3\2"+
+		"\2\2\u00ee\u00ea\3\2\2\2\u00ef\35\3\2\2\2\u00f0\u00f1\7\5\2\2\u00f1\u00f2"+
+		"\5\"\22\2\u00f2\u00f3\7\6\2\2\u00f3\u0103\3\2\2\2\u00f4\u00f5\7/\2\2\u00f5"+
+		"\u00f6\5\"\22\2\u00f6\u00f7\7/\2\2\u00f7\u0103\3\2\2\2\u00f8\u00f9\7\5"+
+		"\2\2\u00f9\u00fa\5\"\22\2\u00fa\u00fb\7\6\2\2\u00fb\u00fc\7\62\2\2\u00fc"+
+		"\u0103\3\2\2\2\u00fd\u00fe\7\5\2\2\u00fe\u0103\7\6\2\2\u00ff\u0100\7\5"+
+		"\2\2\u0100\u0101\7\6\2\2\u0101\u0103\7\62\2\2\u0102\u00f0\3\2\2\2\u0102"+
+		"\u00f4\3\2\2\2\u0102\u00f8\3\2\2\2\u0102\u00fd\3\2\2\2\u0102\u00ff\3\2"+
+		"\2\2\u0103\37\3\2\2\2\u0104\u0105\7\7\2\2\u0105\u0106\5\"\22\2\u0106\u0107"+
+		"\7\b\2\2\u0107\u0117\3\2\2\2\u0108\u0109\7/\2\2\u0109\u010a\5\"\22\2\u010a"+
+		"\u010b\7/\2\2\u010b\u0117\3\2\2\2\u010c\u010d\7\7\2\2\u010d\u010e\5\""+
+		"\22\2\u010e\u010f\7\b\2\2\u010f\u0110\7\62\2\2\u0110\u0117\3\2\2\2\u0111"+
+		"\u0112\7\7\2\2\u0112\u0117\7\b\2\2\u0113\u0114\7\7\2\2\u0114\u0115\7\b"+
+		"\2\2\u0115\u0117\7\62\2\2\u0116\u0104\3\2\2\2\u0116\u0108\3\2\2\2\u0116"+
+		"\u010c\3\2\2\2\u0116\u0111\3\2\2\2\u0116\u0113\3\2\2\2\u0117!\3\2\2\2"+
+		"\u0118\u0119\5\32\16\2\u0119\u011a\7\t\2\2\u011a\u011b\5\"\22\2\u011b"+
+		"\u011e\3\2\2\2\u011c\u011e\5\32\16\2\u011d\u0118\3\2\2\2\u011d\u011c\3"+
+		"\2\2\2\u011e#\3\2\2\2\33+FH`bnp|~\u008a\u008c\u0098\u009a\u00a6\u00a8"+
+		"\u00ba\u00bc\u00c2\u00cc\u00d2\u00e6\u00ee\u0102\u0116\u011d";
 	public static final ATN _ATN =
 		new ATNDeserializer().deserialize(_serializedATN.toCharArray());
 	static {
