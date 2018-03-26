@@ -25,7 +25,7 @@ Is not it clean and straight forward? I like ANTLR!
 
 Special thanks to [Shmatov](https://github.com/shmatov/antlr4-calculator) and [Mgrzeszczak](https://github.com/mgrzeszczak/set-calculator) for good examples of how to do ANTLR for numbers and simple sets.
 
-Boolean and sets algebra following wiki below: [Boolean algebra](https://en.wikipedia.org/wiki/Boolean_algebra), [De Morgan laws](https://en.wikipedia.org/wiki/De_Morgan%27s_laws), [Set math](https://en.wikipedia.org/wiki/Set_(mathematics)), [Set symmetric difference](https://en.wikipedia.org/wiki/Symmetric_difference), [Complement set](https://en.wikipedia.org/wiki/Complement_(set_theory)),[cartesian product]{https://en.wikipedia.org/wiki/Cartesian_product}, [ordered pair]{https://en.wikipedia.org/wiki/Ordered_pair}, [univers]{https://en.wikipedia.org/wiki/Universe_(mathematics)}, [Bit operations](https://www.programiz.com/java-programming/bitwise-operators). 
+Boolean and sets algebra following wiki below: [Boolean algebra](https://en.wikipedia.org/wiki/Boolean_algebra), [De Morgan laws](https://en.wikipedia.org/wiki/De_Morgan%27s_laws), [Set math](https://en.wikipedia.org/wiki/Set_(mathematics)), [Set symmetric difference](https://en.wikipedia.org/wiki/Symmetric_difference), [Complement set](https://en.wikipedia.org/wiki/Complement_(set_theory)),[Cartesian product]{https://en.wikipedia.org/wiki/Cartesian_product), [Ordered pair]{https://en.wikipedia.org/wiki/Ordered_pair), [univers]{https://en.wikipedia.org/wiki/Universe_(mathematics)), (Inner product)[https://en.wikipedia.org/wiki/Inner_product_space], (Norm)[https://en.wikipedia.org/wiki/Norm_(mathematics)], [Bit operations](https://www.programiz.com/java-programming/bitwise-operators). 
 
 ## What is not covered
 
