@@ -97,6 +97,11 @@ public class TestCalcSet {
 	}
 	
 	@Test
+	public void vectors() throws IOException {
+		assertEquals("true", evaluate("data/vectors.txt", "true"));
+	}
+	
+	@Test
 	public void subsetlaw() throws IOException {
 		assertEquals("true", evaluate("data/subsetlaw.txt", "true"));
 	}
@@ -198,36 +203,37 @@ public class TestCalcSet {
 	public static void main(String[] args) throws Exception {
 		logger.info("Antlr test...");
 		
-		org.antlr.v4.gui.TestRig.main(new String[] {"calcset.CalcSet", "input", "-gui","-tokens","-diagnostics","-trace","data/setcartesianlaws.txt"});
-		org.antlr.v4.gui.TestRig.main(new String[] {"calcset.CalcSet", "input", "-gui","-tokens","-diagnostics","-trace","data/setcarddeck.txt"});
-		org.antlr.v4.gui.TestRig.main(new String[] {"calcset.CalcSet", "input", "-gui","-tokens","-diagnostics","-trace","data/equality.txt"});
-		org.antlr.v4.gui.TestRig.main(new String[] {"calcset.CalcSet", "input", "-gui","-tokens","-diagnostics","-trace","data/setcomparison.txt"});
-		org.antlr.v4.gui.TestRig.main(new String[] {"calcset.CalcSet", "input", "-gui","-tokens","-diagnostics","-trace","data/numsetvar.txt"});
-		org.antlr.v4.gui.TestRig.main(new String[] {"calcset.CalcSet", "input", "-gui","-tokens","-diagnostics","-trace","data/numarifmetika.txt"});
-		org.antlr.v4.gui.TestRig.main(new String[] {"calcset.CalcSet", "input", "-gui","-tokens","-diagnostics","-trace","data/setunion.txt"});
-		org.antlr.v4.gui.TestRig.main(new String[] {"calcset.CalcSet", "input", "-gui","-tokens","-diagnostics","-trace","data/setunionlaws.txt"});
-		org.antlr.v4.gui.TestRig.main(new String[] {"calcset.CalcSet", "input", "-gui","-tokens","-diagnostics","-trace","data/setintersection.txt"});
-		org.antlr.v4.gui.TestRig.main(new String[] {"calcset.CalcSet", "input", "-gui","-tokens","-diagnostics","-trace","data/setcomplements.txt"});
-		org.antlr.v4.gui.TestRig.main(new String[] {"calcset.CalcSet", "input", "-gui","-tokens","-diagnostics","-trace","data/setemptylaw.txt"});
-		org.antlr.v4.gui.TestRig.main(new String[] {"calcset.CalcSet", "input", "-gui","-tokens","-diagnostics","-trace","data/calcsetSubsetEmpty.txt"});
-		org.antlr.v4.gui.TestRig.main(new String[] {"calcset.CalcSet", "input", "-gui","-tokens","-diagnostics","-trace","data/setcardinality.txt"});
-		org.antlr.v4.gui.TestRig.main(new String[] {"calcset.CalcSet", "input", "-gui","-tokens","-diagnostics","-trace","data/setcardinalitylaws.txt"});
-		org.antlr.v4.gui.TestRig.main(new String[] {"calcset.CalcSet", "input", "-gui","-tokens","-diagnostics","-trace","data/setbasic.txt"});
-		org.antlr.v4.gui.TestRig.main(new String[] {"calcset.CalcSet", "input", "-gui","-tokens","-diagnostics","-trace","data/setsimple.txt"});
-		org.antlr.v4.gui.TestRig.main(new String[] {"calcset.CalcSet", "input", "-gui","-tokens","-diagnostics","-trace","data/booleanbasic.txt"});
-		org.antlr.v4.gui.TestRig.main(new String[] {"calcset.CalcSet", "input", "-gui","-tokens","-diagnostics","-trace","data/string.txt"});
-		org.antlr.v4.gui.TestRig.main(new String[] {"calcset.CalcSet", "input", "-gui","-tokens","-diagnostics","-trace","data/subsetlaw.txt"});
-		org.antlr.v4.gui.TestRig.main(new String[] {"calcset.CalcSet", "input", "-gui","-tokens","-diagnostics","-trace","data/setmorgan.txt"});
-		org.antlr.v4.gui.TestRig.main(new String[] {"calcset.CalcSet", "input", "-gui","-tokens","-diagnostics","-trace","data/setsymmetricdifferencelaw.txt"});
-		org.antlr.v4.gui.TestRig.main(new String[] {"calcset.CalcSet", "input", "-gui","-tokens","-diagnostics","-trace","data/setmembershipbasic.txt"});
-		org.antlr.v4.gui.TestRig.main(new String[] {"calcset.CalcSet", "input", "-gui","-tokens","-diagnostics","-trace","data/comparison.txt"});
-		org.antlr.v4.gui.TestRig.main(new String[] {"calcset.CalcSet", "input", "-gui","-tokens","-diagnostics","-trace","data/setrelativelaw.txt"});
-		org.antlr.v4.gui.TestRig.main(new String[] {"calcset.CalcSet", "input", "-gui","-tokens","-diagnostics","-trace","data/booleanlaw.txt"});
-		org.antlr.v4.gui.TestRig.main(new String[] {"calcset.CalcSet", "input", "-gui","-tokens","-diagnostics","-trace","data/setintersectionlaw.txt"});
-		org.antlr.v4.gui.TestRig.main(new String[] {"calcset.CalcSet", "input", "-gui","-tokens","-diagnostics","-trace","data/bit.txt"});
-		org.antlr.v4.gui.TestRig.main(new String[] {"calcset.CalcSet", "input", "-gui","-tokens","-diagnostics","-trace","data/setcomplementslaw.txt"});
-		org.antlr.v4.gui.TestRig.main(new String[] {"calcset.CalcSet", "input", "-gui","-tokens","-diagnostics","-trace","data/setuniversalbasic.txt"});
-		org.antlr.v4.gui.TestRig.main(new String[] {"calcset.CalcSet", "input", "-gui","-tokens","-diagnostics","-trace","data/setcartesian.txt"});
+//		org.antlr.v4.gui.TestRig.main(new String[] {"antlr.calcset.CalcSet", "input", "-gui","-tokens","-diagnostics","-trace","data/setcartesianlaws.txt"});
+//		org.antlr.v4.gui.TestRig.main(new String[] {"antlr.calcset.CalcSet", "input", "-gui","-tokens","-diagnostics","-trace","data/setcarddeck.txt"});
+//		org.antlr.v4.gui.TestRig.main(new String[] {"antlr.calcset.CalcSet", "input", "-gui","-tokens","-diagnostics","-trace","data/equality.txt"});
+//		org.antlr.v4.gui.TestRig.main(new String[] {"antlr.calcset.CalcSet", "input", "-gui","-tokens","-diagnostics","-trace","data/setcomparison.txt"});
+//		org.antlr.v4.gui.TestRig.main(new String[] {"antlr.calcset.CalcSet", "input", "-gui","-tokens","-diagnostics","-trace","data/numsetvar.txt"});
+//		org.antlr.v4.gui.TestRig.main(new String[] {"antlr.calcset.CalcSet", "input", "-gui","-tokens","-diagnostics","-trace","data/numarifmetika.txt"});
+//		org.antlr.v4.gui.TestRig.main(new String[] {"antlr.calcset.CalcSet", "input", "-gui","-tokens","-diagnostics","-trace","data/setunion.txt"});
+//		org.antlr.v4.gui.TestRig.main(new String[] {"antlr.calcset.CalcSet", "input", "-gui","-tokens","-diagnostics","-trace","data/setunionlaws.txt"});
+//		org.antlr.v4.gui.TestRig.main(new String[] {"antlr.calcset.CalcSet", "input", "-gui","-tokens","-diagnostics","-trace","data/setintersection.txt"});
+//		org.antlr.v4.gui.TestRig.main(new String[] {"antlr.calcset.CalcSet", "input", "-gui","-tokens","-diagnostics","-trace","data/setcomplements.txt"});
+//		org.antlr.v4.gui.TestRig.main(new String[] {"antlr.calcset.CalcSet", "input", "-gui","-tokens","-diagnostics","-trace","data/setemptylaw.txt"});
+//		org.antlr.v4.gui.TestRig.main(new String[] {"antlr.calcset.CalcSet", "input", "-gui","-tokens","-diagnostics","-trace","data/calcsetSubsetEmpty.txt"});
+//		org.antlr.v4.gui.TestRig.main(new String[] {"antlr.calcset.CalcSet", "input", "-gui","-tokens","-diagnostics","-trace","data/setcardinality.txt"});
+//		org.antlr.v4.gui.TestRig.main(new String[] {"antlr.calcset.CalcSet", "input", "-gui","-tokens","-diagnostics","-trace","data/setcardinalitylaws.txt"});
+//		org.antlr.v4.gui.TestRig.main(new String[] {"antlr.calcset.CalcSet", "input", "-gui","-tokens","-diagnostics","-trace","data/setbasic.txt"});
+//		org.antlr.v4.gui.TestRig.main(new String[] {"antlr.calcset.CalcSet", "input", "-gui","-tokens","-diagnostics","-trace","data/setsimple.txt"});
+//		org.antlr.v4.gui.TestRig.main(new String[] {"antlr.calcset.CalcSet", "input", "-gui","-tokens","-diagnostics","-trace","data/booleanbasic.txt"});
+//		org.antlr.v4.gui.TestRig.main(new String[] {"antlr.calcset.CalcSet", "input", "-gui","-tokens","-diagnostics","-trace","data/string.txt"});
+		org.antlr.v4.gui.TestRig.main(new String[] {"antlr.calcset.CalcSet", "input", "-gui","-tokens","-diagnostics","-trace","data/vectors.txt"});
+//		org.antlr.v4.gui.TestRig.main(new String[] {"antlr.calcset.CalcSet", "input", "-gui","-tokens","-diagnostics","-trace","data/subsetlaw.txt"});
+//		org.antlr.v4.gui.TestRig.main(new String[] {"antlr.calcset.CalcSet", "input", "-gui","-tokens","-diagnostics","-trace","data/setmorgan.txt"});
+//		org.antlr.v4.gui.TestRig.main(new String[] {"antlr.calcset.CalcSet", "input", "-gui","-tokens","-diagnostics","-trace","data/setsymmetricdifferencelaw.txt"});
+//		org.antlr.v4.gui.TestRig.main(new String[] {"antlr.calcset.CalcSet", "input", "-gui","-tokens","-diagnostics","-trace","data/setmembershipbasic.txt"});
+//		org.antlr.v4.gui.TestRig.main(new String[] {"antlr.calcset.CalcSet", "input", "-gui","-tokens","-diagnostics","-trace","data/comparison.txt"});
+//		org.antlr.v4.gui.TestRig.main(new String[] {"antlr.calcset.CalcSet", "input", "-gui","-tokens","-diagnostics","-trace","data/setrelativelaw.txt"});
+//		org.antlr.v4.gui.TestRig.main(new String[] {"antlr.calcset.CalcSet", "input", "-gui","-tokens","-diagnostics","-trace","data/booleanlaw.txt"});
+//		org.antlr.v4.gui.TestRig.main(new String[] {"antlr.calcset.CalcSet", "input", "-gui","-tokens","-diagnostics","-trace","data/setintersectionlaw.txt"});
+//		org.antlr.v4.gui.TestRig.main(new String[] {"antlr.calcset.CalcSet", "input", "-gui","-tokens","-diagnostics","-trace","data/bit.txt"});
+//		org.antlr.v4.gui.TestRig.main(new String[] {"antlr.calcset.CalcSet", "input", "-gui","-tokens","-diagnostics","-trace","data/setcomplementslaw.txt"});
+//		org.antlr.v4.gui.TestRig.main(new String[] {"antlr.calcset.CalcSet", "input", "-gui","-tokens","-diagnostics","-trace","data/setuniversalbasic.txt"});
+//		org.antlr.v4.gui.TestRig.main(new String[] {"antlr.calcset.CalcSet", "input", "-gui","-tokens","-diagnostics","-trace","data/setcartesian.txt"});
 		
 		logger.info("Goodbye!");
 	}

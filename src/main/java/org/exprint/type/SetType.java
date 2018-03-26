@@ -5,6 +5,7 @@ import static org.exprint.util.UtilSet.intersectionOf;
 import static org.exprint.util.UtilSet.unionOf;
 
 import java.util.Collection;
+import java.util.Iterator;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -396,19 +397,51 @@ public class SetType<T extends AtomicType> extends AtomicNotImplemented implemen
 		}
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public AtomicType power(AtomicType a) {
-		if( !(a instanceof IntegerType) ) {
-			return super.power(a);
+		if( a instanceof IntegerType ) { // n-ary set power product
+			int max=a.getInteger();
+			if( max <= 0 ) {
+				throw new RuntimeException(String.format(RUNTIME_ERROR4, "Power must be greater then zero", this, "**", a));
+			}
+			AtomicType b = this;
+			for(int i=1; i<max; i++) {
+				b = b.multiplication(this);
+			}
+			return b;
+		} else if( !isNormalSet() || !a.isNormalSet() ) {
+		} else if( a instanceof SetType && isNormalSet() && a.isNormalSet() ) { 
+			// inner product
+			Set<AtomicType> innerProduct = UtilSet.orderedSet();
+			Iterator<T> ti =set.iterator();
+			Iterator<AtomicType> ai = (Iterator<AtomicType> )a.getSet().iterator();
+			while( ti.hasNext() && ai.hasNext() ) {
+				AtomicType tival = ti.next();
+				AtomicType aival = ai.next();
+				if( tival instanceof RealType || aival instanceof RealType ) {
+					innerProduct.add(new RealType(tival.getDouble()*aival.getDouble()));
+				} else {
+					innerProduct.add(new IntegerType(tival.getInteger()*aival.getInteger()));
+				}
+			}
+			return normalSet(innerProduct);
 		}
-		int max=a.getInteger();
-		if( max <= 0 ) {
-			throw new RuntimeException(String.format(RUNTIME_ERROR4, "Power must be greater then zero", this, "**", a));
-		}
-		AtomicType b = this;
-		for(int i=1; i<max; i++) {
-			b = b.multiplication(this);
-		}
-		return b;
+		return super.power(a);
 	}
+
+	@Override
+	public AtomicType norm() {
+		if( isNormalSet() ) {
+			double norm = 0.0;
+			for(Iterator<T> ti = set.iterator(); ti.hasNext(); ) {
+				double x = ti.next().getDouble();
+				norm += x*x;
+			}
+			return new RealType(Math.sqrt(norm));
+		} else {
+			throw new RuntimeException(String.format(RUNTIME_ERROR4, "Norm can be applied for normal set only", "||", this, "||"));
+		}
+	}
+
 }

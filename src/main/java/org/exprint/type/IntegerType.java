@@ -207,6 +207,6 @@ public class IntegerType extends AtomicNotImplemented implements AtomicType, Com
 
 	@Override
 	public AtomicType cardinality() {
-		return new IntegerType(Integer.MAX_VALUE);
+		return new IntegerType(Math.abs(val));
 	}
 }

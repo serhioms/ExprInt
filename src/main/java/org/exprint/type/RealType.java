@@ -134,7 +134,7 @@ public class RealType extends AtomicNotImplemented implements AtomicType, Compar
 
 	@Override
 	public AtomicType cardinality() {
-		return new RealType(Double.MAX_VALUE);
+		return new RealType(Math.abs(val));
 	}
 	
 	@Override

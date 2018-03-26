@@ -135,9 +135,4 @@ public class BooleanType extends AtomicNotImplemented implements AtomicType, Com
 			throw new RuntimeException(String.format(RUNTIME_ERROR4, getMessage(e), this, "!|", a));
 		}
 	}
-
-	@Override
-	public AtomicType cardinality() {
-		return new IntegerType(1);
-	}
 }

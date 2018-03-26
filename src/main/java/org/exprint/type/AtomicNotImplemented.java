@@ -11,33 +11,33 @@ abstract public class AtomicNotImplemented implements AtomicType, Comparable<Ato
 	public static final String NOT_IMPLEMENTED4 = "%s %s%s%s is not implemented";
 	public static final String NOT_VALID3 = "%s %s %s is not valid";
 	public static final String NOT_VALID2 = "%s(%s) is not valid";
-	public static final String NOT_VALID1 = "%s is not valid for %s";
+	public static final String NOT_VALID1 = "%s.%s() is not valid";
 	public static final String RUNTIME_ERROR4 = "%s: %s %s %s";
 	public static final String RUNTIME_ERROR3 = "%s: %s(%s)";
 
 	@Override
 	public Boolean getBoolean() {
-		throw new RuntimeException(String.format(NOT_VALID1, "getBoolean", this.getClass().getSimpleName()));
+		throw new RuntimeException(String.format(NOT_VALID1, this.getClass().getSimpleName(), "getBoolean"));
 	}
 
 	@Override
 	public String getString() {
-		throw new RuntimeException(String.format(NOT_VALID1, "getString", this.getClass().getSimpleName()));
+		throw new RuntimeException(String.format(NOT_VALID1, this.getClass().getSimpleName(), "getString"));
 	}
 
 	@Override
 	public Integer getInteger() {
-		throw new RuntimeException(String.format(NOT_VALID1, "getInteger", this.getClass().getSimpleName()));
+		throw new RuntimeException(String.format(NOT_VALID1, this.getClass().getSimpleName(), "getInteger"));
 	}
 
 	@Override
 	public Double getDouble() {
-		throw new RuntimeException(String.format(NOT_VALID1, "getDouble", this.getClass().getSimpleName()));
+		throw new RuntimeException(String.format(NOT_VALID1, this.getClass().getSimpleName(), "getDouble"));
 	}
 
 	@Override
 	public Set<? extends AtomicType> getSet() {
-		throw new RuntimeException(String.format(NOT_VALID1, "getSet", this.getClass().getSimpleName()));
+		throw new RuntimeException(String.format(NOT_VALID1, this.getClass().getSimpleName(), "getSet"));
 	}
 
 	@Override
@@ -136,7 +136,7 @@ abstract public class AtomicNotImplemented implements AtomicType, Comparable<Ato
 
 	@Override
 	public AtomicType cardinality() {
-		throw new RuntimeException(String.format(NOT_VALID2, "#", this.getClass().getSimpleName()));
+		throw new RuntimeException(String.format(NOT_VALID3, "|", this.getClass().getSimpleName(), "|"));
 	}
 
 	@Override
@@ -146,22 +146,22 @@ abstract public class AtomicNotImplemented implements AtomicType, Comparable<Ato
 
 	@Override
 	public Set<? extends AtomicType> getComplementarySet() {
-		throw new RuntimeException(String.format(NOT_VALID1, "getComplimentarySet", this.getClass().getSimpleName()));
+		throw new RuntimeException(String.format(NOT_VALID1, this.getClass().getSimpleName(), "getComplimentarySet"));
 	}
 
 	@Override
 	public boolean isComplimentarySet() {
-		throw new RuntimeException(String.format(NOT_VALID1, "isComplimentarySet", this.getClass().getSimpleName()));
+		throw new RuntimeException(String.format(NOT_VALID1, this.getClass().getSimpleName(), "isComplimentarySet"));
 	}
 
 	@Override
 	public boolean isUniversalSet() {
-		throw new RuntimeException(String.format(NOT_VALID1, "isUniversalSet", this.getClass().getSimpleName()));
+		throw new RuntimeException(String.format(NOT_VALID1, this.getClass().getSimpleName(), "isUniversalSet"));
 	}
 
 	@Override
 	public boolean isNormalSet() {
-		throw new RuntimeException(String.format(NOT_VALID1, "isNormalSet", this.getClass().getSimpleName()));
+		throw new RuntimeException(String.format(NOT_VALID1, this.getClass().getSimpleName(), "isNormalSet"));
 	}
 
 	@Override
@@ -317,6 +317,10 @@ abstract public class AtomicNotImplemented implements AtomicType, Comparable<Ato
 		} else {
 			return strt.equals(stro);
 		}
+	}
+
+	@Override
+	public AtomicType norm() {
+		return cardinality();
 	}	
-	
 }

@@ -72,82 +72,82 @@ DISJUNCTIVE_UNION	: '/\\';  /* https://en.wikipedia.org/wiki/Symmetric_differenc
 	Input string - expression
 */
 input
-	: setVar NL input					# ToSetVar 
-	| booleanOp NL						# Calculate
+	: assign NL input			# ToAssign
+	| orand NL					# Calculate
 	;
 
-setVar
-	: ID ASSIGN booleanOp				# SetVariable
+assign
+	: ID ASSIGN orand			# SetVariable
 	;
 
-booleanOp 
-    : booleanOp OR equalNotequal  		# Or
-    | booleanOp XOR equalNotequal  		# Xor
-    | booleanOp NOR equalNotequal  		# Nor
-    | booleanOp XNOR equalNotequal  	# Xnor
-    | booleanOp AND equalNotequal		# And
-    | booleanOp NAND equalNotequal		# Nand
-    | equalNotequal                  	# ToEqualNotequal
+orand 
+    : orand OR equalgrls  		# Or
+    | orand XOR equalgrls  		# Xor
+    | orand NOR equalgrls  		# Nor
+    | orand XNOR equalgrls  	# Xnor
+    | orand AND equalgrls		# And
+    | orand NAND equalgrls		# Nand
+    | equalgrls                  # ToEqualNotequal
     ;
 
-equalNotequal
-    : equalNotequal EQUAL plusOrMinus 	# Equal
-    | equalNotequal NEQUAL plusOrMinus	# Nequal
-    | equalNotequal GR plusOrMinus		# Greater
-    | equalNotequal GRE plusOrMinus		# GreaterEqual
-    | equalNotequal LS plusOrMinus		# Less
-    | equalNotequal LSE plusOrMinus		# LessEqual
-    | plusOrMinus						# ToPlusOrMinus
+equalgrls
+    : equalgrls EQUAL plusminus 	# Equal
+    | equalgrls NEQUAL plusminus	# Nequal
+    | equalgrls GR plusminus		# Greater
+    | equalgrls GRE plusminus		# GreaterEqual
+    | equalgrls LS plusminus		# Less
+    | equalgrls LSE plusminus		# LessEqual
+    | plusminus						# ToPlusOrMinus
 	;
 	
-plusOrMinus 
-    : plusOrMinus PLUS implicationSubset  					# Plus
-    | plusOrMinus MINUS implicationSubset					# Minus
-    | implicationSubset                  					# ToImplicationSubset
+plusminus 
+    : plusminus PLUS implicationsubset  		# Plus
+    | plusminus MINUS implicationsubset			# Minus
+    | implicationsubset              			# ToImplicationSubset
     ;
 
-implicationSubset
-    : implicationSubset IMPLICATION union					# ImplicationSet
-    | implicationSubset SUBSET union						# SubSet
-    | union													# ToUnion
+implicationsubset
+    : implicationsubset IMPLICATION multdiv		# ImplicationSet
+    | implicationsubset SUBSET multdiv			# SubSet
+    | multdiv									# ToUnion
     ;
 
-union
-    : union UNION intersectionComplements  					# UnionSet
-    | union DISJUNCTIVE_UNION intersectionComplements  		# DisjunctiveUnion
-    | intersectionComplements								# ToIntersectionComplements
+multdiv
+    : multdiv MULT uniondisjunctive				# Multiplication
+    | multdiv DIV uniondisjunctive				# Division
+    | uniondisjunctive							# ToBit
     ;
 
-intersectionComplements
-    : intersectionComplements INTERSECTION multOrDiv		# IntersectionSet
-    | intersectionComplements COMPLEMENTS multOrDiv			# ComplementsSet
-    | multOrDiv												# ToMultOrDiv
+uniondisjunctive
+    : uniondisjunctive UNION intersectioncomplements  					# UnionSet
+    | uniondisjunctive DISJUNCTIVE_UNION intersectioncomplements  		# DisjunctiveUnion
+    | intersectioncomplements											# ToIntersectionComplements
     ;
 
-multOrDiv
-    : multOrDiv MULT bit				# Multiplication
-    | multOrDiv DIV bit					# Division
-    | bit								# ToBit
+intersectioncomplements
+    : intersectioncomplements INTERSECTION bit		# IntersectionSet
+    | intersectioncomplements COMPLEMENTS bit		# ComplementsSet
+    | bit											# ToMultOrDiv
     ;
 
 bit
-    : bit BIT_LEFT pow					# BitLeft
-    | bit BIT_RIGHT pow					# BitRight
-    | bit BIT_RIGHTU pow				# BitRightUnsigned
-    | bit BIT_XOR pow					# BitXor
-    | pow								# ToPow
+    : bit BIT_LEFT power				# BitLeft
+    | bit BIT_RIGHT power				# BitRight
+    | bit BIT_RIGHTU power				# BitRightUnsigned
+    | bit BIT_XOR power					# BitXor
+    | power								# ToPow
     ;
 
-pow
-    : unaryMinus (POW pow)? 			# Power
+power
+    : unarycomplementsbitinvers (POW power)? 		# PowerPower
     ;
 
-unaryMinus
-    : MINUS unaryMinus 					# ChangeSign
-    | NOT unaryMinus					# UnaryNot
-    | unaryMinus COMPLEMENT_SET			# ComplementSet
-    | BIT_INVERS unaryMinus				# BitInvers
-    | atom             					# ToAtom
+unarycomplementsbitinvers
+    : MINUS unarycomplementsbitinvers 				# ChangeSign
+    | NOT unarycomplementsbitinvers					# UnaryNot
+    | unarycomplementsbitinvers COMPLEMENT_SET		# ComplementSet
+    | BIT_INVERS unarycomplementsbitinvers			# BitInvers
+    | atom             								# ToAtom
     ;
 
 atom
@@ -155,35 +155,34 @@ atom
     | MATH_PI				# ConstantPI
     | MATH_E				# ConstantE
     | STRING				# String
-    | TRUE					# Boolean
-    | FALSE					# Boolean
+    | TRUE					# ConstantBoolean
+    | FALSE					# ConstantBoolean
     | DOUBLE				# Double
     | INT					# Int
-    | '(' booleanOp ')'		# Braces
-    | '|' booleanOp '|'		# AtomCardinality /* https://en.wikipedia.org/wiki/Cardinal_number#Cardinal_arithmetic */
-    | expr					# ToExprFrAtom
+    |  '(' orand ')'		# Braces
+    |  '|' orand '|'		# Cardinality /* https://en.wikipedia.org/wiki/Cardinal_number#Cardinal_arithmetic */
+    | '||' orand '||'		# Norm /* https://en.wikipedia.org/wiki/Norm_(mathematics) */
+    | expression			# ToExprFrAtom
 	;
 
 /*
 	Set definition
 */
-expr
-	: unorderedsetexpr 
-	| orderedsetexpr
-	| '(' expr ')'
+expression
+	: unorderedset 
+	| orderedset
+	| '(' expression ')'
 	;
 	
-unorderedsetexpr
-	: '{' list '}' 						# UnorderedSet
-	| '|' list '|' 						# UnorderedSetCardinality /* https://en.wikipedia.org/wiki/Cardinal_number#Cardinal_arithmetic */
+unorderedset
+	: '{' list '}' 						# UnorderedPair
 	| '{' list '}' COMPLEMENT_SET		# UnorderedComplementSet
 	| '{' '}'							# UnorderedEmptySet
 	| '{' '}' COMPLEMENT_SET			# UnorderedUniversalSet
 	;
 	
-orderedsetexpr
-	: '[' list ']' 						# OrderedSet
-	| '|' list '|' 						# OrderedSetCardinality /* https://en.wikipedia.org/wiki/Cardinal_number#Cardinal_arithmetic */
+orderedset
+	: '[' list ']' 						# OrderedPair
 	| '[' list ']' COMPLEMENT_SET		# OrderedComplementSet
 	| '[' ']'							# OrderedEmptySet
 	| '[' ']' COMPLEMENT_SET			# OrderedUniversalSet

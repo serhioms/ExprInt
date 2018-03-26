@@ -40,6 +40,7 @@ public interface AtomicType {
 	public AtomicType cardinality();
 	public AtomicType disjunctiveUnion(AtomicType a);
 	public AtomicType complementSet();
+	public AtomicType norm();
 	
 	public Boolean getBoolean();
 	
