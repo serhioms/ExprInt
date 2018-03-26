@@ -1,4 +1,4 @@
-# Expression interpretator
+# Expression interpreter
 
 Evaluate expressions with Real numbers, Integers, Booleans, Strings and Sets. Able to declare variables by expression assignment. Set can contain any type include other sets.
 
