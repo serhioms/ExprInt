@@ -2,15 +2,15 @@ grammar CalcSet;
 /*
 	Expression lexems https://github.com/antlr/antlr4/blob/master/doc/getting-started.md#installation
 */
-WS				: [ \t\r]+ -> skip;
-NL				: '\n';
-INT				: [0-9]+;
+WS			: [ \t\r]+ -> skip;
+NL			: '\n';
+INT			: [0-9]+;
 DOUBLE			: [0-9]+'.'[0-9]+;
 MATH_PI			: '_pi';
 MATH_E			: '_e';
 TRUE			: 'true';
 FALSE			: 'false';
-ID				: [a-zA-Z_][a-zA-Z_0-9]*;
+ID			: [a-zA-Z_][a-zA-Z_0-9]*;
 STRING			: '"' ~( '\r' | '\n' | '"' )* '"';
 
 /*
@@ -20,8 +20,8 @@ ASSIGN		: '=';
 PLUS		: '+';
 MINUS		: '-';
 MULT		: '*';
-DIV			: '/';
-POW			: '**';
+DIV		: '/';
+POW		: '**';
 
 /*
 	Bit operations https://docs.oracle.com/javase/tutorial/java/nutsandbolts/op3.html
@@ -39,8 +39,8 @@ GR			: '>';
 GRE			: '>=';
 LS			: '<';
 LSE			: '<=';
-EQUAL		: '==';
-NEQUAL		: '!=';
+EQUAL			: '==';
+NEQUAL			: '!=';
 AND			: '&&';
 OR			: '||';
 NOT			: '!';
@@ -48,23 +48,23 @@ NOT			: '!';
 /*
 	Boolean algebra
 */
-IMPLICATION	: '->';
+IMPLICATION		: '->';
 
 /*
 	More boolean and number https://en.wikipedia.org/wiki/Boolean_algebra
 */
-NAND		: '!&';
+NAND			: '!&';
 NOR			: '!|';
 XOR			: 'X|';
-XNOR		: 'X!';
+XNOR			: 'X!';
 
 /* 
 	Sets https://en.wikipedia.org/wiki/Set_(mathematics)
  */
 INTERSECTION		: '&';
-UNION				: '|';
-COMPLEMENTS			: '\\';
-SUBSET				: '@';
+UNION			: '|';
+COMPLEMENTS		: '\\';
+SUBSET			: '@';
 COMPLEMENT_SET		: '\'';   /* https://en.wikipedia.org/wiki/Complement_(set_theory) */
 DISJUNCTIVE_UNION	: '/\\';  /* https://en.wikipedia.org/wiki/Symmetric_difference */
 
@@ -72,22 +72,22 @@ DISJUNCTIVE_UNION	: '/\\';  /* https://en.wikipedia.org/wiki/Symmetric_differenc
 	Input string - expression
 */
 input
-	: assign NL input			# ToAssign
-	| orand NL					# Calculate
+	: assign NL input		# ToAssign
+	| orand NL			# Calculate
 	;
 
 assign
-	: ID ASSIGN orand			# SetVariable
+	: ID ASSIGN orand		# SetVariable
 	;
 
 orand 
     : orand OR equalgrls  		# Or
     | orand XOR equalgrls  		# Xor
     | orand NOR equalgrls  		# Nor
-    | orand XNOR equalgrls  	# Xnor
+    | orand XNOR equalgrls  		# Xnor
     | orand AND equalgrls		# And
     | orand NAND equalgrls		# Nand
-    | equalgrls                  # ToEqualNotequal
+    | equalgrls                  	# ToEqualNotequal
     ;
 
 equalgrls
@@ -97,7 +97,7 @@ equalgrls
     | equalgrls GRE plusminus		# GreaterEqual
     | equalgrls LS plusminus		# Less
     | equalgrls LSE plusminus		# LessEqual
-    | plusminus						# ToPlusOrMinus
+    | plusminus				# ToPlusOrMinus
 	;
 	
 plusminus 
@@ -109,25 +109,25 @@ plusminus
 implicationsubset
     : implicationsubset IMPLICATION multdiv		# ImplicationSet
     | implicationsubset SUBSET multdiv			# SubSet
-    | multdiv									# ToUnion
+    | multdiv						# ToUnion
     ;
 
 multdiv
-    : multdiv MULT uniondisjunctive				# Multiplication
-    | multdiv DIV uniondisjunctive				# Division
-    | uniondisjunctive							# ToBit
+    : multdiv MULT uniondisjunctive			# Multiplication
+    | multdiv DIV uniondisjunctive			# Division
+    | uniondisjunctive					# ToBit
     ;
 
 uniondisjunctive
-    : uniondisjunctive UNION intersectioncomplements  					# UnionSet
-    | uniondisjunctive DISJUNCTIVE_UNION intersectioncomplements  		# DisjunctiveUnion
-    | intersectioncomplements											# ToIntersectionComplements
+    : uniondisjunctive UNION intersectioncomplements  			# UnionSet
+    | uniondisjunctive DISJUNCTIVE_UNION intersectioncomplements  	# DisjunctiveUnion
+    | intersectioncomplements						# ToIntersectionComplements
     ;
 
 intersectioncomplements
     : intersectioncomplements INTERSECTION bit		# IntersectionSet
     | intersectioncomplements COMPLEMENTS bit		# ComplementsSet
-    | bit											# ToMultOrDiv
+    | bit						# ToMultOrDiv
     ;
 
 bit
@@ -135,7 +135,7 @@ bit
     | bit BIT_RIGHT power				# BitRight
     | bit BIT_RIGHTU power				# BitRightUnsigned
     | bit BIT_XOR power					# BitXor
-    | power								# ToPow
+    | power						# ToPow
     ;
 
 power
@@ -143,25 +143,25 @@ power
     ;
 
 unarycomplementsbitinvers
-    : MINUS unarycomplementsbitinvers 				# ChangeSign
-    | NOT unarycomplementsbitinvers					# UnaryNot
+    : MINUS unarycomplementsbitinvers 			# ChangeSign
+    | NOT unarycomplementsbitinvers			# UnaryNot
     | unarycomplementsbitinvers COMPLEMENT_SET		# ComplementSet
-    | BIT_INVERS unarycomplementsbitinvers			# BitInvers
-    | atom             								# ToAtom
+    | BIT_INVERS unarycomplementsbitinvers		# BitInvers
+    | atom             					# ToAtom
     ;
 
 atom
-    : ID					# Variable
+    : ID				# Variable
     | MATH_PI				# ConstantPI
     | MATH_E				# ConstantE
     | STRING				# String
-    | TRUE					# ConstantBoolean
-    | FALSE					# ConstantBoolean
+    | TRUE				# ConstantBoolean
+    | FALSE				# ConstantBoolean
     | DOUBLE				# Double
-    | INT					# Int
-    |  '(' orand ')'		# Braces
-    |  '|' orand '|'		# Cardinality /* https://en.wikipedia.org/wiki/Cardinal_number#Cardinal_arithmetic */
-    | '||' orand '||'		# Norm /* https://en.wikipedia.org/wiki/Norm_(mathematics) */
+    | INT				# Int
+    |  '(' orand ')'			# Braces
+    |  '|' orand '|'			# Cardinality 	/* https://en.wikipedia.org/wiki/Cardinal_number#Cardinal_arithmetic */
+    | '||' orand '||'			# Norm		/* https://en.wikipedia.org/wiki/Norm_(mathematics) */
     | expression			# ToExprFrAtom
 	;
 
@@ -175,17 +175,17 @@ expression
 	;
 	
 unorderedset
-	: '{' list '}' 						# UnorderedPair
-	| '{' list '}' COMPLEMENT_SET		# UnorderedComplementSet
-	| '{' '}'							# UnorderedEmptySet
-	| '{' '}' COMPLEMENT_SET			# UnorderedUniversalSet
+	: '{' list '}' 			# UnorderedPair
+	| '{' list '}' COMPLEMENT_SET	# UnorderedComplementSet
+	| '{' '}'			# UnorderedEmptySet
+	| '{' '}' COMPLEMENT_SET	# UnorderedUniversalSet
 	;
 	
 orderedset
-	: '[' list ']' 						# OrderedPair
-	| '[' list ']' COMPLEMENT_SET		# OrderedComplementSet
-	| '[' ']'							# OrderedEmptySet
-	| '[' ']' COMPLEMENT_SET			# OrderedUniversalSet
+	: '[' list ']' 			# OrderedPair
+	| '[' list ']' COMPLEMENT_SET	# OrderedComplementSet
+	| '[' ']'			# OrderedEmptySet
+	| '[' ']' COMPLEMENT_SET	# OrderedUniversalSet
 	;
 	
 list

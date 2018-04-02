@@ -435,8 +435,13 @@ public class SetType<T extends AtomicType> extends AtomicNotImplemented implemen
 		if( isNormalSet() ) {
 			double norm = 0.0;
 			for(Iterator<T> ti = set.iterator(); ti.hasNext(); ) {
-				double x = ti.next().getDouble();
-				norm += x*x;
+				T next = ti.next();
+				try {
+					double x = next.getDouble();
+					norm += x*x;
+				} catch(Throwable t) {
+					throw new RuntimeException(String.format(RUNTIME_ERROR4, "Expected Integer or Double but got "+next.getClass().getSimpleName(), "||", this, "||"));
+				}
 			}
 			return new RealType(Math.sqrt(norm));
 		} else {

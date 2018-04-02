@@ -14,7 +14,7 @@ public class TestHello {
 	public static void main(String[] args) throws Exception {
 		logger.info("Antlr test...");
 		
-		TestRig.main(new String[] {"hello.Hello", "r", "-gui","-tokens","-diagnostics","-trace","data/hello.txt"});
+		TestRig.main(new String[] {"antlr.hello.Hello", "r", "-gui","-tokens","-diagnostics","-trace","data/hello.txt"});
 		
 		logger.info("Goodbye!");
 	}
