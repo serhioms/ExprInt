@@ -2,6 +2,16 @@
 
 Evaluate arifmetic expression with Real, Integer, Boolean, String and Set. Able to declare variable by expression assignment. Set can contain any type include other sets.
 
+## What is special?
+
+Interpretator developed based on [ANTLR gramma](https://github.com/serhioms/ExprInt/blob/master/gramma/CalcSet.g4), [ANTLR visitor](https://github.com/serhioms/ExprInt/blob/master/src/main/java/org/exprint/antlr/EvalVisitor.java) and [implementation of each of 5 types ](https://github.com/serhioms/ExprInt/tree/master/src/main/java/org/exprint/type).
+
+Is not it clean and straight forward? I like [ANTLR](https://github.com/antlr/antlr4)!
+
+Special thanks to [Shmatov](https://github.com/shmatov/antlr4-calculator) and [Mgrzeszczak](https://github.com/mgrzeszczak/set-calculator) for good examples of how to do ANTLR for numbers and simple sets.
+
+Boolean and sets algebra following wiki below: [Boolean algebra](https://en.wikipedia.org/wiki/Boolean_algebra), [De Morgan laws](https://en.wikipedia.org/wiki/De_Morgan%27s_laws), [Set math](https://en.wikipedia.org/wiki/Set_(mathematics)), [Set symmetric difference](https://en.wikipedia.org/wiki/Symmetric_difference), [Complement set](https://en.wikipedia.org/wiki/Complement_(set_theory)),[Cartesian product](https://en.wikipedia.org/wiki/Cartesian_product), [Ordered pair](https://en.wikipedia.org/wiki/Ordered_pair), [univers](https://en.wikipedia.org/wiki/Universe_(mathematics)), [Inner product](https://en.wikipedia.org/wiki/Inner_product_space), [Norm](https://en.wikipedia.org/wiki/Norm_(mathematics)), [Bit operations](https://www.programiz.com/java-programming/bitwise-operators). 
+
 ## Usage
 
 ### Download project and start run.cmd from command line.
@@ -16,16 +26,6 @@ C:\ExprInt>java -version<br/>
 java version "1.8.0_161"<br/>
 Java(TM) SE Runtime Environment (build 1.8.0_161-b12)<br/>
 Java HotSpot(TM) 64-Bit Server VM (build 25.161-b12, mixed mode)<br/>
-
-## What is special?
-
-Interpretator developed based on [ANTLR gramma](https://github.com/serhioms/ExprInt/blob/master/gramma/CalcSet.g4), [ANTLR visitor](https://github.com/serhioms/ExprInt/blob/master/src/main/java/org/exprint/antlr/EvalVisitor.java) and [implementation of each of 5 types ](https://github.com/serhioms/ExprInt/tree/master/src/main/java/org/exprint/type).
-
-Is not it clean and straight forward? I like ANTLR!
-
-Special thanks to [Shmatov](https://github.com/shmatov/antlr4-calculator) and [Mgrzeszczak](https://github.com/mgrzeszczak/set-calculator) for good examples of how to do ANTLR for numbers and simple sets.
-
-Boolean and sets algebra following wiki below: [Boolean algebra](https://en.wikipedia.org/wiki/Boolean_algebra), [De Morgan laws](https://en.wikipedia.org/wiki/De_Morgan%27s_laws), [Set math](https://en.wikipedia.org/wiki/Set_(mathematics)), [Set symmetric difference](https://en.wikipedia.org/wiki/Symmetric_difference), [Complement set](https://en.wikipedia.org/wiki/Complement_(set_theory)),[Cartesian product](https://en.wikipedia.org/wiki/Cartesian_product), [Ordered pair](https://en.wikipedia.org/wiki/Ordered_pair), [univers](https://en.wikipedia.org/wiki/Universe_(mathematics)), [Inner product](https://en.wikipedia.org/wiki/Inner_product_space), [Norm](https://en.wikipedia.org/wiki/Norm_(mathematics)), [Bit operations](https://www.programiz.com/java-programming/bitwise-operators). 
 
 ## What is not covered
 
