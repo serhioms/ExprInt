@@ -240,8 +240,14 @@ public final class MyCollectors {
 
     public static <T>
     Collector<T, ?, Set<T>> toMyUnorderedSet() {
-        return new CollectorImpl<>((Supplier<Set<T>>) MyUnorderedSet::new, 
-        							Set::add,
+        return new CollectorImpl<>((Supplier<Set<T>>) MyUnorderedSet::new, Set::add,
+                                   (left, right) -> { left.addAll(right); return left; },
+                                   CH_UNORDERED_ID);
+    }
+
+    public static <T>
+    Collector<T, ?, Set<T>> toMyOrderedSet() {
+        return new CollectorImpl<>((Supplier<Set<T>>) MyOrderedSet::new, Set::add,
                                    (left, right) -> { left.addAll(right); return left; },
                                    CH_UNORDERED_ID);
     }

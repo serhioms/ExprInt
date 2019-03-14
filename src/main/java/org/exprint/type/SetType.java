@@ -164,7 +164,6 @@ public class SetType<T extends AtomicType> extends AtomicNotImplemented implemen
 		throw new RuntimeException(String.format(NOT_VALID3, this, "&", a));
 	}
 
-	
 	@SuppressWarnings("unchecked")
 	@Override
 	public AtomicType and(AtomicType a) {

@@ -12,6 +12,7 @@ TRUE			: 'true';
 FALSE			: 'false';
 ID			: [a-zA-Z_][a-zA-Z_0-9]*;
 STRING			: '"' ~( '\r' | '\n' | '"' )* '"';
+WILDCARD		: '?';
 
 /*
 	Number algebra
@@ -159,6 +160,7 @@ atom
     | FALSE				# ConstantBoolean
     | DOUBLE				# Double
     | INT				# Int
+    | WILDCARD				# Wildcard
     |  '(' orand ')'			# Braces
     |  '|' orand '|'			# Cardinality 	/* https://en.wikipedia.org/wiki/Cardinal_number#Cardinal_arithmetic */
     | '||' orand '||'			# Norm		/* https://en.wikipedia.org/wiki/Norm_(mathematics) */

@@ -361,6 +361,13 @@ public interface CalcSetVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitInt(CalcSetParser.IntContext ctx);
 	/**
+	 * Visit a parse tree produced by the {@code Wildcard}
+	 * labeled alternative in {@link CalcSetParser#atom}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitWildcard(CalcSetParser.WildcardContext ctx);
+	/**
 	 * Visit a parse tree produced by the {@code Braces}
 	 * labeled alternative in {@link CalcSetParser#atom}.
 	 * @param ctx the parse tree

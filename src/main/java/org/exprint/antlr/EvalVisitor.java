@@ -8,6 +8,7 @@ import org.exprint.type.IntegerType;
 import org.exprint.type.RealType;
 import org.exprint.type.SetType;
 import org.exprint.type.StringType;
+import org.exprint.type.WildcardType;
 import org.exprint.util.UtilSet;
 
 import antlr.calcset.CalcSetBaseVisitor;
@@ -53,6 +54,7 @@ import antlr.calcset.CalcSetParser.UnorderedComplementSetContext;
 import antlr.calcset.CalcSetParser.UnorderedEmptySetContext;
 import antlr.calcset.CalcSetParser.UnorderedPairContext;
 import antlr.calcset.CalcSetParser.UnorderedUniversalSetContext;
+import antlr.calcset.CalcSetParser.WildcardContext;
 import antlr.calcset.CalcSetParser.XnorContext;
 import antlr.calcset.CalcSetParser.XorContext;
 
@@ -356,6 +358,9 @@ public class EvalVisitor extends CalcSetBaseVisitor<AtomicType> {
 		AtomicType atomicType = variables.get(ctx.ID().getText());
 		return atomicType;
 	}
-	
-	
+
+	@Override
+	public AtomicType visitWildcard(WildcardContext ctx) {
+		return WildcardType.instance;
+	}
 }
